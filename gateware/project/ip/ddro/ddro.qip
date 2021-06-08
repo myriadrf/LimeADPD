@@ -1,0 +1,8 @@
+set_global_assignment -name IP_TOOL_NAME "ALTDDIO_OUT"
+set_global_assignment -name IP_TOOL_VERSION "15.0"
+set_global_assignment -name IP_GENERATED_DEVICE_FAMILY "{Cyclone V}"
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) "ddro.vhd"]
+set_global_assignment -name MISC_FILE [file join $::quartus(qip_path) "ddro.bsf"]
+set_global_assignment -name MISC_FILE [file join $::quartus(qip_path) "ddro.inc"]
+set_global_assignment -name MISC_FILE [file join $::quartus(qip_path) "ddro.cmp"]
+set_global_assignment -name MISC_FILE [file join $::quartus(qip_path) "ddro.ppf"]

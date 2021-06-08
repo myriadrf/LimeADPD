@@ -1,0 +1,32 @@
+	component nios_cpu is
+		port (
+			clk_clk                                : in  std_logic                     := 'X';             -- clk
+			fpga_spi0_MISO                         : in  std_logic                     := 'X';             -- MISO
+			fpga_spi0_MOSI                         : out std_logic;                                        -- MOSI
+			fpga_spi0_SCLK                         : out std_logic;                                        -- SCLK
+			fpga_spi0_SS_n                         : out std_logic;                                        -- SS_n
+			gpi0_export                            : in  std_logic_vector(7 downto 0)  := (others => 'X'); -- export
+			gpio0_export                           : out std_logic_vector(7 downto 0);                     -- export
+			pll_recfg_from_pll_0_reconfig_from_pll : in  std_logic_vector(63 downto 0) := (others => 'X'); -- reconfig_from_pll
+			pll_recfg_from_pll_1_reconfig_from_pll : in  std_logic_vector(63 downto 0) := (others => 'X'); -- reconfig_from_pll
+			pll_recfg_from_pll_2_reconfig_from_pll : in  std_logic_vector(63 downto 0) := (others => 'X'); -- reconfig_from_pll
+			pll_recfg_from_pll_3_reconfig_from_pll : in  std_logic_vector(63 downto 0) := (others => 'X'); -- reconfig_from_pll
+			pll_recfg_from_pll_4_reconfig_from_pll : in  std_logic_vector(63 downto 0) := (others => 'X'); -- reconfig_from_pll
+			pll_recfg_from_pll_5_reconfig_from_pll : in  std_logic_vector(63 downto 0) := (others => 'X'); -- reconfig_from_pll
+			pll_recfg_to_pll_0_reconfig_to_pll     : out std_logic_vector(63 downto 0);                    -- reconfig_to_pll
+			pll_recfg_to_pll_1_reconfig_to_pll     : out std_logic_vector(63 downto 0);                    -- reconfig_to_pll
+			pll_recfg_to_pll_2_reconfig_to_pll     : out std_logic_vector(63 downto 0);                    -- reconfig_to_pll
+			pll_recfg_to_pll_3_reconfig_to_pll     : out std_logic_vector(63 downto 0);                    -- reconfig_to_pll
+			pll_recfg_to_pll_4_reconfig_to_pll     : out std_logic_vector(63 downto 0);                    -- reconfig_to_pll
+			pll_recfg_to_pll_5_reconfig_to_pll     : out std_logic_vector(63 downto 0);                    -- reconfig_to_pll
+			pll_rst_export                         : out std_logic_vector(31 downto 0);                    -- export
+			pllcfg_cmd_export                      : in  std_logic_vector(2 downto 0)  := (others => 'X'); -- export
+			pllcfg_spi_MISO                        : in  std_logic                     := 'X';             -- MISO
+			pllcfg_spi_MOSI                        : out std_logic;                                        -- MOSI
+			pllcfg_spi_SCLK                        : out std_logic;                                        -- SCLK
+			pllcfg_spi_SS_n                        : out std_logic;                                        -- SS_n
+			pllcfg_stat_export                     : out std_logic_vector(9 downto 0);                     -- export
+			reset_reset_n                          : out std_logic                                         -- reset_n
+		);
+	end component nios_cpu;
+

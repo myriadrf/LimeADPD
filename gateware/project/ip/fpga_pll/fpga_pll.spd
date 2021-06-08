@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file path="fpga_pll_sim/fpga_pll.vho" type="VHDL" />
+ <topLevel name="fpga_pll" />
+ <deviceFamily name="cyclonev" />
+</simPackage>

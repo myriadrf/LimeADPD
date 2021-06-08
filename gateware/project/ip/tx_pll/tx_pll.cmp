@@ -1,0 +1,12 @@
+	component tx_pll is
+		port (
+			refclk            : in  std_logic                     := 'X';             -- clk
+			rst               : in  std_logic                     := 'X';             -- reset
+			outclk_0          : out std_logic;                                        -- clk
+			outclk_1          : out std_logic;                                        -- clk
+			locked            : out std_logic;                                        -- export
+			reconfig_to_pll   : in  std_logic_vector(63 downto 0) := (others => 'X'); -- reconfig_to_pll
+			reconfig_from_pll : out std_logic_vector(63 downto 0)                     -- reconfig_from_pll
+		);
+	end component tx_pll;
+
