@@ -1,5 +1,2 @@
 set_instance_assignment -name PLL_COMPENSATION_MODE DIRECT -to "*fpga_pll_0002*|altera_pll:altera_pll_i*|*"
- 
-set_instance_assignment -name PLL_AUTO_RESET OFF -to "*fpga_pll_0002*|altera_pll:altera_pll_i*|*"
-set_instance_assignment -name PLL_BANDWIDTH_PRESET AUTO -to "*fpga_pll_0002*|altera_pll:altera_pll_i*|*"
 set_instance_assignment -name UNFORCE_MERGE_PLL_OUTPUT_COUNTER ON -to "*fpga_pll_0002*|altera_pll:altera_pll_i*|*"

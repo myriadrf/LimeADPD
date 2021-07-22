@@ -34,10 +34,7 @@ entity rx_fifo_ctrl is
 		  buff_size      : in std_logic_vector(15 downto 0);
 		  fifo_wrusedw	  : in std_logic_vector(fifo_wsize-1 downto 0);
 		  limit_std		  : out std_logic_vector(18 downto 0);
-		  dis_iqsel			: in std_logic; -- disable when data comes without iqselect
-		  
-		  hd_bypass: in std_logic;  -- Borko
-		  hd_yen: in std_logic
+		  dis_iqsel			: in std_logic -- disable when data comes without iqselect
         
         );
 end rx_fifo_ctrl;
@@ -60,14 +57,8 @@ signal limit			: unsigned(18 downto 0);
 
 type fifo_states    is (idle, wait_frame_start, fill_fifo, wait_buffer, wait_en);
 signal fifo_state  : fifo_states;
---signal fu: std_logic;
-
-  signal enable: std_logic;
 
 begin
-
-
-  enable<= hd_bypass or ((not (hd_bypass)) and hd_yen);
 
 
 --to count buffer size
@@ -76,8 +67,7 @@ limit<=to_unsigned(limit_in, limit'length);
 
 limit_std<=std_logic_vector(limit); --just for testing
   
-fifo_wreq <= wreq and (not fifo_wfull) and enable;
---fifo_wreq <= wreq2 and not fifo_wfull;  -- Borko
+fifo_wreq <= wreq and not fifo_wfull;
   
 -- ----------------------------------------------------------------------------
 -- Main state machine
@@ -87,12 +77,8 @@ main_fsm_f : process(clk, reset_n) begin
       fifo_state <= idle;
       wreq<='0';
       wr_cnt_rst<='0';
-		--fu<='0';  -- Borko
-	
 	elsif(clk'event and clk = '1')then 
-	     --fu<= not fu; -- Borko
-	  if (enable ='1') then  -- Borko
-	  
+	
 	     case fifo_state is				--wait for capture enable
 	       when idle =>
 	         wreq<='0';
@@ -108,8 +94,6 @@ main_fsm_f : process(clk, reset_n) begin
 	         end if;
 				
 	       when wait_frame_start =>	--wait frame start
-			 
-			     --fu<='0';  -- Borko
 	           wr_cnt_rst<='0';
 	           wreq<='0';  
 	           if iq_sel_reg=frame_start then 
@@ -119,18 +103,16 @@ main_fsm_f : process(clk, reset_n) begin
 	           end if;
 	                         
 	       when fill_fifo =>			--fill fifo until limit
-				
-				wr_cnt_rst<='0';
+					wr_cnt_rst<='0';
 	         if fifo_wfull='0' then
-				
-	            if  (wr_cnt < limit) then
+	            if  wr_cnt < limit then 
 	                 wreq<='1';
 	                 fifo_state <= fill_fifo;
-	             else 
+	            else 
 	                 wreq<='0';
 	                 fifo_state <= wait_buffer;
-	             end if;    
-	           else
+	            end if;    
+	         else
 	            wreq<='0';
 	            fifo_state <=fill_fifo;
 	         end if;
@@ -156,14 +138,11 @@ main_fsm_f : process(clk, reset_n) begin
 	       when others =>
 					fifo_state <= idle;
 			 
-	     end case;
-		 end if; --if (enable ='1') then  -- Borko
+	     end case; 
 	end if;	
 end process;
 
- 
--- Borko
--- wreq2<= (hd_bypass or (not(hd_bypass) and hd_yen)) when (fifo_state=fill_fifo) else '0';
+
 -- ----------------------------------------------------------------------------
 -- write counter and sync registers
 -- ----------------------------------------------------------------------------
@@ -176,25 +155,20 @@ end process;
 		  ram_buffer_rdy_reg2<='0';
 		  iq_sel_reg<='0';
  	    elsif (clk'event and clk = '1') then
-		 if (enable ='1') then  -- Borko
-		 
-			ram_buffer_rdy_reg<=ram_buffer_rdy;
-			ram_buffer_rdy_reg1<=ram_buffer_rdy_reg;
-			ram_buffer_rdy_reg2<=ram_buffer_rdy_reg1;
-			iq_sel_reg<=not iq_sel; --because iq sel wil be delayed so we want to invert it
- 	      
-			if wr_cnt_rst='1' then
+		 ram_buffer_rdy_reg<=ram_buffer_rdy;
+		 ram_buffer_rdy_reg1<=ram_buffer_rdy_reg;
+		 ram_buffer_rdy_reg2<=ram_buffer_rdy_reg1;
+		 iq_sel_reg<=not iq_sel; --because iq sel wil be delayed so we want to invert it
+ 	      if wr_cnt_rst='1' then
 	        wr_cnt<=(others=>'0');
 	      else 
-	           --if wreq2='1' and fifo_wfull='0' then  -- Borko
-				  if wreq='1' and fifo_wfull='0' then
+	           if wreq='1' and fifo_wfull='0' then
  	            wr_cnt<=wr_cnt+1;
  	           else 
  	            wr_cnt<=wr_cnt;
  	           end if;
         end if;
- 	    end if; --if (enable ='1') then  -- Borko
-		end if; 
+ 	    end if;
     end process;
   
 end arch;  

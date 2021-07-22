@@ -1,22 +1,22 @@
 //altclkctrl CBX_SINGLE_OUTPUT_FILE="ON" CLOCK_TYPE="Global Clock" DEVICE_FAMILY="Cyclone V" USE_GLITCH_FREE_SWITCH_OVER_IMPLEMENTATION="OFF" ena inclk outclk
-//VERSION_BEGIN 15.0 cbx_altclkbuf 2015:04:22:18:04:07:SJ cbx_cycloneii 2015:04:22:18:04:07:SJ cbx_lpm_add_sub 2015:04:22:18:04:07:SJ cbx_lpm_compare 2015:04:22:18:04:07:SJ cbx_lpm_decode 2015:04:22:18:04:08:SJ cbx_lpm_mux 2015:04:22:18:04:08:SJ cbx_mgl 2015:04:22:18:06:50:SJ cbx_stratix 2015:04:22:18:04:08:SJ cbx_stratixii 2015:04:22:18:04:08:SJ cbx_stratixiii 2015:04:22:18:04:08:SJ cbx_stratixv 2015:04:22:18:04:08:SJ  VERSION_END
+//VERSION_BEGIN 16.1 cbx_altclkbuf 2016:11:30:18:10:07:SJ cbx_cycloneii 2016:11:30:18:10:07:SJ cbx_lpm_add_sub 2016:11:30:18:10:07:SJ cbx_lpm_compare 2016:11:30:18:10:07:SJ cbx_lpm_decode 2016:11:30:18:10:07:SJ cbx_lpm_mux 2016:11:30:18:10:07:SJ cbx_mgl 2016:11:30:18:11:28:SJ cbx_nadder 2016:11:30:18:10:07:SJ cbx_stratix 2016:11:30:18:10:07:SJ cbx_stratixii 2016:11:30:18:10:07:SJ cbx_stratixiii 2016:11:30:18:10:07:SJ cbx_stratixv 2016:11:30:18:10:07:SJ  VERSION_END
 // synthesis VERILOG_INPUT_VERSION VERILOG_2001
 // altera message_off 10463
 
 
 
-// Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
-//  Your use of Altera Corporation's design tools, logic functions 
+// Copyright (C) 2016  Intel Corporation. All rights reserved.
+//  Your use of Intel Corporation's design tools, logic functions 
 //  and other software and tools, and its AMPP partner logic 
 //  functions, and any output files from any of the foregoing 
 //  (including device programming or simulation files), and any 
 //  associated documentation or information are expressly subject 
-//  to the terms and conditions of the Altera Program License 
-//  Subscription Agreement, the Altera Quartus II License Agreement,
-//  the Altera MegaCore Function License Agreement, or other 
+//  to the terms and conditions of the Intel Program License 
+//  Subscription Agreement, the Intel Quartus Prime License Agreement,
+//  the Intel MegaCore Function License Agreement, or other 
 //  applicable license agreement, including, without limitation, 
 //  that your use is for the sole purpose of programming logic 
-//  devices manufactured by Altera and sold by Altera or its 
+//  devices manufactured by Intel and sold by Intel or its 
 //  authorized distributors.  Please refer to the applicable 
 //  agreement for further details.
 
@@ -60,16 +60,16 @@ module  gclk_ctrl_altclkctrl_0_sub
 		clkselect = {2{1'b0}},
 		outclk = wire_sd1_outclk;
 endmodule //gclk_ctrl_altclkctrl_0_sub
-//VALID FILE // (C) 2001-2015 Altera Corporation. All rights reserved.
-// Your use of Altera Corporation's design tools, logic functions and other 
+//VALID FILE // (C) 2001-2016 Intel Corporation. All rights reserved.
+// Your use of Intel Corporation's design tools, logic functions and other 
 // software and tools, and its AMPP partner logic functions, and any output 
 // files any of the foregoing (including device programming or simulation 
 // files), and any associated documentation or information are expressly subject 
-// to the terms and conditions of the Altera Program License Subscription 
-// Agreement, Altera MegaCore Function License Agreement, or other applicable 
+// to the terms and conditions of the Intel Program License Subscription 
+// Agreement, Intel MegaCore Function License Agreement, or other applicable 
 // license agreement, including, without limitation, that your use is for the 
-// sole purpose of programming logic devices manufactured by Altera and sold by 
-// Altera or its authorized distributors.  Please refer to the applicable 
+// sole purpose of programming logic devices manufactured by Intel and sold by 
+// Intel or its authorized distributors.  Please refer to the applicable 
 // agreement for further details.
 
 

@@ -1,4 +1,4 @@
-//Legal Notice: (C)2016 Altera Corporation. All rights reserved.  Your
+//Legal Notice: (C)2018 Altera Corporation. All rights reserved.  Your
 //use of Altera Corporation's design tools, logic functions and other
 //software and tools, and its AMPP partner logic functions, and any
 //output files any of the foregoing (including device programming or
@@ -27,12 +27,12 @@
 //4         reserved
 //5         slave-enable  r/w
 //6         end-of-packet-value r/w
-//INPUT_CLOCK: 100000000
+//INPUT_CLOCK: 30720000
 //ISMASTER: 1
 //DATABITS: 8
 //TARGETCLOCK: 5000000
-//NUMSLAVES: 1
-//CPOL: 1
+//NUMSLAVES: 8
+//CPOL: 0
 //CPHA: 0
 //LSBFIRST: 0
 //EXTRADELAY: 0
@@ -63,7 +63,7 @@ module nios_cpu_fpga_spi0 (
 
   output           MOSI;
   output           SCLK;
-  output           SS_n;
+  output  [  7: 0] SS_n;
   output  [ 15: 0] data_to_cpu;
   output           dataavailable;
   output           endofpacket;
@@ -78,64 +78,65 @@ module nios_cpu_fpga_spi0 (
   input            spi_select;
   input            write_n;
 
-  wire             E;
-  reg              EOP;
-  reg              MISO_reg;
-  wire             MOSI;
-  reg              ROE;
-  reg              RRDY;
-  wire             SCLK;
-  reg              SCLK_reg;
-  reg              SSO_reg;
-  wire             SS_n;
-  wire             TMT;
-  reg              TOE;
-  wire             TRDY;
-  wire             control_wr_strobe;
-  reg              data_rd_strobe;
-  reg     [ 15: 0] data_to_cpu;
-  reg              data_wr_strobe;
-  wire             dataavailable;
-  wire             ds_MISO;
-  wire             enableSS;
-  wire             endofpacket;
-  reg     [ 15: 0] endofpacketvalue_reg;
-  wire             endofpacketvalue_wr_strobe;
-  reg              iEOP_reg;
-  reg              iE_reg;
-  reg              iROE_reg;
-  reg              iRRDY_reg;
-  reg              iTMT_reg;
-  reg              iTOE_reg;
-  reg              iTRDY_reg;
-  wire             irq;
-  reg              irq_reg;
-  wire             p1_data_rd_strobe;
-  wire    [ 15: 0] p1_data_to_cpu;
-  wire             p1_data_wr_strobe;
-  wire             p1_rd_strobe;
-  wire    [  3: 0] p1_slowcount;
-  wire             p1_wr_strobe;
-  reg              rd_strobe;
-  wire             readyfordata;
-  reg     [  7: 0] rx_holding_reg;
-  reg     [  7: 0] shift_reg;
-  wire             slaveselect_wr_strobe;
-  wire             slowclock;
-  reg     [  3: 0] slowcount;
-  wire    [ 10: 0] spi_control;
-  reg     [ 15: 0] spi_slave_select_holding_reg;
-  reg     [ 15: 0] spi_slave_select_reg;
-  wire    [ 10: 0] spi_status;
-  reg     [  4: 0] state;
-  reg              stateZero;
-  wire             status_wr_strobe;
-  reg              transmitting;
-  reg              tx_holding_primed;
-  reg     [  7: 0] tx_holding_reg;
-  reg              wr_strobe;
-  wire             write_shift_reg;
-  wire             write_tx_holding;
+
+wire             E;
+reg              EOP;
+reg              MISO_reg;
+wire             MOSI;
+reg              ROE;
+reg              RRDY;
+wire             SCLK;
+reg              SCLK_reg;
+reg              SSO_reg;
+wire    [  7: 0] SS_n;
+wire             TMT;
+reg              TOE;
+wire             TRDY;
+wire             control_wr_strobe;
+reg              data_rd_strobe;
+reg     [ 15: 0] data_to_cpu;
+reg              data_wr_strobe;
+wire             dataavailable;
+wire             ds_MISO;
+wire             enableSS;
+wire             endofpacket;
+reg     [ 15: 0] endofpacketvalue_reg;
+wire             endofpacketvalue_wr_strobe;
+reg              iEOP_reg;
+reg              iE_reg;
+reg              iROE_reg;
+reg              iRRDY_reg;
+reg              iTMT_reg;
+reg              iTOE_reg;
+reg              iTRDY_reg;
+wire             irq;
+reg              irq_reg;
+wire             p1_data_rd_strobe;
+wire    [ 15: 0] p1_data_to_cpu;
+wire             p1_data_wr_strobe;
+wire             p1_rd_strobe;
+wire    [  2: 0] p1_slowcount;
+wire             p1_wr_strobe;
+reg              rd_strobe;
+wire             readyfordata;
+reg     [  7: 0] rx_holding_reg;
+reg     [  7: 0] shift_reg;
+wire             slaveselect_wr_strobe;
+wire             slowclock;
+reg     [  2: 0] slowcount;
+wire    [ 10: 0] spi_control;
+reg     [ 15: 0] spi_slave_select_holding_reg;
+reg     [ 15: 0] spi_slave_select_reg;
+wire    [ 10: 0] spi_status;
+reg     [  4: 0] state;
+reg              stateZero;
+wire             status_wr_strobe;
+reg              transmitting;
+reg              tx_holding_primed;
+reg     [  7: 0] tx_holding_reg;
+reg              wr_strobe;
+wire             write_shift_reg;
+wire             write_tx_holding;
   //spi_control_port, which is an e_avalon_slave
   assign p1_rd_strobe = ~rd_strobe & spi_select & ~read_n;
   // Read is a two-cycle event.
@@ -254,11 +255,11 @@ module nios_cpu_fpga_spi0 (
     end
 
 
-  // slowclock is active once every 10 system clock pulses.
-  assign slowclock = slowcount == 4'h9;
+  // slowclock is active once every 4 system clock pulses.
+  assign slowclock = slowcount == 3'h3;
 
-  assign p1_slowcount = ({4 {(transmitting && !slowclock)}} & (slowcount + 1)) |
-    ({4 {(~((transmitting && !slowclock)))}} & 0);
+  assign p1_slowcount = ({3 {(transmitting && !slowclock)}} & (slowcount + 1)) |
+    ({3 {(~((transmitting && !slowclock)))}} & 0);
 
   // Divide counter for SPI clock.
   always @(posedge clk or negedge reset_n)
@@ -318,7 +319,7 @@ module nios_cpu_fpga_spi0 (
 
   assign enableSS = transmitting & ~stateZero;
   assign MOSI = shift_reg[7];
-  assign SS_n = (enableSS | SSO_reg) ? ~spi_slave_select_reg : {1 {1'b1} };
+  assign SS_n = (enableSS | SSO_reg) ? ~spi_slave_select_reg : {8 {1'b1} };
   assign SCLK = SCLK_reg;
   // As long as there's an empty spot somewhere,
   //it's safe to write data.
@@ -343,7 +344,7 @@ module nios_cpu_fpga_spi0 (
           tx_holding_reg <= 0;
           tx_holding_primed <= 0;
           transmitting <= 0;
-          SCLK_reg <= 1;
+          SCLK_reg <= 0;
           MISO_reg <= 0;
         end
       else 
@@ -389,14 +390,14 @@ module nios_cpu_fpga_spi0 (
                   transmitting <= 0;
                   RRDY <= 1;
                   rx_holding_reg <= shift_reg;
-                  SCLK_reg <= 1;
+                  SCLK_reg <= 0;
                   if (RRDY)
                       ROE <= 1;
                 end
               else if (state != 0)
                   if (transmitting)
                       SCLK_reg <= ~SCLK_reg;
-              if (SCLK_reg ^ 0 ^ 1)
+              if (SCLK_reg ^ 0 ^ 0)
                 begin
                   if (1)
                       shift_reg <= {shift_reg[6 : 0], MISO_reg};

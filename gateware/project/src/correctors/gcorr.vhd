@@ -38,7 +38,18 @@ architecture gcorr_arch of gcorr is
 	
 begin
 	
-	m <= x * signed('0' & gc);
+   
+   --m inside clocked process to increase fmax
+   process(clk, nrst)
+	begin
+		if(nrst = '0') then
+			m <= (others => '0');
+		elsif rising_edge(clk) then
+         m <= x * signed('0' & gc);
+		end if;		
+	end process;
+   
+	--m <= x * signed('0' & gc);
 	mux <= m(28 downto 11) when byp = '0' else x;
 
 	reg: process(clk, nrst)

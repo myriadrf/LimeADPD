@@ -1,7 +1,0 @@
-	component gclk_ctrl is
-		port (
-			inclk  : in  std_logic := 'X'; -- inclk
-			outclk : out std_logic         -- outclk
-		);
-	end component gclk_ctrl;
-

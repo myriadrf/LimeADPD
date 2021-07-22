@@ -1,0 +1,15 @@
+BLOCK		START ADDRESS		END ADDRESS
+
+Page_0		0x00000000		0x004C2772
+
+
+Configuration device: 5CGXFC7D7
+Configuration mode: Active Serial
+Quad-Serial configuration device dummy clock cycle: 12
+
+
+Notes:
+
+- Data checksum for this conversion is 0xD38F4B2A
+
+- All the addresses in this file are byte addresses

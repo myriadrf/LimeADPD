@@ -34,25 +34,11 @@ architecture dccorr_arch of dccorr is
 	signal s		: signed (13 downto 0);
 	signal r		: signed (13 downto 0);
 	
-	--signal dc1	: signed (9 downto 0);
-	
-	signal dc1	: std_logic_vector(7 downto 0);	
-	signal dc2	: std_logic_vector(11 downto 0);
-	signal dc3	: signed (11 downto 0);
-	
-	
-	
 	
 begin
 	
-	--dc1<=resize(dc,10);	
-	--s <= x + shift_left(dc1,2);
 	
-	dc1<=std_logic_vector(dc);
-	dc2<=dc1&"0000";
-	dc3<=signed(dc2);
-	s <= x + dc3;
-	
+	s <= x + dc;
 	mux <= s(13 downto 0) when byp = '0' else x;
 
 	reg: process(clk, nrst)

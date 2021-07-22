@@ -1,297 +1,257 @@
 -- ----------------------------------------------------------------------------	
--- FILE:	fpgacfg.vhd
--- DESCRIPTION:	Serial configuration interface to control TX modules
--- DATE:	June 07, 2007
+-- FILE:	adpdcfg.vhd
+-- DESCRIPTION:	Serial configuration interface to control DPD, CFR modules
+-- DATE:	Dec 20, 2018
 -- AUTHOR(s):	Lime Microsystems
--- REVISIONS:	
+-- REVISIONS:
 -- ----------------------------------------------------------------------------	
 
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
-use work.mem_package.all;
-
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
+USE work.mem_package.ALL;
 -- ----------------------------------------------------------------------------
 -- Entity declaration
 -- ----------------------------------------------------------------------------
-entity adpdcfg is
-	port (
-		-- Address and location of this module
-		-- Will be hard wired at the top level
-		maddress	: in std_logic_vector(9 downto 0);
-		mimo_en	: in std_logic;	-- MIMO enable, from TOP SPI (always 1)
-	
-		-- Serial port IOs
-		sdin	: in std_logic; 	-- Data in
-		sclk	: in std_logic; 	-- Data clock
-		sen	: in std_logic;	-- Enable signal (active low)
-		sdout	: out std_logic; 	-- Data out
-	
-		-- Signals coming from the pins or top level serial interface
-		lreset	: in std_logic; 	-- Logic reset signal, resets logic cells only  (use only one reset)
-		mreset	: in std_logic; 	-- Memory reset signal, resets configuration memory only (use only one reset)
-		
-		oen: out std_logic; --nc
-		stateo: out std_logic_vector(5 downto 0);
-		
-		
-		--ADPD
-		ADPD_BUFF_SIZE 	: out std_logic_vector(15 downto 0);
-		ADPD_CONT_CAP_EN	: out std_logic;
-		ADPD_CAP_EN			: out std_logic;
-		
-		--  Borisav Jovanovic: 11.09.2016
-		adpd_config			: out std_logic_vector(15 downto 0);
-		adpd_data			: out std_logic_vector(15 downto 0);
-		
-	   -- power amplifier control signals
-		pa1_ctrl1, pa1_ctrl2, pa1_ven, pa1_vmode0, pa1_vmode1: out std_logic;
-		pa2_ctrl1, pa2_ctrl2, pa2_ven, pa2_vmode0, pa2_vmode1: out std_logic;
-		RF_SW_V3, RF_SW_V2, RF_SW_V1: out std_logic
-
+ENTITY adpdcfg IS
+	PORT (
+		maddress : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
+		mimo_en : IN STD_LOGIC;
+		sdin : IN STD_LOGIC;
+		sclk : IN STD_LOGIC;
+		sen : IN STD_LOGIC;
+		sdout : OUT STD_LOGIC;
+		lreset : IN STD_LOGIC;
+		mreset : IN STD_LOGIC;
+		oen : OUT STD_LOGIC; --nc
+		stateo : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
+		ADPD_BUFF_SIZE : OUT STD_LOGIC_VECTOR(15 DOWNTO 0); --ADPD
+		ADPD_CONT_CAP_EN : OUT STD_LOGIC;
+		ADPD_CAP_EN : OUT STD_LOGIC;
+		-- DPD
+		adpd_config0, adpd_config1, adpd_data : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+		-- CFR
+		cfr0_bypass, cfr0_sleep, cfr1_bypass, cfr1_sleep, cfr0_odd, cfr1_odd : OUT STD_LOGIC;
+		cfr0_interpolation, cfr1_interpolation : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
+		cfr0_threshold, cfr1_threshold : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+		cfr0_order, cfr1_order : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+		-- CFR GAIN
+		gain_cfr0, gain_cfr1 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+		gain_cfr0_bypass, gain_cfr1_bypass : OUT STD_LOGIC;
+		-- HB
+		hb0_delay, hb1_delay : OUT STD_LOGIC;
+		-- FIR
+		gfir0_byp, gfir0_sleep, gfir0_odd, gfir1_byp, gfir1_sleep, gfir1_odd : OUT STD_LOGIC;
+		PAEN0, PAEN1, DCEN0, DCEN1, reset_n_soft : OUT STD_LOGIC;
+		rf_sw : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
 	);
-end adpdcfg;
+END adpdcfg;
 
 -- ----------------------------------------------------------------------------
 -- Architecture
 -- ----------------------------------------------------------------------------
-architecture adpdcfg_arch of adpdcfg is
+ARCHITECTURE adpdcfg_arch OF adpdcfg IS
 
-	signal inst_reg: std_logic_vector(15 downto 0);		-- Instruction register
-	signal inst_reg_en: std_logic;
+	SIGNAL inst_reg : STD_LOGIC_VECTOR(15 DOWNTO 0); -- Instruction register
+	SIGNAL inst_reg_en : STD_LOGIC;
 
-	signal din_reg: std_logic_vector(15 downto 0);		-- Data in register
-	signal din_reg_en: std_logic;
-	
-	signal dout_reg: std_logic_vector(15 downto 0);		-- Data out register
-	signal dout_reg_sen, dout_reg_len: std_logic;
-	
-	signal mem: marray32x16;									-- Config memory
-	signal mem_we: std_logic;
-	
-	signal oe: std_logic;										-- Tri state buffers control
-	signal spi_config_data_rev	: std_logic_vector(143 downto 0);
-	
+	SIGNAL din_reg : STD_LOGIC_VECTOR(15 DOWNTO 0); -- Data in register
+	SIGNAL din_reg_en : STD_LOGIC;
+
+	SIGNAL dout_reg : STD_LOGIC_VECTOR(15 DOWNTO 0); -- Data out register
+	SIGNAL dout_reg_sen, dout_reg_len : STD_LOGIC;
+
+	SIGNAL mem : marray32x16; -- Config memory
+	SIGNAL mem_we : STD_LOGIC;
+
+	SIGNAL oe : STD_LOGIC; -- Tri state buffers control
+	SIGNAL spi_config_data_rev : STD_LOGIC_VECTOR(143 DOWNTO 0);
+
 	-- Components
-	use work.mcfg_components.mcfg32wm_fsm;
-	for all: mcfg32wm_fsm use entity work.mcfg32wm_fsm(mcfg32wm_fsm_arch);
-	
-	signal pa2mode, pa1mode, rfsw : std_logic_vector(2 downto 0);	
-   signal pa2sw, pa1sw : std_logic_vector(1 downto 0);
+	USE work.mcfg_components.mcfg32wm_fsm;
+	FOR ALL : mcfg32wm_fsm USE ENTITY work.mcfg32wm_fsm(mcfg32wm_fsm_arch);
 
-begin
-
-
+BEGIN
 	-- ---------------------------------------------------------------------------------------------
 	-- Finite state machines
 	-- ---------------------------------------------------------------------------------------------
-	fsm: mcfg32wm_fsm port map( 
+	fsm : mcfg32wm_fsm PORT MAP(
 		address => maddress, mimo_en => mimo_en, inst_reg => inst_reg, sclk => sclk, sen => sen, reset => lreset,
 		inst_reg_en => inst_reg_en, din_reg_en => din_reg_en, dout_reg_sen => dout_reg_sen,
 		dout_reg_len => dout_reg_len, mem_we => mem_we, oe => oe, stateo => stateo);
-		
+
 	-- ---------------------------------------------------------------------------------------------
 	-- Instruction register
 	-- ---------------------------------------------------------------------------------------------
-	inst_reg_proc: process(sclk, lreset)
-		variable i: integer;
-	begin
-		if lreset = '0' then
-			inst_reg <= (others => '0');
-		elsif sclk'event and sclk = '1' then
-			if inst_reg_en = '1' then
-				for i in 15 downto 1 loop
-					inst_reg(i) <= inst_reg(i-1);
-				end loop;
+	inst_reg_proc : PROCESS (sclk, lreset)
+		VARIABLE i : INTEGER;
+	BEGIN
+		IF lreset = '0' THEN
+			inst_reg <= (OTHERS => '0');
+		ELSIF sclk'event AND sclk = '1' THEN
+			IF inst_reg_en = '1' THEN
+				FOR i IN 15 DOWNTO 1 LOOP
+					inst_reg(i) <= inst_reg(i - 1);
+				END LOOP;
 				inst_reg(0) <= sdin;
-			end if;
-		end if;
-	end process inst_reg_proc;
+			END IF;
+		END IF;
+	END PROCESS inst_reg_proc;
 
 	-- ---------------------------------------------------------------------------------------------
 	-- Data input register
 	-- ---------------------------------------------------------------------------------------------
-	din_reg_proc: process(sclk, lreset)
-		variable i: integer;
-	begin
-		if lreset = '0' then
-			din_reg <= (others => '0');
-		elsif sclk'event and sclk = '1' then
-			if din_reg_en = '1' then
-				for i in 15 downto 1 loop
-					din_reg(i) <= din_reg(i-1);
-				end loop;
+	din_reg_proc : PROCESS (sclk, lreset)
+		VARIABLE i : INTEGER;
+	BEGIN
+		IF lreset = '0' THEN
+			din_reg <= (OTHERS => '0');
+		ELSIF sclk'event AND sclk = '1' THEN
+			IF din_reg_en = '1' THEN
+				FOR i IN 15 DOWNTO 1 LOOP
+					din_reg(i) <= din_reg(i - 1);
+				END LOOP;
 				din_reg(0) <= sdin;
-			end if;
-		end if;
-	end process din_reg_proc;
+			END IF;
+		END IF;
+	END PROCESS din_reg_proc;
 
 	-- ---------------------------------------------------------------------------------------------
 	-- Data output register
 	-- ---------------------------------------------------------------------------------------------
-	dout_reg_proc: process(sclk, lreset)
-		variable i: integer;
-	begin
-		if lreset = '0' then
-			dout_reg <= (others => '0');
-		elsif sclk'event and sclk = '0' then
+	dout_reg_proc : PROCESS (sclk, lreset)
+		VARIABLE i : INTEGER;
+	BEGIN
+		IF lreset = '0' THEN
+			dout_reg <= (OTHERS => '0');
+		ELSIF sclk'event AND sclk = '0' THEN
 			-- Shift operation
-			if dout_reg_sen = '1' then
-				for i in 15 downto 1 loop
-					dout_reg(i) <= dout_reg(i-1);
-				end loop;
+			IF dout_reg_sen = '1' THEN
+				FOR i IN 15 DOWNTO 1 LOOP
+					dout_reg(i) <= dout_reg(i - 1);
+				END LOOP;
 				dout_reg(0) <= dout_reg(15);
-			-- Load operation
-			elsif dout_reg_len = '1' then
-				case inst_reg(4 downto 0) is	-- mux read-only outputs
-					when others  => dout_reg <= mem(to_integer(unsigned(inst_reg(4 downto 0))));
-				end case;
-			end if;			      
-		end if;
-	end process dout_reg_proc;
-	
+				-- Load operation
+			ELSIF dout_reg_len = '1' THEN
+				CASE inst_reg(4 DOWNTO 0) IS -- mux read-only outputs
+					WHEN OTHERS => dout_reg <= mem(to_integer(unsigned(inst_reg(4 DOWNTO 0))));
+				END CASE;
+			END IF;
+		END IF;
+	END PROCESS dout_reg_proc;
+
 	-- Tri state buffer to connect multiple serial interfaces in parallel
-	--sdout <= dout_reg(7) when oe = '1' else 'Z';
+	-- sdout <= dout_reg(7) when oe = '1' else 'Z';
 
---	sdout <= dout_reg(7);
---	oen <= oe;
+	--	sdout <= dout_reg(7);
+	--	oen <= oe;
 
-	sdout <= dout_reg(15) and oe;
+	sdout <= dout_reg(15) AND oe;
 	oen <= oe;
 	-- ---------------------------------------------------------------------------------------------
 	-- Configuration memory
 	-- --------------------------------------------------------------------------------------------- 
-	ram: process(sclk, mreset) --(remap)
-	begin
+	ram : PROCESS (sclk, mreset) --(remap)
+	BEGIN
 		-- Defaults
-		if mreset = '0' then	
+		IF mreset = '0' THEN
 			--Read only registers
-			mem(0)	<= "0100000000000000"; -- 00 free, ADPD_BUFF_SIZE
-			mem(1)	<= "0000000000000000"; -- 14 free, ADPD_CONT_CAP_EN, ADPD_CAP_EN
-			--FREE for use 
-			mem(2)	<= "0000000000000000"; -- 16 free, 
-			mem(3)	<= "0000000000000000"; -- 16 free, 
-			mem(4)	<= "0000000000000000"; -- 16 free,
-			mem(5)	<= "0000000000000000"; -- 16 free, 
-			mem(6)	<= "0000000000000000"; -- 16 free,
-			mem(7)	<= "0000000000000000"; -- 16 free, 
-			mem(8)	<= "0000000000000000"; -- 16 free, 
-			mem(9)	<= "0000000000000000"; -- 16 free,			
-			mem(10)	<= "0000000000000000"; -- 16 free, 
-			mem(11)	<= "0000000000000000"; -- 16 free, 
-			mem(12)	<= "0000000000000000"; -- 16 free, 
-			mem(13)	<= "0000000000000000"; -- 16 free, 
-			mem(14)	<= "0000000000000000"; -- 16 free, 
-			mem(15)	<= "0000000000000000"; -- 16 free, 
-			mem(16)	<= "0000000000000000"; -- 16 free, 
-			mem(17)	<= "0000000000000000"; -- rfsw(2:0)&"000"&pa2mode(2:0)&pa2sw(1:0)&pa1mode(2:0)&pa1sw(1:0)
-			mem(18)  <= "0000000000000000"; -- adpd_config(15:0)  
-			mem(19)	<= "0000000000000000"; -- 16 free, 
-			mem(20)	<= "0000000000000000"; -- 16 free, 
-			mem(21)	<= "0000000000000000"; -- 16 free, 
-			mem(22)	<= "0000000000000000"; -- adpd_data(15:0), 
-			mem(23)	<= "0000000000000000"; -- 16 free, 		
+			mem(0) <= "0100000000000000"; -- ADPD_BUFF_SIZE
+			mem(1) <= "0000100000000000"; -- 9 free, rf_sw(2:0),PAEN1,PAEN0,ADPD_CONT_CAP_EN,ADPD_CAP_EN
+			mem(2) <= "0000000000000000"; -- adpd_config0(15:0) 
+			mem(3) <= "0000000000000000"; -- adpd_config1(15:0)
+			mem(4) <= "0000000000000000"; -- adpd_data(15:0)
+			mem(5) <= "1110111011101110"; -- various CHB, CHA settings
+			mem(6) <= "1111111111111111"; -- cfr0_threshold
+			mem(7) <= "1111111111111111"; -- cfr1_threshold
+			mem(8) <= "0010000000000000"; -- gain_cfr0 [-4..4]
+			mem(9) <= "0010000000000000"; -- gain_cfr1	[-4..4]	
 
-		elsif sclk'event and sclk = '1' then
-				if mem_we = '1' then
-					mem(to_integer(unsigned(inst_reg(4 downto 0)))) <= din_reg(14 downto 0) & sdin;
-				end if;
-				
-				if dout_reg_len = '0' then
-				end if;
-				
-		end if;
-	end process ram;
-	
+			mem(10) <= "0000000000000000"; -- spinCFR_ORDER_chB & spinCFR_ORDER (dummy)
+			mem(11) <= "0000000000000000"; -- dummy, txtPllFreqTxMHz
+			mem(12) <= "0000000000000000"; -- dummy, txtPllFreqRxMHz 
+			mem(13) <= "0000000000000000"; -- 16 free, 
+			mem(14) <= "0000000000000000"; -- 16 free, 
+			mem(15) <= "0000000000000000"; -- 16 free, 
+			mem(16) <= "0000000000000000"; -- 16 free, 
+			mem(17) <= "0000000000000000"; -- 16 free,
+			mem(18) <= "0000000000000000"; -- 16 free, 
+			mem(19) <= "0000000000000000"; -- 16 free, 
+			mem(20) <= "0000000000000000"; -- 16 free, 
+			mem(21) <= "0000000000000000"; -- 16 free, 
+			mem(22) <= "0000000000000000"; -- 16 free, 
+			mem(23) <= "0000000000000000"; -- 16 free, 		
+
+		ELSIF sclk'event AND sclk = '1' THEN
+			IF mem_we = '1' THEN
+				mem(to_integer(unsigned(inst_reg(4 DOWNTO 0)))) <= din_reg(14 DOWNTO 0) & sdin;
+			END IF;
+
+			IF dout_reg_len = '0' THEN
+			END IF;
+
+		END IF;
+	END PROCESS ram;
+
 	-- ---------------------------------------------------------------------------------------------
 	-- Decoding logic
 	-- ---------------------------------------------------------------------------------------------
-		ADPD_BUFF_SIZE 	<=mem(0);
-		ADPD_CAP_EN			<=mem(1)(0);
-		ADPD_CONT_CAP_EN	<=mem(1)(1);
-		
-		
-		-- Borisav Jovanovic: 11.09.2016
-		-- ADPD_CONFIG			<=mem(2);
-		adpd_config		<= mem(18)(15 downto 0); 
-	   adpd_data		<= mem(22)(15 downto 0);
-	
-	
-		-- registar 0x51=0b 010 (10001)
-		rfsw(2 downto 0)<=  mem(17)(15 downto 13);
-		-- three free bits
-		
-		pa2mode(2 downto 0)<= mem(17)(9 downto 7);
-		pa2sw(1 downto 0)<= mem(17)(6 downto 5);
 
-		pa1mode(2 downto 0)<= mem(17)(4 downto 2);
-		pa1sw(1 downto 0)<= mem(17)(1 downto 0);
-		
-		
-		rf_sw: process (rfsw) is
-		begin
-		   RF_SW_V3<='0'; RF_SW_V2<='0'; RF_SW_V1<='0';
-		   case rfsw is
-			  when "000" => RF_SW_V3<='1'; RF_SW_V2<='0'; RF_SW_V1<='1'; -- ALL OFF
-			  when "001" => RF_SW_V3<='0'; RF_SW_V2<='0'; RF_SW_V1<='1'; -- EXT CPL IN1
-			  when "010" => RF_SW_V3<='0'; RF_SW_V2<='1'; RF_SW_V1<='0'; -- PA1 coupler out
-			  when "011" => RF_SW_V3<='0'; RF_SW_V2<='1'; RF_SW_V1<='1'; -- EXT CPL IN2 
-			  when "100" => RF_SW_V3<='1'; RF_SW_V2<='0'; RF_SW_V1<='0'; -- PA2 coupler out
-			  when others => RF_SW_V3<='1'; RF_SW_V2<='0'; RF_SW_V1<='1';  -- ALL OFF
-			end case;
-	   end process;	
-		
-		pa1_sw: process (pa1sw) is
-		begin
-		   pa1_ctrl1<='0'; pa1_ctrl2<='0';
-		   case pa1sw is
-			  when "00" => pa1_ctrl1<='0'; pa1_ctrl2<='0'; -- off
-			  when "01" => pa1_ctrl1<='0'; pa1_ctrl2<='1'; -- RF1->RFC
-			  when "10" => pa1_ctrl1<='1'; pa1_ctrl2<='0'; -- RF2->RFC
-			  when others => pa1_ctrl1<='0'; pa1_ctrl2<='0';
-			end case;
-	   end process;
+	ADPD_BUFF_SIZE <= mem(0); -- not important		
 
-      pa1_mode: process (pa1mode) is
-		begin
-		   pa1_ven<='0'; pa1_vmode0<='0'; pa1_vmode1<='0'; 
-		   case pa1mode is
-			  when "000" => pa1_ven<='0'; pa1_vmode0<='0'; pa1_vmode1<='0'; -- OFF
-			  when "001" => pa1_ven<='1'; pa1_vmode0<='1'; pa1_vmode1<='1'; -- ON
-			  
-			  --when "001" => pa1_ven<='0'; pa1_vmode0<='1'; pa1_vmode1<='1'; -- Standby
-			  --when "010" => pa1_ven<='1'; pa1_vmode0<='1'; pa1_vmode1<='1'; -- Low power
-			  --when "011" => pa1_ven<='1'; pa1_vmode0<='1'; pa1_vmode1<='0'; -- Medium power
-			  --when "100" => pa1_ven<='1'; pa1_vmode0<='0'; pa1_vmode1<='0'; -- High power
-			  when others => pa1_ven<='0'; pa1_vmode0<='0'; pa1_vmode1<='0';  -- OFF
-			end case;
-	   end process;	
+	-- mem(1)
+	ADPD_CAP_EN <= mem(1)(0);
+	ADPD_CONT_CAP_EN <= mem(1)(1);
 
-      pa2_sw: process (pa2sw) is
-		begin
-		   pa2_ctrl1<='0'; pa2_ctrl2<='0';
-		   case pa2sw is
-			  when "00" => pa2_ctrl1<='0'; pa2_ctrl2<='0';  -- OFF
-			  when "01" => pa2_ctrl1<='0'; pa2_ctrl2<='1'; -- RF1->RFC
-			  when "10" => pa2_ctrl1<='1'; pa2_ctrl2<='0'; -- RF2->RFC
-			  when others => pa2_ctrl1<='0'; pa2_ctrl2<='0';
-			end case;
-	   end process;
+	PAEN0 <= mem(1)(2); -- PA amplifier enable  channel A
+	PAEN1 <= mem(1)(3); -- PA amplifier enable  channel B
 
-      pa2_mode: process (pa2mode) is
-		begin
-		   pa2_ven<='0'; pa2_vmode0<='0'; pa2_vmode1<='0'; 
-		   case pa2mode is
-			  when "000" => pa2_ven<='0'; pa2_vmode0<='0'; pa2_vmode1<='0'; -- OFF
-			  when "001" => pa2_ven<='1'; pa2_vmode0<='1'; pa2_vmode1<='1'; -- ON
-			  -- when "001" => pa2_ven<='0'; pa2_vmode0<='1'; pa2_vmode1<='1'; -- Standby
-			  --when "010" => pa2_ven<='1'; pa2_vmode0<='1'; pa2_vmode1<='1'; -- Low power
-			  --when "011" => pa2_ven<='1'; pa2_vmode0<='1'; pa2_vmode1<='0'; -- Medium power
-			  --when "100" => pa2_ven<='1'; pa2_vmode0<='0'; pa2_vmode1<='0'; -- High power
-			  when others => pa2_ven<='0'; pa2_vmode0<='0'; pa2_vmode1<='0';  -- OFF
-			end case;
-	   end process;		
+	rf_sw <= mem(1)(6 DOWNTO 4); -- RF_SW control		
 
+	DCEN0 <= mem(1)(7); -- DC-DC enable  channel A
+	DCEN1 <= mem(1)(8); -- DC-DC enable  channel B
 
+	reset_n_soft <= mem(1)(11);
 
-end adpdcfg_arch;
+	cfr0_interpolation <= mem(1)(13 DOWNTO 12);
+	cfr1_interpolation <= mem(1)(15 DOWNTO 14);
+
+	adpd_config0 <= mem(2)(15 DOWNTO 0);
+	adpd_config1 <= mem(3)(15 DOWNTO 0);
+	adpd_data <= mem(4)(15 DOWNTO 0);
+
+	-- mem(5) default:0xEEEE
+	-- CH A		
+	cfr0_sleep <= mem(5)(0); --0
+	cfr0_bypass <= mem(5)(1); --1	
+	cfr0_odd <= mem(5)(2); --1		
+
+	gain_cfr0_bypass <= mem(5)(3); --1		
+
+	gfir0_sleep <= mem(5)(4); --0	
+	gfir0_byp <= mem(5)(5); --1
+	gfir0_odd <= mem(5)(6); --1	
+
+	hb0_delay <= mem(5)(7); --1
+
+	-- CH B			
+	cfr1_sleep <= mem(5)(8); --0
+	cfr1_bypass <= mem(5)(9); --1
+	cfr1_odd <= mem(5)(10); --1	
+
+	gain_cfr1_bypass <= mem(5)(11); --1
+
+	gfir1_sleep <= mem(5)(12); --0	
+	gfir1_byp <= mem(5)(13); --1
+	gfir1_odd <= mem(5)(14); --1		
+
+	hb1_delay <= mem(5)(15); --1
+	----------------		
+	cfr0_threshold <= mem(6)(15 DOWNTO 0); --"1111111111111111"	
+	cfr1_threshold <= mem(7)(15 DOWNTO 0); --"1111111111111111"	
+	gain_cfr0 <= mem(8) (15 DOWNTO 0); --"0010000000000000"		
+	gain_cfr1 <= mem(9) (15 DOWNTO 0); --"0010000000000000"
+
+	cfr0_order <= mem(10) (7 DOWNTO 0); -- dodato
+	cfr1_order <= mem(10) (15 DOWNTO 8); -- dodato
+END adpdcfg_arch;

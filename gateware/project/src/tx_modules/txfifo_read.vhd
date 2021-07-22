@@ -29,9 +29,8 @@ entity txfifo_read is
         diq_l   : out std_logic_vector(15 downto 0);
 		  --diq_h_uns   : out std_logic_vector(15 downto 0); 
         --diq_l_uns  : out std_logic_vector(15 downto 0);
-        data_out_valid, 
-		  data_out_valid2  : out std_logic;   -- ne treba
-		  hb_bypass, hb_xen: in std_logic -- Borko       
+        data_out_valid  : out std_logic
+        
         
         );
 end txfifo_read;
@@ -45,7 +44,7 @@ signal ch_select  : std_logic;
 
 type read_states is (idle, read_A, read_B, const_B);
 signal current_read_state, next_read_state, read_state_d : read_states;
-signal fifo_rreq_sig, fifo_rreq_sig_hb  : std_logic;
+signal fifo_rreq_sig  : std_logic;
 signal diq_out_h : std_logic_vector(15 downto 0);
 signal diq_out_l : std_logic_vector(15 downto 0);
   
@@ -107,20 +106,7 @@ process(current_read_state, fifo_empty) begin
 	end if;
 end process;
 
-
--- ----------------------------------------------------------------------------
--- txfifo read signal  half band, Borko 
--- ----------------------------------------------------------------------------
-process(current_read_state, fifo_empty, hb_xen) begin
-	if((current_read_state = read_A or current_read_state = read_B)and fifo_empty='0' and hb_xen='1') then
-    fifo_rreq_sig_hb<='1';
-	else
-    fifo_rreq_sig_hb<='0';
-	end if;
-end process;
-
-
-fifo_rreq<=fifo_rreq_sig when hb_bypass='1' else fifo_rreq_sig_hb;  -- Borko
+fifo_rreq<=fifo_rreq_sig;
 
 -- ----------------------------------------------------------------------------
 --state machine
@@ -134,15 +120,7 @@ fsm_f : process(clk, reset_n)begin
 	elsif(clk'event and clk = '1')then 
 		current_read_state <= next_read_state;
 		read_state_d<=current_read_state;
-		
-		data_out_valid2<=fifo_rreq_sig;  -- ne treba
-		
-		if hb_bypass='1' then
-			data_out_valid<=fifo_rreq_sig;
-		else
-			data_out_valid<=fifo_rreq_sig_hb;  -- Borko
-		end if;
-
+		data_out_valid<=fifo_rreq_sig;
 	end if;	
 end process;
 

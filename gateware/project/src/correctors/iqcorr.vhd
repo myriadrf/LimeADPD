@@ -56,8 +56,23 @@ architecture iqcorr_arch of iqcorr is
 
 begin
 
-	cos_i <= xi - resize (xi(17 downto 6),18);
-	cos_q <= xq - resize (xq(17 downto 6),18);
+
+   --	cos_i <= xi - resize (xi(17 downto 6),18);
+   --	cos_q <= xq - resize (xq(17 downto 6),18);
+
+   --cos_i and cos_q is inside clocked proc to meet timing 
+	reg0: process (clk, nrst)
+	begin
+		if (nrst = '0') then
+			cos_i <= (others => '0');
+			cos_q <= (others => '0');
+		elsif rising_edge(clk) then
+			if (en = '1') then
+            cos_i <= xi - resize (xi(17 downto 6),18);
+            cos_q <= xq - resize (xq(17 downto 6),18);
+			end if;
+		end if;
+	end process reg0;
 
 	r_xi <= cos_i * pcw;
 	r_xq <= cos_q * pcw;
@@ -79,8 +94,17 @@ begin
 		end if;
 	end process reg1;
 
-	sumi <= (r_c_xi(17) & r_c_xi) + (r_r_xq(17) & r_r_xq);
-	sumq <= (r_c_xq(17) & r_c_xq) + (r_r_xi(17) & r_r_xi);
+   --to help timing
+   process (clk, nrst)
+	begin
+		if rising_edge(clk) then
+         sumi <= (r_c_xi(17) & r_c_xi) + (r_r_xq(17) & r_r_xq);
+         sumq <= (r_c_xq(17) & r_c_xq) + (r_r_xi(17) & r_r_xi);
+		end if;
+	end process;
+   
+--	sumi <= (r_c_xi(17) & r_c_xi) + (r_r_xq(17) & r_r_xq);
+--	sumq <= (r_c_xq(17) & r_c_xq) + (r_r_xi(17) & r_r_xi);
 
 	--muxi <= sumi(18 downto 1) when byp = '0' else xi;
 	--muxq <= sumq(18 downto 1) when byp = '0' else xq;

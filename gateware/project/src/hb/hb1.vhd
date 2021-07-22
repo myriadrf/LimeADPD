@@ -12,169 +12,187 @@
 --				clkdiv module.
 -- ----------------------------------------------------------------------------	
 
-library IEEE;
-use IEEE.std_logic_1164.all;
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
 
 -- ----------------------------------------------------------------------------
 -- Entity declaration
 -- ----------------------------------------------------------------------------
-entity hb1 is
-    port (
-	 -- bilo je  (24 downto 0)
-    	xi1: in std_logic_vector(17 downto 0); 	-- I input signal
-    	xq1: in std_logic_vector(17 downto 0); 	-- Q input signal
-	   n: in std_logic_vector(7 downto 0);	-- Clock division ratio is n+1
-	   sleep: in std_logic;			-- Sleep mode control
-	   clk: in std_logic;			-- Clock and reset
-	   reset: in std_logic;
-	   xen: out std_logic;			-- HBI input enable
-	   yi1: out std_logic_vector(17 downto 0); 	-- I output signal
-	   yq1: out std_logic_vector(17 downto 0) 	-- Q output signal
-    );
-end hb1;
+ENTITY hb1 IS
+	PORT (
+		xi1 : IN std_logic_vector(17 DOWNTO 0); -- I input signal
+		xq1 : IN std_logic_vector(17 DOWNTO 0); -- Q input signal
+		n : IN std_logic_vector(7 DOWNTO 0); -- Clock division ratio is n+1
+		sleep, delay : IN std_logic; -- Sleep mode control
+		clk : IN std_logic; -- Clock and reset
+		reset, bypass : IN std_logic;
+		xen : OUT std_logic; -- HBI input enable
+		yi1 : OUT std_logic_vector(17 DOWNTO 0); -- I output signal
+		yq1 : OUT std_logic_vector(17 DOWNTO 0) -- Q output signal
+	);
+END hb1;
 
 -- ----------------------------------------------------------------------------
 -- Architecture
 -- ----------------------------------------------------------------------------
-architecture hb1_arch of hb1 is
+ARCHITECTURE hb1_arch OF hb1 IS
 
-   signal xi: std_logic_vector(24 downto 0); 	-- I input signal
-   signal xq: std_logic_vector(24 downto 0); 	-- Q input signal
-	
-	signal yi: std_logic_vector(24 downto 0); 	-- I output signal
-	signal yq: std_logic_vector(24 downto 0); 	-- Q output signal
+	SIGNAL xi : std_logic_vector(24 DOWNTO 0); -- I input signal
+	SIGNAL xq : std_logic_vector(24 DOWNTO 0); -- Q input signal
 
+	SIGNAL yi : std_logic_vector(24 DOWNTO 0); -- I output signal
+	SIGNAL yq : std_logic_vector(24 DOWNTO 0); -- Q output signal
+	SIGNAL x : std_logic_vector(24 DOWNTO 0); -- Multiplexed xi and xq
+	SIGNAL xe : std_logic_vector(24 DOWNTO 0); -- Even input
+	SIGNAL xo : std_logic_vector(24 DOWNTO 0); -- Odd input
+	SIGNAL ye : std_logic_vector(24 DOWNTO 0); -- Even output
+	SIGNAL yo : std_logic_vector(24 DOWNTO 0); -- Odd output
+	SIGNAL yia : std_logic_vector(24 DOWNTO 0); -- Advanced yi
 
-	signal x:   std_logic_vector(24 downto 0); -- Multiplexed xi and xq
-	signal xe:  std_logic_vector(24 downto 0); -- Even input
-	signal xo:  std_logic_vector(24 downto 0); -- Odd input
-	signal ye:  std_logic_vector(24 downto 0); -- Even output
-	signal yo:  std_logic_vector(24 downto 0); -- Odd output
-	signal yia: std_logic_vector(24 downto 0); -- Advanced yi
-		    
 	-- Enable and MUX select signal
-	signal en, sel: std_logic;
+	SIGNAL en, sel : std_logic;
 
-	-- Component declarations
-	--use work.components.hb1e;
-	--use work.components.hb1o;
-	--use work.components.clkdiv;
-	--for all:hb1e use entity work.hb1e(hb1e_arch);
-	--for all:hb1o use entity work.hb1o(hb1o_arch);
-	--for all:clkdiv use entity work.clkdiv(clkdiv_arch);
-	
-	
-	component hb1e is
-    port (
-    	x: in std_logic_vector(24 downto 0); 	-- Input signal
-		clk: in std_logic;			-- Clock and reset
-		en: in std_logic;
-		reset: in std_logic;
-		y: out std_logic_vector(24 downto 0) 	-- Output signal
-    );
-	end component hb1e;
-	
-	component clkdiv is
-    port (
-		n: in std_logic_vector(7 downto 0);	-- Clock division ratio is n+1
-		sleep: in std_logic;			-- Sleep signal
-		clk: in std_logic;			-- Clock and reset
-		reset: in std_logic;
-		en: out std_logic			-- Output enable signal
-    );
-	end component clkdiv;
-	
-	component hb1o is
-    port (
-    	x: in std_logic_vector(24 downto 0); -- Input signal
-		clk: in std_logic;	-- Clock and reset
-		en: in std_logic;
-		reset: in std_logic;
-		y: out std_logic_vector(24 downto 0) -- Output signal
-    );
-	end component hb1o;
-	
+	signal  yqprim,  yqsec,  yqter, yqquad, yi2, yq2: std_logic_vector(17 downto 0);
+	--constant delay: std_logic:='1';
 
-	
-	
-begin
+	COMPONENT hb1e IS
+		PORT (
+			x : IN std_logic_vector(24 DOWNTO 0); -- Input signal
+			clk : IN std_logic; -- Clock and reset
+			en : IN std_logic;
+			reset : IN std_logic;
+			y : OUT std_logic_vector(24 DOWNTO 0) -- Output signal
+		);
+	END COMPONENT hb1e;
 
-   xi<=xi1(17 downto 0)&"0000000";	
-	xq<=xq1(17 downto 0)&"0000000";
-	
-	yi1<=yi(24 downto 7);
-	yq1<=yq(24 downto 7);
-	 
+	COMPONENT clkdiv IS
+		PORT (
+			n : IN std_logic_vector(7 DOWNTO 0); -- Clock division ratio is n+1
+			sleep : IN std_logic; -- Sleep signal
+			clk : IN std_logic; -- Clock and reset
+			reset : IN std_logic;
+			en : OUT std_logic -- Output enable signal
+		);
+	END COMPONENT clkdiv;
+
+	COMPONENT hb1o IS
+		PORT (
+			x : IN std_logic_vector(24 DOWNTO 0); -- Input signal
+			clk : IN std_logic; -- Clock and reset
+			en : IN std_logic;
+			reset : IN std_logic;
+			y : OUT std_logic_vector(24 DOWNTO 0) -- Output signal
+		);
+	END COMPONENT hb1o;
+BEGIN
+
+	xi <= xi1(17 DOWNTO 0) & "0000000";
+	xq <= xq1(17 DOWNTO 0) & "0000000";
+
 	-- Clock division
-	clkd: clkdiv port map(n => n, clk => clk, reset => reset, 
-		sleep => sleep,	en => en);
-		
+	clkd : clkdiv PORT MAP(
+		n => n, clk => clk, reset => reset,
+		sleep => sleep, en => en);
+
 	-- MUX select signal
-	dff: process(clk, reset)
-	begin
-		if reset = '0' then
-			--sel <= '0';
+	dff : PROCESS (clk, reset)
+	BEGIN
+		IF reset = '0' THEN
 			sel <= '1';
-		elsif clk'event and clk = '1' then
-			if en = '1' then
-				sel <= not sel;
-			end if;
-		end if;
-	end process dff;
-	
-	xen <= sel;
+		ELSIF clk'event AND clk = '1' THEN
+			IF en = '1' THEN
+				sel <= NOT sel;
+			END IF;
+		END IF;
+	END PROCESS dff;
+
+	xen <= sel AND en;
 
 	-- Multiplex xi and xq
-	x <= xi when sel = '1' else xq;
+	x <= xi WHEN sel = '1' ELSE
+		xq;
 
 	-- Latch La
-	la: process(clk, reset)
-	begin
-		if reset = '0' then
-			xe <= (others => '0');
-		elsif clk'event and clk = '1' then
-			if en = '1' then
+	la : PROCESS (clk, reset)
+	BEGIN
+		IF reset = '0' THEN
+			xe <= (OTHERS => '0');
+		ELSIF clk'event AND clk = '1' THEN
+			IF en = '1' THEN
 				xe <= x;
-			end if;
-		end if;
-	end process la;
+			END IF;
+		END IF;
+	END PROCESS la;
 
- 	-- Latch Lb
-	lb: process(clk, reset)
-	begin
-		if reset = '0' then
-			xo <= (others => '0');
-		elsif clk'event and clk = '1' then
-			if en = '1' then
+	-- Latch Lb
+	lb : PROCESS (clk, reset)
+	BEGIN
+		IF reset = '0' THEN
+			xo <= (OTHERS => '0');
+		ELSIF clk'event AND clk = '1' THEN
+			IF en = '1' THEN
 				xo <= xe;
-			end if;
-		end if;
-	end process lb;
+			END IF;
+		END IF;
+	END PROCESS lb;
 
 	-- Even HB1 filter
-	even: hb1e
-		port map( x => xe, clk => clk, en => en, reset => reset, y => ye);
+	even : hb1e
+	PORT MAP(x => xe, clk => clk, en => en, reset => reset, y => ye);
 
 	-- Odd HB1 filter
-	odd: hb1o
-		port map( x => xo, clk => clk, en => en, reset => reset, y => yo);
+	odd : hb1o
+	PORT MAP(x => xo, clk => clk, en => en, reset => reset, y => yo);
 
 	-- Multiplex ye and yo to construct yia and yq
-	yia  <= ye when sel = '1' else yo;
-	yq   <= ye when sel = '0' else yo;
+	yia <= ye WHEN sel = '1' ELSE
+		yo;
+	yq <= ye WHEN sel = '0' ELSE
+		yo;
 
 	-- Delay yia one clock cycle to align it with ya
-	le: process(clk, reset)
-	begin
-		if reset = '0' then
-			yi <= (others => '0');
-		elsif clk'event and clk = '1' then
-			if en = '1' then
+
+	le : PROCESS (clk, reset)
+	BEGIN
+		IF reset = '0' THEN
+			yi <= (OTHERS => '0');
+		ELSIF clk'event AND clk = '1' THEN
+			IF en = '1' THEN
 				yi <= yia;
-			end if;
-		end if;
-	end process le;
+			END IF;
+		END IF;
+	END PROCESS le;
 	
-end hb1_arch;
+	
+	--- Borko
+   delayl: process(clk)
+	begin
+		if clk'event and clk = '1' then		
+		  yqprim<=yq(24 downto 7);
+		  yqsec<=yqprim;
+		  yqter<=yqsec;
+		  yqquad<=yqter;		
+		end if;
+	end process delayl;
+	
+	-- Delay  both
+	latch : PROCESS (clk, reset)
+	BEGIN
+		IF reset = '0' THEN
+			yi2 <= (OTHERS => '0');
+			yq2 <= (OTHERS => '0');
+		ELSIF clk'event AND clk = '1' THEN
+			IF en = '1' THEN
+				yi2 <= yi(24 DOWNTO 7);
+				if delay='0' then yq2<=yq(24 downto 7);
+				else	yq2<= yqquad;
+				end if;	
+			
+			END IF;
+		END IF;
+	END PROCESS latch;
 
+	yi1 <= yi2 when bypass='0' else xi1;
+    yq1 <= yq2 when bypass='0' else xq1;
 
+END hb1_arch;

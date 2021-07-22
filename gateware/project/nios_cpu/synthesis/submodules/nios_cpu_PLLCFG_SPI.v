@@ -1,4 +1,4 @@
-//Legal Notice: (C)2016 Altera Corporation. All rights reserved.  Your
+//Legal Notice: (C)2018 Altera Corporation. All rights reserved.  Your
 //use of Altera Corporation's design tools, logic functions and other
 //software and tools, and its AMPP partner logic functions, and any
 //output files any of the foregoing (including device programming or
@@ -27,7 +27,7 @@
 //4         reserved
 //5         slave-enable  r/w
 //6         end-of-packet-value r/w
-//INPUT_CLOCK: 100000000
+//INPUT_CLOCK: 30720000
 //ISMASTER: 1
 //DATABITS: 8
 //TARGETCLOCK: 10000000
@@ -78,64 +78,65 @@ module nios_cpu_PLLCFG_SPI (
   input            spi_select;
   input            write_n;
 
-  wire             E;
-  reg              EOP;
-  reg              MISO_reg;
-  wire             MOSI;
-  reg              ROE;
-  reg              RRDY;
-  wire             SCLK;
-  reg              SCLK_reg;
-  reg              SSO_reg;
-  wire             SS_n;
-  wire             TMT;
-  reg              TOE;
-  wire             TRDY;
-  wire             control_wr_strobe;
-  reg              data_rd_strobe;
-  reg     [ 15: 0] data_to_cpu;
-  reg              data_wr_strobe;
-  wire             dataavailable;
-  wire             ds_MISO;
-  wire             enableSS;
-  wire             endofpacket;
-  reg     [ 15: 0] endofpacketvalue_reg;
-  wire             endofpacketvalue_wr_strobe;
-  reg              iEOP_reg;
-  reg              iE_reg;
-  reg              iROE_reg;
-  reg              iRRDY_reg;
-  reg              iTMT_reg;
-  reg              iTOE_reg;
-  reg              iTRDY_reg;
-  wire             irq;
-  reg              irq_reg;
-  wire             p1_data_rd_strobe;
-  wire    [ 15: 0] p1_data_to_cpu;
-  wire             p1_data_wr_strobe;
-  wire             p1_rd_strobe;
-  wire    [  2: 0] p1_slowcount;
-  wire             p1_wr_strobe;
-  reg              rd_strobe;
-  wire             readyfordata;
-  reg     [  7: 0] rx_holding_reg;
-  reg     [  7: 0] shift_reg;
-  wire             slaveselect_wr_strobe;
-  wire             slowclock;
-  reg     [  2: 0] slowcount;
-  wire    [ 10: 0] spi_control;
-  reg     [ 15: 0] spi_slave_select_holding_reg;
-  reg     [ 15: 0] spi_slave_select_reg;
-  wire    [ 10: 0] spi_status;
-  reg     [  4: 0] state;
-  reg              stateZero;
-  wire             status_wr_strobe;
-  reg              transmitting;
-  reg              tx_holding_primed;
-  reg     [  7: 0] tx_holding_reg;
-  reg              wr_strobe;
-  wire             write_shift_reg;
-  wire             write_tx_holding;
+
+wire             E;
+reg              EOP;
+reg              MISO_reg;
+wire             MOSI;
+reg              ROE;
+reg              RRDY;
+wire             SCLK;
+reg              SCLK_reg;
+reg              SSO_reg;
+wire             SS_n;
+wire             TMT;
+reg              TOE;
+wire             TRDY;
+wire             control_wr_strobe;
+reg              data_rd_strobe;
+reg     [ 15: 0] data_to_cpu;
+reg              data_wr_strobe;
+wire             dataavailable;
+wire             ds_MISO;
+wire             enableSS;
+wire             endofpacket;
+reg     [ 15: 0] endofpacketvalue_reg;
+wire             endofpacketvalue_wr_strobe;
+reg              iEOP_reg;
+reg              iE_reg;
+reg              iROE_reg;
+reg              iRRDY_reg;
+reg              iTMT_reg;
+reg              iTOE_reg;
+reg              iTRDY_reg;
+wire             irq;
+reg              irq_reg;
+wire             p1_data_rd_strobe;
+wire    [ 15: 0] p1_data_to_cpu;
+wire             p1_data_wr_strobe;
+wire             p1_rd_strobe;
+wire    [  1: 0] p1_slowcount;
+wire             p1_wr_strobe;
+reg              rd_strobe;
+wire             readyfordata;
+reg     [  7: 0] rx_holding_reg;
+reg     [  7: 0] shift_reg;
+wire             slaveselect_wr_strobe;
+wire             slowclock;
+reg     [  1: 0] slowcount;
+wire    [ 10: 0] spi_control;
+reg     [ 15: 0] spi_slave_select_holding_reg;
+reg     [ 15: 0] spi_slave_select_reg;
+wire    [ 10: 0] spi_status;
+reg     [  4: 0] state;
+reg              stateZero;
+wire             status_wr_strobe;
+reg              transmitting;
+reg              tx_holding_primed;
+reg     [  7: 0] tx_holding_reg;
+reg              wr_strobe;
+wire             write_shift_reg;
+wire             write_tx_holding;
   //spi_control_port, which is an e_avalon_slave
   assign p1_rd_strobe = ~rd_strobe & spi_select & ~read_n;
   // Read is a two-cycle event.
@@ -254,11 +255,11 @@ module nios_cpu_PLLCFG_SPI (
     end
 
 
-  // slowclock is active once every 5 system clock pulses.
-  assign slowclock = slowcount == 3'h4;
+  // slowclock is active once every 2 system clock pulses.
+  assign slowclock = slowcount == 2'h1;
 
-  assign p1_slowcount = ({3 {(transmitting && !slowclock)}} & (slowcount + 1)) |
-    ({3 {(~((transmitting && !slowclock)))}} & 0);
+  assign p1_slowcount = ({2 {(transmitting && !slowclock)}} & (slowcount + 1)) |
+    ({2 {(~((transmitting && !slowclock)))}} & 0);
 
   // Divide counter for SPI clock.
   always @(posedge clk or negedge reset_n)

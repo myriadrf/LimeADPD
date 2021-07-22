@@ -1,8 +1,8 @@
 set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name IP_TOOL_NAME "Qsys"
-set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name IP_TOOL_VERSION "15.0"
+set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name IP_TOOL_VERSION "16.1"
 set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name IP_TOOL_ENV "Qsys"
 set_global_assignment -library "gclk_ctrl" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../../gclk_ctrl.sopcinfo"]
-set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name SLD_INFO "QSYS_NAME gclk_ctrl HAS_SOPCINFO 1 GENERATION_ID 1458561183"
+set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name SLD_INFO "QSYS_NAME gclk_ctrl HAS_SOPCINFO 1 GENERATION_ID 1482842427"
 set_global_assignment -library "gclk_ctrl" -name MISC_FILE [file join $::quartus(qip_path) "../gclk_ctrl.cmp"]
 set_global_assignment -library "gclk_ctrl" -name SLD_FILE [file join $::quartus(qip_path) "gclk_ctrl.debuginfo"]
 set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name IP_TARGETED_DEVICE_FAMILY "Cyclone V"
@@ -15,7 +15,7 @@ set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name IP_COMPONEN
 set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name IP_COMPONENT_REPORT_HIERARCHY "On"
 set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name IP_COMPONENT_INTERNAL "Off"
 set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name IP_COMPONENT_VERSION "MS4w"
-set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTQ1ODU2MTE4Mw==::QXV0byBHRU5FUkFUSU9OX0lE"
+set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTQ4Mjg0MjQyNw==::QXV0byBHRU5FUkFUSU9OX0lE"
 set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfRkFNSUxZ::Q3ljbG9uZSBW::QXV0byBERVZJQ0VfRkFNSUxZ"
 set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0U=::NUNHWEZDN0Q3RjMxQzg=::QXV0byBERVZJQ0U="
 set_global_assignment -entity "gclk_ctrl" -library "gclk_ctrl" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfU1BFRURHUkFERQ==::OF9INw==::QXV0byBERVZJQ0VfU1BFRURHUkFERQ=="
@@ -24,7 +24,7 @@ set_global_assignment -entity "gclk_ctrl_altclkctrl_0" -library "gclk_ctrl" -nam
 set_global_assignment -entity "gclk_ctrl_altclkctrl_0" -library "gclk_ctrl" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
 set_global_assignment -entity "gclk_ctrl_altclkctrl_0" -library "gclk_ctrl" -name IP_COMPONENT_INTERNAL "Off"
 set_global_assignment -entity "gclk_ctrl_altclkctrl_0" -library "gclk_ctrl" -name IP_COMPONENT_AUTHOR "QWx0ZXJhIENvcnBvcmF0aW9u"
-set_global_assignment -entity "gclk_ctrl_altclkctrl_0" -library "gclk_ctrl" -name IP_COMPONENT_VERSION "MTUuMA=="
+set_global_assignment -entity "gclk_ctrl_altclkctrl_0" -library "gclk_ctrl" -name IP_COMPONENT_VERSION "MTYuMQ=="
 set_global_assignment -entity "gclk_ctrl_altclkctrl_0" -library "gclk_ctrl" -name IP_COMPONENT_PARAMETER "REVWSUNFX0ZBTUlMWQ==::Q3ljbG9uZSBW::RGV2aWNlIEZhbWlseQ=="
 set_global_assignment -entity "gclk_ctrl_altclkctrl_0" -library "gclk_ctrl" -name IP_COMPONENT_PARAMETER "Q0xPQ0tfVFlQRQ==::MQ==::SG93IGRvIHlvdSB3YW50IHRvIHVzZSB0aGUgQUxUQ0xLQ1RSTD8="
 set_global_assignment -entity "gclk_ctrl_altclkctrl_0" -library "gclk_ctrl" -name IP_COMPONENT_PARAMETER "TlVNQkVSX09GX0NMT0NLUw==::MQ==::SG93IG1hbnkgY2xvY2sgaW5wdXRzIHdvdWxkIHlvdSBsaWtlPw=="
@@ -35,5 +35,5 @@ set_global_assignment -library "gclk_ctrl" -name VERILOG_FILE [file join $::quar
 set_global_assignment -library "gclk_ctrl" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/gclk_ctrl_altclkctrl_0.v"]
 
 set_global_assignment -entity "gclk_ctrl_altclkctrl_0" -library "gclk_ctrl" -name IP_TOOL_NAME "altclkctrl"
-set_global_assignment -entity "gclk_ctrl_altclkctrl_0" -library "gclk_ctrl" -name IP_TOOL_VERSION "15.0"
+set_global_assignment -entity "gclk_ctrl_altclkctrl_0" -library "gclk_ctrl" -name IP_TOOL_VERSION "16.1"
 set_global_assignment -entity "gclk_ctrl_altclkctrl_0" -library "gclk_ctrl" -name IP_TOOL_ENV "Qsys"

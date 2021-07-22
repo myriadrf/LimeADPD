@@ -1,4 +1,4 @@
-//Legal Notice: (C)2016 Altera Corporation. All rights reserved.  Your
+//Legal Notice: (C)2018 Altera Corporation. All rights reserved.  Your
 //use of Altera Corporation's design tools, logic functions and other
 //software and tools, and its AMPP partner logic functions, and any
 //output files any of the foregoing (including device programming or
@@ -33,16 +33,17 @@ module nios_cpu_PLLCFG_Command (
   output  [ 31: 0] readdata;
   input   [  1: 0] address;
   input            clk;
-  input   [  2: 0] in_port;
+  input   [  3: 0] in_port;
   input            reset_n;
 
-  wire             clk_en;
-  wire    [  2: 0] data_in;
-  wire    [  2: 0] read_mux_out;
-  reg     [ 31: 0] readdata;
+
+wire             clk_en;
+wire    [  3: 0] data_in;
+wire    [  3: 0] read_mux_out;
+reg     [ 31: 0] readdata;
   assign clk_en = 1;
   //s1, which is an e_avalon_slave
-  assign read_mux_out = {3 {(address == 0)}} & data_in;
+  assign read_mux_out = {4 {(address == 0)}} & data_in;
   always @(posedge clk or negedge reset_n)
     begin
       if (reset_n == 0)

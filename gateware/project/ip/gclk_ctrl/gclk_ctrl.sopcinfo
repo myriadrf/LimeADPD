@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="gclk_ctrl" kind="gclk_ctrl" version="1.0" fabric="QSYS">
- <!-- Format version 15.0 145 (Future versions may contain additional information.) -->
- <!-- 2016.03.21.13:53:03 -->
+ <!-- Format version 16.1 200 (Future versions may contain additional information.) -->
+ <!-- 2016.12.27.14:40:27 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1458561183</value>
+  <value>1482842427</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -68,7 +68,7 @@
  <module
    name="altclkctrl_0"
    kind="altclkctrl"
-   version="15.0"
+   version="16.1"
    path="altclkctrl_0">
   <!-- Describes a single module. Module parameters are
 the requested settings for a module instance. -->
@@ -137,7 +137,7 @@ the requested settings for a module instance. -->
    <visible>true</visible>
    <valid>true</valid>
   </parameter>
-  <interface name="altclkctrl_input" kind="conduit_end" version="15.0">
+  <interface name="altclkctrl_input" kind="conduit_end" version="16.1">
    <!-- The connection points exposed by a module instance for the
 particular module parameters. Connection points and their
 parameters are a RESULT of the module parameters. -->
@@ -186,7 +186,7 @@ parameters are a RESULT of the module parameters. -->
     <role>inclk</role>
    </port>
   </interface>
-  <interface name="altclkctrl_output" kind="conduit_end" version="15.0">
+  <interface name="altclkctrl_output" kind="conduit_end" version="16.1">
    <!-- The connection points exposed by a module instance for the
 particular module parameters. Connection points and their
 parameters are a RESULT of the module parameters. -->
@@ -242,7 +242,7 @@ parameters are a RESULT of the module parameters. -->
   <type>com.altera.entityinterfaces.IElementClass</type>
   <subtype>com.altera.entityinterfaces.IModule</subtype>
   <displayName>ALTCLKCTRL</displayName>
-  <version>15.0</version>
+  <version>16.1</version>
  </plugin>
  <plugin>
   <instanceCount>2</instanceCount>
@@ -250,8 +250,8 @@ parameters are a RESULT of the module parameters. -->
   <type>com.altera.entityinterfaces.IElementClass</type>
   <subtype>com.altera.entityinterfaces.IMutableConnectionPoint</subtype>
   <displayName>Conduit</displayName>
-  <version>15.0</version>
+  <version>16.1</version>
  </plugin>
- <reportVersion>15.0 145</reportVersion>
+ <reportVersion>16.1 200</reportVersion>
  <uniqueIdentifier></uniqueIdentifier>
 </EnsembleReport>

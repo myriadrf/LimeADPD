@@ -52,15 +52,6 @@ architecture hb1d_arch of hb1d is
 	-- Enable and MUX select signal
 	signal en, sel: std_logic;
 
-	-- Component declarations
-	--use work.components.hb1e;
-	--use work.components.hb1o;
-	--use work.components.clkdiv;
-	--use work.components.add26;
-	--for all:hb1e use entity work.hb1e(hb1e_arch);
-	--for all:hb1o use entity work.hb1o(hb1o_arch);
-	--for all:clkdiv use entity work.clkdiv(clkdiv_arch);
-	--for all:add26 use entity work.add26(add26_arch);
 	
    component add26 is
     port (
@@ -106,7 +97,7 @@ architecture hb1d_arch of hb1d is
 	end component hb1o;
 	
 	signal  	xi: std_logic_vector(24 downto 0); 	-- I input signal
-   signal 	xq: std_logic_vector(24 downto 0); 	-- Q input signal
+        signal 	xq: std_logic_vector(24 downto 0); 	-- Q input signal
 		
 	signal	yi: std_logic_vector(24 downto 0); 	-- I output signal
 	signal   yq: std_logic_vector(24 downto 0);	-- Q output signal
@@ -126,8 +117,7 @@ begin
 	-- MUX select signal
 	dff: process(clk, reset)
 	begin
-		if reset = '0' then
-			--sel <= '0';
+		if reset = '0' then			
 			sel <= '1';
 		elsif clk'event and clk = '1' then
 			if en = '1' then
@@ -190,11 +180,6 @@ begin
 	odd: hb1o
 		port map( x => xo, clk => clk, en => en, reset => reset, y => yo);
 
-
-	-- Adder
-	--yrez <= std_logic_vector(signed(ye(24)&ye) + signed(yo(24)&yo));
-	--y <= yrez(25 downto 1);
-	
 	-- Adder
 	add: add26 port map( a(25) => ye(24), a(24 downto 0) => ye, b(25) => yo(24), b(24 downto 0) => yo, cin => '0', clk => clk, en => en, reset => reset, s => yrez, cout => open);
 	y <= yrez(25 downto 1);

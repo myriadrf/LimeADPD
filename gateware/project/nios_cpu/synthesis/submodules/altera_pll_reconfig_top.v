@@ -1,13 +1,13 @@
-// (C) 2001-2015 Altera Corporation. All rights reserved.
-// Your use of Altera Corporation's design tools, logic functions and other 
+// (C) 2001-2018 Intel Corporation. All rights reserved.
+// Your use of Intel Corporation's design tools, logic functions and other 
 // software and tools, and its AMPP partner logic functions, and any output 
-// files any of the foregoing (including device programming or simulation 
+// files from any of the foregoing (including device programming or simulation 
 // files), and any associated documentation or information are expressly subject 
-// to the terms and conditions of the Altera Program License Subscription 
-// Agreement, Altera MegaCore Function License Agreement, or other applicable 
+// to the terms and conditions of the Intel Program License Subscription 
+// Agreement, Intel FPGA IP License Agreement, or other applicable 
 // license agreement, including, without limitation, that your use is for the 
-// sole purpose of programming logic devices manufactured by Altera and sold by 
-// Altera or its authorized distributors.  Please refer to the applicable 
+// sole purpose of programming logic devices manufactured by Intel and sold by 
+// Intel or its authorized distributors.  Please refer to the applicable 
 // agreement for further details.
 
 
@@ -28,7 +28,8 @@ module altera_pll_reconfig_top
     parameter   MIF_FILE_NAME           = "",
 	
 	parameter 	ENABLE_BYTEENABLE		= 0,
-	parameter	BYTEENABLE_WIDTH		= 4
+	parameter	BYTEENABLE_WIDTH		= 4,
+    parameter   WAIT_FOR_LOCK           = 1
 ) ( 
 
     //input
@@ -204,8 +205,10 @@ begin:nm20_reconfig
 		
         // ------ END MIF-RELATED MANAGEMENT ------	
 		
-		twentynm_iopll_reconfig_core twentynm_iopll_reconfig_core_inst
-		(
+		twentynm_iopll_reconfig_core 
+        #(
+            .WAIT_FOR_LOCK(WAIT_FOR_LOCK)
+        ) twentynm_iopll_reconfig_core_inst	(
 			// Inputs
 			.mgmt_clk(mgmt_clk),
 			.mgmt_rst_n(~mgmt_reset),
@@ -226,8 +229,10 @@ begin:nm20_reconfig
 	end // End generate reconfig with MIF
 	else 
 	begin:reconfig_core_20nm
-		twentynm_iopll_reconfig_core twentynm_iopll_reconfig_core_inst
-		(
+		twentynm_iopll_reconfig_core 
+        #(
+            .WAIT_FOR_LOCK(WAIT_FOR_LOCK)
+        ) twentynm_iopll_reconfig_core_inst	(
 			// Inputs
 			.mgmt_clk(mgmt_clk),
 			.mgmt_rst_n(~mgmt_reset),

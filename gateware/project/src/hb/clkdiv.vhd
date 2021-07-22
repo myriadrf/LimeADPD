@@ -65,7 +65,13 @@ begin
 	begin
 		if reset = '0' then
 			a <= (others => '0');
+			--sleep_o <= '0';
+			
 		elsif clk'event and clk = '1' then
+		   
+			-- if (sleep='1')  then  -- Borko
+			--   a <= (others => '0');
+			-- els
 			if ovfl = '1' and sleep = '0' then
 				a <= (others => '0');
 			elsif ovfl = '0' and sleep = '0' then

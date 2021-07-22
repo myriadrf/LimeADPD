@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pinplan
+ variation_name="ddr3_av_2x32"
+ megafunction_name="ALTERA_MEM_IF_DDR3_EMIF"
+ intended_family="Cyclone V"
+ specifies="all_ports">
+ <global>
+  <pin name="pll_ref_clk" direction="input" scope="external" />
+  <pin name="global_reset_n" direction="input" scope="external" />
+  <pin name="soft_reset_n" direction="input" scope="external" />
+  <pin name="afi_clk" direction="output" scope="external" />
+  <pin name="afi_half_clk" direction="output" scope="external" />
+  <pin name="afi_reset_n" direction="output" scope="external" />
+  <pin name="afi_reset_export_n" direction="output" scope="external" />
+  <pin name="mem_a[13..0]" direction="output" scope="external" />
+  <pin name="mem_ba[2..0]" direction="output" scope="external" />
+  <pin name="mem_ck" direction="output" scope="external" />
+  <pin name="mem_ck_n" direction="output" scope="external" />
+  <pin name="mem_cke" direction="output" scope="external" />
+  <pin name="mem_cs_n" direction="output" scope="external" />
+  <pin name="mem_dm[3..0]" direction="output" scope="external" />
+  <pin name="mem_ras_n" direction="output" scope="external" />
+  <pin name="mem_cas_n" direction="output" scope="external" />
+  <pin name="mem_we_n" direction="output" scope="external" />
+  <pin name="mem_reset_n" direction="output" scope="external" />
+  <pin name="mem_dq[31..0]" direction="bidir" scope="external" />
+  <pin name="mem_dqs[3..0]" direction="bidir" scope="external" />
+  <pin name="mem_dqs_n[3..0]" direction="bidir" scope="external" />
+  <pin name="mem_odt" direction="output" scope="external" />
+  <pin name="avl_ready_0" direction="output" scope="external" />
+  <pin name="avl_burstbegin_0" direction="input" scope="external" />
+  <pin name="avl_addr_0[25..0]" direction="input" scope="external" />
+  <pin name="avl_rdata_valid_0" direction="output" scope="external" />
+  <pin name="avl_rdata_0[63..0]" direction="output" scope="external" />
+  <pin name="avl_wdata_0[63..0]" direction="input" scope="external" />
+  <pin name="avl_be_0[7..0]" direction="input" scope="external" />
+  <pin name="avl_read_req_0" direction="input" scope="external" />
+  <pin name="avl_write_req_0" direction="input" scope="external" />
+  <pin name="avl_size_0[1..0]" direction="input" scope="external" />
+  <pin name="avl_ready_1" direction="output" scope="external" />
+  <pin name="avl_burstbegin_1" direction="input" scope="external" />
+  <pin name="avl_addr_1[25..0]" direction="input" scope="external" />
+  <pin name="avl_rdata_valid_1" direction="output" scope="external" />
+  <pin name="avl_rdata_1[63..0]" direction="output" scope="external" />
+  <pin name="avl_wdata_1[63..0]" direction="input" scope="external" />
+  <pin name="avl_be_1[7..0]" direction="input" scope="external" />
+  <pin name="avl_read_req_1" direction="input" scope="external" />
+  <pin name="avl_write_req_1" direction="input" scope="external" />
+  <pin name="avl_size_1[1..0]" direction="input" scope="external" />
+  <pin name="mp_cmd_clk_0_clk" direction="input" scope="external" />
+  <pin name="mp_cmd_reset_n_0_reset_n" direction="input" scope="external" />
+  <pin name="mp_cmd_clk_1_clk" direction="input" scope="external" />
+  <pin name="mp_cmd_reset_n_1_reset_n" direction="input" scope="external" />
+  <pin name="mp_rfifo_clk_0_clk" direction="input" scope="external" />
+  <pin name="mp_rfifo_reset_n_0_reset_n" direction="input" scope="external" />
+  <pin name="mp_wfifo_clk_0_clk" direction="input" scope="external" />
+  <pin name="mp_wfifo_reset_n_0_reset_n" direction="input" scope="external" />
+  <pin name="mp_rfifo_clk_1_clk" direction="input" scope="external" />
+  <pin name="mp_rfifo_reset_n_1_reset_n" direction="input" scope="external" />
+  <pin name="mp_wfifo_clk_1_clk" direction="input" scope="external" />
+  <pin name="mp_wfifo_reset_n_1_reset_n" direction="input" scope="external" />
+  <pin name="local_init_done" direction="output" scope="external" />
+  <pin name="local_cal_success" direction="output" scope="external" />
+  <pin name="local_cal_fail" direction="output" scope="external" />
+  <pin name="oct_rzqin" direction="input" scope="external" />
+  <pin name="pll_mem_clk" direction="output" scope="external" />
+  <pin name="pll_write_clk" direction="output" scope="external" />
+  <pin name="pll_locked" direction="output" scope="external" />
+  <pin name="pll_write_clk_pre_phy_clk" direction="output" scope="external" />
+  <pin name="pll_addr_cmd_clk" direction="output" scope="external" />
+  <pin name="pll_avl_clk" direction="output" scope="external" />
+  <pin name="pll_config_clk" direction="output" scope="external" />
+  <pin name="pll_mem_phy_clk" direction="output" scope="external" />
+  <pin name="afi_phy_clk" direction="output" scope="external" />
+  <pin name="pll_avl_phy_clk" direction="output" scope="external" />
+ </global>
+</pinplan>

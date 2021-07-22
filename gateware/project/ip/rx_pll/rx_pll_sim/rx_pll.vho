@@ -1,25 +1,24 @@
 --IP Functional Simulation Model
---VERSION_BEGIN 15.0 cbx_mgl 2015:04:22:18:06:50:SJ cbx_simgen 2015:04:22:18:04:08:SJ  VERSION_END
+--VERSION_BEGIN 18.0 cbx_mgl 2018:04:24:18:08:49:SJ cbx_simgen 2018:04:24:18:04:18:SJ  VERSION_END
 
 
--- Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
--- Your use of Altera Corporation's design tools, logic functions 
+-- Copyright (C) 2018  Intel Corporation. All rights reserved.
+-- Your use of Intel Corporation's design tools, logic functions 
 -- and other software and tools, and its AMPP partner logic 
 -- functions, and any output files from any of the foregoing 
 -- (including device programming or simulation files), and any 
 -- associated documentation or information are expressly subject 
--- to the terms and conditions of the Altera Program License 
--- Subscription Agreement, the Altera Quartus II License Agreement,
--- the Altera MegaCore Function License Agreement, or other 
--- applicable license agreement, including, without limitation, 
--- that your use is for the sole purpose of programming logic 
--- devices manufactured by Altera and sold by Altera or its 
--- authorized distributors.  Please refer to the applicable 
--- agreement for further details.
+-- to the terms and conditions of the Intel Program License 
+-- Subscription Agreement, the Intel Quartus Prime License Agreement,
+-- the Intel FPGA IP License Agreement, or other applicable license
+-- agreement, including, without limitation, that your use is for
+-- the sole purpose of programming logic devices manufactured by
+-- Intel and sold by Intel or its authorized distributors.  Please
+-- refer to the applicable agreement for further details.
 
 -- You may only use these simulation model output files for simulation
 -- purposes and expressly not for synthesis or any other purposes (in which
--- event Altera disclaims all warranties of any kind).
+-- event Intel disclaims all warranties of any kind).
 
 
 --synopsys translate_off
@@ -81,8 +80,8 @@
 		c_cnt_bypass_en7 => "true",
 		c_cnt_bypass_en8 => "true",
 		c_cnt_bypass_en9 => "true",
-		c_cnt_hi_div0 => 1,
-		c_cnt_hi_div1 => 1,
+		c_cnt_hi_div0 => 2,
+		c_cnt_hi_div1 => 2,
 		c_cnt_hi_div10 => 1,
 		c_cnt_hi_div11 => 1,
 		c_cnt_hi_div12 => 1,
@@ -135,8 +134,8 @@
 		c_cnt_lo_div7 => 1,
 		c_cnt_lo_div8 => 1,
 		c_cnt_lo_div9 => 1,
-		c_cnt_odd_div_duty_en0 => "false",
-		c_cnt_odd_div_duty_en1 => "false",
+		c_cnt_odd_div_duty_en0 => "true",
+		c_cnt_odd_div_duty_en1 => "true",
 		c_cnt_odd_div_duty_en10 => "false",
 		c_cnt_odd_div_duty_en11 => "false",
 		c_cnt_odd_div_duty_en12 => "false",
@@ -229,9 +228,9 @@
 		duty_cycle9 => 50,
 		fractional_vco_multiplier => "false",
 		m_cnt_bypass_en => "false",
-		m_cnt_hi_div => 1,
+		m_cnt_hi_div => 2,
 		m_cnt_lo_div => 1,
-		m_cnt_odd_div_duty_en => "false",
+		m_cnt_odd_div_duty_en => "true",
 		mimic_fbclk_type => "gclk",
 		n_cnt_bypass_en => "true",
 		n_cnt_hi_div => 256,
@@ -239,8 +238,8 @@
 		n_cnt_odd_div_duty_en => "false",
 		number_of_clocks => 2,
 		operation_mode => "source synchronous",
-		output_clock_frequency0 => "160.000000 MHz",
-		output_clock_frequency1 => "160.000000 MHz",
+		output_clock_frequency0 => "125.000000 MHz",
+		output_clock_frequency1 => "125.000000 MHz",
 		output_clock_frequency10 => "0 MHz",
 		output_clock_frequency11 => "0 MHz",
 		output_clock_frequency12 => "0 MHz",
@@ -292,14 +291,14 @@
 		pll_fractional_division => 1,
 		pll_m_cnt_in_src => "ph_mux_clk",
 		pll_manu_clk_sw_en => "false",
-		pll_output_clk_frequency => "320.0 MHz",
+		pll_output_clk_frequency => "375.0 MHz",
 		pll_slf_rst => "false",
 		pll_subtype => "Reconfigurable",
 		pll_type => "Cyclone V",
 		pll_vco_div => 2,
 		pll_vcoph_div => 1,
 		refclk1_frequency => "0 MHz",
-		reference_clock_frequency => "160.0 MHz",
+		reference_clock_frequency => "125.0 MHz",
 		sim_additional_refclk_cycles_to_lock => 0
 	  )
 	  PORT MAP ( 

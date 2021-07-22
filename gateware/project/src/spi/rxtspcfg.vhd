@@ -11,6 +11,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.mem_package.all;
+use work.rxtspcfg_pkg.all;
 
 -- ----------------------------------------------------------------------------
 -- Entity declaration
@@ -31,60 +32,14 @@ entity rxtspcfg is
 		-- Signals coming from the pins or top level serial interface
 		lreset: in std_logic; 	-- Logic reset signal, resets logic cells only
 		mreset: in std_logic; 	-- Memory reset signal, resets configuration memory only
-		rxen: in std_logic;	-- Power down all modules when rxen=0
-		capd: in std_logic_vector(31 downto 0);	-- Captured data
-		
-		rxtspout_i: in std_logic_vector(15 downto 0);
-		rxtspout_q: in std_logic_vector(15 downto 0);
-		
+	
 		oen: out std_logic;
 		
 		en		: buffer std_logic;
 		stateo: out std_logic_vector(5 downto 0);
-
-		gcorri: out std_logic_vector(10 downto 0);
-		gcorrq: out std_logic_vector(10 downto 0);
-		iqcorr: out std_logic_vector(11 downto 0);
-		dccorr_avg: out std_logic_vector(2 downto 0);
-		ovr: out std_logic_vector(2 downto 0);	--HBD decimation ratio
-		gfir1l: out std_logic_vector(2 downto 0);		--Length of GPFIR1
-		gfir1n: out std_logic_vector(7 downto 0);		--Clock division ratio of GPFIR1
-		gfir2l: out std_logic_vector(2 downto 0);		--Length of GPFIR2
-		gfir2n: out std_logic_vector(7 downto 0);		--Clock division ratio of GPFIR2
-		gfir3l: out std_logic_vector(2 downto 0);		--Length of GPFIR3
-		gfir3n: out std_logic_vector(7 downto 0);		--Clock division ratio of GPFIR3
-		insel: out std_logic;
-		agc_k: out std_logic_vector(17 downto 0);
-		agc_adesired: out std_logic_vector(11 downto 0);
-		agc_avg: out std_logic_vector(11 downto 0);
-		agc_mode: out std_logic_vector(1 downto 0);
-		gc_byp: out std_logic;
-		ph_byp: out std_logic;
-		dc_byp: out std_logic;
-		agc_byp: out std_logic;
-		gfir1_byp: out std_logic;
-		gfir2_byp: out std_logic;
-		gfir3_byp: out std_logic;
-		cmix_byp: out std_logic;
-		cmix_sc: out std_logic;
-		cmix_gain: out std_logic_vector(2 downto 0);
-
-		bstart: out std_logic;			-- BIST start flag
-		capture: out std_logic;
-		capsel: out std_logic_vector(1 downto 0);
-		
-		tsgfcw		: out std_logic_vector(8 downto 7);
-		tsgdcldq	: out std_logic;
-		tsgdcldi	: out std_logic;
-		tsgswapiq	: out std_logic;
-		tsgmode		: out std_logic;
-		tsgfc			:out std_logic;
-		dc_reg: out std_logic_vector(15 downto 0);	--DC level to drive DAC
-		
-		hbd_dly: out std_logic_vector(2 downto 0);
-		
-		rssi_mode: out std_logic_vector(1 downto 0);
-		rxdcloop_en: out std_logic
+      
+      to_rxtspcfg : in t_TO_RXTSPCFG;
+      from_rxtspcfg : out t_FROM_RXTSPCFG
 
 	);
 end rxtspcfg;
@@ -219,11 +174,11 @@ begin
 				
 				if dout_reg_len = '0' then
 					if capsel_adc = '0' then
-						mem(14) <= capd(15 downto 0);
-						mem(15) <= capd(31 downto 16);
+						mem(14) <= to_rxtspcfg.capd(15 downto 0);
+						mem(15) <= to_rxtspcfg.capd(31 downto 16);
 					else
-						mem(14) <= rxtspout_i;
-						mem(15) <= rxtspout_q;
+						mem(14) <= to_rxtspcfg.rxtspout_i;
+						mem(15) <= to_rxtspcfg.rxtspout_q;
 					end if;
 				end if;
 				
@@ -234,74 +189,74 @@ begin
 	-- Decoding logic
 	-- ---------------------------------------------------------------------------------------------
 
-	
-	--0x0
-	capture		<= mem(0)(15);
-	capsel		<= mem(0)(14 downto 13);
-	capsel_adc	<= mem(0)(12);
-	tsgfc			<= mem(0)(9);
-	tsgfcw		<= mem(0)(8 downto 7);
-	tsgdcldq		<= mem(0)(6);
-	tsgdcldi		<= mem(0)(5);
-	tsgswapiq	<= mem(0)(4);
-	tsgmode		<= mem(0)(3);
-	insel			<= mem(0)(2);
-	bstart		<= mem(0)(1);
-	en 			<= mem(0)(0) and rxen;
-	
-	--0x1, 0x2
-	gcorrq <= mem(1)(10 downto 0);
-	gcorri <= mem(2)(10 downto 0);
-	
-	--0x3
-	iqcorr	<= mem(3)(11 downto 0);
-	ovr		<= mem(3)(14 downto 12);
-
-	--0x4
-	dccorr_avg	<= mem(4)(2 downto 0);
-	hbd_dly		<= mem(4)(15 downto 13);
-	
-	--0x5
-	gfir1l <= mem(5)(10 downto 8);
-	gfir1n <= mem(5)(7 downto 0);
-
-	--0x6
-	gfir2l <= mem(6)(10 downto 8);
-	gfir2n <= mem(6)(7 downto 0);
-	
-	--0x7
-	gfir3l <= mem(7)(10 downto 8);
-	gfir3n <= mem(7)(7 downto 0);
-
-	--0x8
-	agc_k <= mem(8) & mem(9)(1 downto 0);
-	
-	--0x9
-	agc_adesired <= mem(9)(15 downto 4);
-	
-	--0xA
-	agc_avg   <= mem(10)(11 downto 0);
-	agc_mode  <= mem(10)(13 downto 12);
-	rssi_mode <= not (mem(10)(15 downto 14));
-	
-	--0xB
-	dc_reg <= mem(11);
-	
-	--0xC
-	ph_byp <= mem(12)(0);
-	gc_byp <= mem(12)(1);
-	dc_byp <= mem(12)(2);
-	gfir1_byp <= mem(12)(3);
-	gfir2_byp <= mem(12)(4);
-	gfir3_byp <= mem(12)(5);
-	agc_byp <= mem(12)(6);
-	cmix_byp <= mem(12)(7);
-	rxdcloop_en <= not mem(12)(8);	-- Inverted, to form oposite logic!
-	cmix_sc <= mem(12)(13);
-	cmix_gain <= mem(12)(12) & mem(12)(15 downto 14);
-	
-	--0xE, 0xF
-	--CAPD, READ ONLY REGS
-
-	
+   
+   --0x0
+   from_rxtspcfg.capture      <= mem(0)(15);
+   from_rxtspcfg.capsel       <= mem(0)(14 downto 13);
+   capsel_adc                 <= mem(0)(12);
+   from_rxtspcfg.tsgfc        <= mem(0)(9);
+   from_rxtspcfg.tsgfcw       <= mem(0)(8 downto 7);
+   from_rxtspcfg.tsgdcldq     <= mem(0)(6);
+   from_rxtspcfg.tsgdcldi     <= mem(0)(5);
+   from_rxtspcfg.tsgswapiq    <= mem(0)(4);
+   from_rxtspcfg.tsgmode      <= mem(0)(3);
+   from_rxtspcfg.insel        <= mem(0)(2);
+   from_rxtspcfg.bstart       <= mem(0)(1);
+   from_rxtspcfg.en           <= mem(0)(0) and to_rxtspcfg.rxen;
+   
+   --0x1, 0x2
+   from_rxtspcfg.gcorrq       <= mem(1)(10 downto 0);
+   from_rxtspcfg.gcorri       <= mem(2)(10 downto 0);
+   
+   --0x3
+   from_rxtspcfg.iqcorr       <= mem(3)(11 downto 0);
+   from_rxtspcfg.ovr          <= mem(3)(14 downto 12);
+   
+   --0x4
+   from_rxtspcfg.dccorr_avg   <= mem(4)(2 downto 0);
+   from_rxtspcfg.hbd_dly      <= mem(4)(15 downto 13);
+   
+   --0x5
+   from_rxtspcfg.gfir1l       <= mem(5)(10 downto 8);
+   from_rxtspcfg.gfir1n       <= mem(5)(7 downto 0);
+   
+   --0x6
+   from_rxtspcfg.gfir2l       <= mem(6)(10 downto 8);
+   from_rxtspcfg.gfir2n       <= mem(6)(7 downto 0);
+   
+   --0x7
+   from_rxtspcfg.gfir3l       <= mem(7)(10 downto 8);
+   from_rxtspcfg.gfir3n       <= mem(7)(7 downto 0);
+   
+   --0x8
+   from_rxtspcfg.agc_k        <= mem(8) & mem(9)(1 downto 0);
+   
+   --0x9
+   from_rxtspcfg.agc_adesired <= mem(9)(15 downto 4);
+   
+   --0xA
+   from_rxtspcfg.agc_avg      <= mem(10)(11 downto 0);
+   from_rxtspcfg.agc_mode     <= mem(10)(13 downto 12);
+   from_rxtspcfg.rssi_mode    <= not (mem(10)(15 downto 14));
+   
+   --0xB
+   from_rxtspcfg.dc_reg       <= mem(11);
+   
+   --0xC
+   from_rxtspcfg.ph_byp       <= mem(12)(0);
+   from_rxtspcfg.gc_byp       <= mem(12)(1);
+   from_rxtspcfg.dc_byp       <= mem(12)(2);
+   from_rxtspcfg.gfir1_byp    <= mem(12)(3);
+   from_rxtspcfg.gfir2_byp    <= mem(12)(4);
+   from_rxtspcfg.gfir3_byp    <= mem(12)(5);
+   from_rxtspcfg.agc_byp      <= mem(12)(6);
+   from_rxtspcfg.cmix_byp     <= mem(12)(7);
+   from_rxtspcfg.rxdcloop_en  <= not mem(12)(8); -- Inverted, to form oposite logic!
+   from_rxtspcfg.cmix_sc      <= mem(12)(13);
+   from_rxtspcfg.cmix_gain    <= mem(12)(12) & mem(12)(15 downto 14);
+   
+   --0xE, 0xF
+   --CAPD, READ ONLY REGS
+   
+   
 end rxtspcfg_arch;

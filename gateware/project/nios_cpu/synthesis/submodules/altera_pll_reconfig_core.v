@@ -1,13 +1,13 @@
-// (C) 2001-2015 Altera Corporation. All rights reserved.
-// Your use of Altera Corporation's design tools, logic functions and other 
+// (C) 2001-2018 Intel Corporation. All rights reserved.
+// Your use of Intel Corporation's design tools, logic functions and other 
 // software and tools, and its AMPP partner logic functions, and any output 
-// files any of the foregoing (including device programming or simulation 
+// files from any of the foregoing (including device programming or simulation 
 // files), and any associated documentation or information are expressly subject 
-// to the terms and conditions of the Altera Program License Subscription 
-// Agreement, Altera MegaCore Function License Agreement, or other applicable 
+// to the terms and conditions of the Intel Program License Subscription 
+// Agreement, Intel FPGA IP License Agreement, or other applicable 
 // license agreement, including, without limitation, that your use is for the 
-// sole purpose of programming logic devices manufactured by Altera and sold by 
-// Altera or its authorized distributors.  Please refer to the applicable 
+// sole purpose of programming logic devices manufactured by Intel and sold by 
+// Intel or its authorized distributors.  Please refer to the applicable 
 // agreement for further details.
 
 
@@ -138,7 +138,9 @@ module altera_pll_reconfig_core
     assign          mgmt_waitrequest    = slave_waitrequest | read_waitrequest; //Read waitrequest asserted in polling mode
 
     //internal signals
+    wire            locked_orig;
     wire            locked;
+   
     wire            pll_start;
     wire            pll_start_valid;
     reg             status_read;
@@ -292,7 +294,17 @@ module altera_pll_reconfig_core
     // other
     reg             mif_reg_asserted;
     // MAIN FSM                             
-       
+
+    // Synchronize locked signal
+   altera_std_synchronizer #(
+        .depth(3)
+    ) altera_std_synchronizer_inst (
+        .clk(mgmt_clk),
+        .reset_n(~mgmt_reset), 
+        .din(locked_orig),
+        .dout(locked)
+    );
+   
     always @(posedge clk)
     begin
         if (reset)
@@ -1672,7 +1684,7 @@ module altera_pll_reconfig_core
 
     //assign reconfig_from_pll signals
     assign dprio_readdata = reconfig_from_pll [15:0]; 
-    assign locked         = reconfig_from_pll [16];
+    assign locked_orig    = reconfig_from_pll [16];
     assign phase_done     = reconfig_from_pll [17];
 
 endmodule

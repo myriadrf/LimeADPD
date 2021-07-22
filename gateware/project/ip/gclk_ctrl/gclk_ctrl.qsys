@@ -6,12 +6,9 @@
    version="1.0"
    description=""
    tags="INTERNAL_COMPONENT=true"
-   categories="" />
+   categories="System" />
  <parameter name="bonusData"><![CDATA[bonusData 
 {
-   element $${FILENAME}
-   {
-   }
    element altclkctrl_0
    {
       datum _sortIndex
@@ -58,7 +55,7 @@
  <module
    name="altclkctrl_0"
    kind="altclkctrl"
-   version="15.0"
+   version="16.1"
    enabled="1"
    autoexport="1">
   <parameter name="CLOCK_TYPE" value="1" />
