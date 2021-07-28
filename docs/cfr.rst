@@ -24,9 +24,11 @@ NOTE: Peak to Average Power Ratio Reduction (PAPR) is also known as Crest Factor
 Reduction (CFR). The Crest Factor Ratio (CFR) is defined as a ratio between the
 signal magnitude maximum value and the signal average value:
 
+**<<ADD EQN>>**
 
 Peak to Average Power Ratio (PAPR) is defined as:
 
+**<<ADD EQN>>**
 
 Peak Windowing Method 
 ---------------------
@@ -34,9 +36,7 @@ Peak Windowing Method
 Hard Clipping (HC) technique cuts the peaks when the envelope *\|x(n)\|* of the
 complex signal *x(n)* exceeds user selectable threshold level *Th*:
 
-
-
-
+**<<ADD EQN>>**
 
 HC is quite simple. However it produces high signal distortion due to hard
 clipping. Undesirable side effects of HC include in-band signal distortion which
@@ -47,11 +47,11 @@ signal peaks are multiplied with a windowing function to smooth the sharp edges
 at clipping points. In fact, the above clipping coefficients *c(n)* are
 replaced by *b(n)*:
 
-
+**<<ADD EQN>>**
 
 where w\ *(n)* is some symmetrical windowing function (Hann’s for example). 
 
-
+**<<ADD EQN>>**
 
 The difference between *c(n)* and *b(n)* is minimized by choosing narrow window
 lengths which results in lower EVM degradation. However, if clipping operation
@@ -88,12 +88,13 @@ feed-forward (PWFIR1) and feedback (PWFIR2) sub-filters.
 
 PWFIR takes input signal *v(n)* and generates 1-\ *b(n)*. Negative values of
 *v(n)* are replaced by zeros before driving the rest of the filter. The sequence
-*b(n)* is gain correction of the input sequences *xI(n)* and *xQ(n)*. 
+*b(n)* is gain correction of the input sequences *x*\ :sub:`I`\ *(n)* and 
+*x*\ :sub:`Q`\ *(n)*. 
 
-Prior to applying the correction, *xI(n)* and *xQ(n)* are properly delayed to
-compensate for the delay (latency) introduced by the implementation of PWFIR and
-other CFR preprocessing stages. Hence, CFR output *y(n)* is constructed as shown
-in Figure 2.c.
+Prior to applying the correction, *x*\ :sub:`I`\ *(n)* and *x*\ :sub:`Q`\ *(n)*
+are properly delayed to compensate for the delay (latency) introduced by the
+implementation of PWFIR and other CFR preprocessing stages. Hence, CFR output
+*y(n)* is constructed as shown in Figure 2.c.
 
 In order to reduce overlapping, the feedback structure (PWFIR2) is introduced.
 The feedback path adjusts the next filter input value. Looking forward to when
@@ -115,7 +116,7 @@ produces output signal 1-\ *b(n)* while PWFIR2 generates the feedback signal
 *f(n)* (Figure 2.a). For the implementation, we have chosen Hann windowing
 function:
 
-
+**<<ADD EQN>>**
 
 PWFIR is designed to implement 1 <= L <= 40 tap filters where the filter length
 L and the filter coefficients *w(k)* are easily software programmable.
@@ -143,12 +144,10 @@ indexed from 0 to 19. Whenever the condition is true, the coefficient at index
 *j* is determined by following equation. Otherwise, the coefficient is set to
 zero.
 
-
+**<<ADD EQN>>**
 
 PWFIR2 architecture is given in Figure 4.b. It provides up to 20 programmable
 filter coefficients which are stored in the register array and indexed from 0 to
 19. The coefficients of PWFIR2 are determined by following equation whenever
 condition is met. Otherwise, the coefficient value at index *j* is set to zero.
-
-
 

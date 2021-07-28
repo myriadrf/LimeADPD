@@ -37,8 +37,8 @@ Test Case 1: 10MHz LTE, Maxim Integrated MAX2612 PA
 
 * ADPD Parameters:
 
-  * Nonlinearity order: *M1*\ =2, *M2*\ =0.
-  * Memory order: *N1=N2*\ =4.
+  * Nonlinearity order: *M*\ :sub:`1`\ =2, *M*\ :sub:`2`\ =0.
+  * Memory order: *N*\ :sub:`1`\ =\ *N*\ :sub:`2`\ =4.
 
 * CFR parameters:
  
@@ -71,8 +71,8 @@ Test Case 2: 20MHz LTE, Maxim Integrated MAX2612 PA
 
 * ADPD Parameters:
 
-  * Nonlinearity order: *M1*\ =2, *M2*\ =0.
-  * Memory order: *N1=N2*\ =4.
+  * Nonlinearity order: *M*\ :sub:`1`\ =2, *M*\ :sub:`2`\ =0.
+  * Memory order: *N*\ :sub:`1`\ =\ *N*\ :sub:`2`\ =4.
 
 * CFR parameters:
 

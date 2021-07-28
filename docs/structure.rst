@@ -31,19 +31,24 @@ can efficiently be implemented in real life applications.
 
 For a given complex input:
 
+**<<ADD EQN>>**
 
 complex valued memory polynomial produces complex output:
 
+**<<ADD EQN>>**
 
 where:
 
+**<<ADD EQN>>**
 
-are the polynomial coefficients while e(n) is the envelop of the input. For the
+are the polynomial coefficients while *e(n)* is the envelop of the input. For the
 envelop calculation, two options are considered, the usual one:
 
+**<<ADD EQN>>**
 
 and the squared one:
 
+**<<ADD EQN>>**
 
 Usually, squared one is used in ADPD applications since it is simpler to
 calculate and in most cases provides even better results.
@@ -58,28 +63,34 @@ LimeADPD Equations
 Based on discussions given in previous sections and using signal notations of
 Figure 1, ADPD predistorter implements the following equations:
 
+**<<ADD EQN>>**
 
 while postdistorter does similar:
 
+**<<ADD EQN>>**
 
 Note that predistorter and postdistorter share the same set of complex
-coefficients **w**\ ij. Delay line is simple and its output is given by:
+coefficients **w**\ :sub:`ij`. Delay line is simple and its output is given by:
 
+**<<ADD EQN>>**
 
 Training Algorithm
 ------------------
 
 ADPD training algorithm alters complex valued memory polynomial coefficients
-**w**\ ij in order to minimise the difference between PA input **yp**\ *(n)* and
-**y**\ *((n)*, ignoring the delay and gain difference between the two signals.
-Instantaneous error shown in Figure 1 is calculated as:
+**w**\ :sub:`ij` in order to minimise the difference between PA input **yp**\
+*(n)* and **y**\ *(n)*, ignoring the delay and gain difference between the 
+two signals. Instantaneous error shown in Figure 1 is calculated as:
 
+**<<ADD EQN>>**
 
-Training is based on minimising Recursive Least Square (RLS) E(n) error:
+Training is based on minimising Recursive Least Square (RLS) *E(n)* error:
 
+**<<ADD EQN>>**
 
 by solving linear system of equations:
 
+**<<ADD EQN>>**
 
 Any linear equation system solving algorithm can be used. Lime ADPD involves LU
 decomposition. However, iterative techniques such as Gauss – Seidel and Gradient

@@ -23,10 +23,10 @@ For the development or demo, test waveform is uploaded first and played from the
 WFM RAM Block implemented using Altera Cyclone V FPGA resources. More
 importantly, the same FPGA also implements both DPD and CFR modules. 
 
-Initially, predistorter is bypassed i.e. *ypI=xpI, ypQ=xpQ*. Predistorter has
-provision for SPI in order to update the coefficients during the training.
-Signals **xp**, **yp** and **x** are captured using Data Capture RAM Blocks
-implemented also using FPGA resources. 
+Initially, predistorter is bypassed i.e. *yp*\ :sub:`I`\ =\ *xp*\ :sub:`I`,
+*yp*\ :sub:`Q`\ =\ *xp*\ :sub:`Q`. Provision for SPI in order to update the
+coefficients during the training.  Signals **xp**, **yp** and **x** are captured
+using Data Capture RAM Blocks implemented also using FPGA resources. 
 
 Captured data is made available to CPU (Intel Motherboard) Core via PCIe
 interface. FPGA implements PCIe and other glue logic required to interconnect
