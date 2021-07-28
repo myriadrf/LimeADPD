@@ -13,8 +13,8 @@
    cfr-results
    conclusion
 
-Introduction
-============
+Lime Adaptive Digital PreDistortion
+===================================
 
 .. figure:: images/spectrum.png
 

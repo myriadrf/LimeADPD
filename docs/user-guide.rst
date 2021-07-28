@@ -210,8 +210,8 @@ ADPD parameters given in the QADPD setup part of the window are:
 * *M (nonl.)* — the nonlinearity order, maximum value M=3,
 * *Lambda* — the RLS forgetting factor. It is real value less than 1.0.
 * *Train cycles* — number of train cycles before new DPD coefficients are 
-   programmed
-* *ND delay* — the DPD delay line length (in range from 74-80)
+  programmed.
+* *ND delay* — the DPD delay line length (in range from 74-80).
 * *Gain* — floating point number representing the DPD digital gain. When Gain is
   obtained by gain calibration process, the PA output power is maintained at the
   save power level after DPD linearization process is performed compared to
@@ -292,5 +292,4 @@ as follows:
    train* option and select *Continuous* option.
 3. To stop monitoring operation, first press *One step*, then *End* button.
 4. Repeat steps 1-3 for the other channel .
-
 
