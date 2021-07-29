@@ -7,7 +7,7 @@ CFR and DPD User Guide
 
    For DPD demonstration two transceiver channels are implemented in LimeSDR
    QPCIe board (named with channels A and B). Also, two power amplifiers are
-   requited belonging different transmitting paths. 
+   required that are connected to the two different transmit paths. 
 
 Hardware Configuration
 ----------------------

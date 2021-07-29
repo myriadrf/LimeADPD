@@ -88,7 +88,7 @@ Test Case 2: 20MHz LTE, Maxim Integrated MAX2612 PA
 
 .. figure:: /images/test-case-2-after-linearization.png
 
-   Figure 12: Signal spectrum before linerization.
+   Figure 12: Signal spectrum after linerization.
 
 * Before linearization: ACPR = -40.3 dBc; EVM = 3.6%.
 * After linearization: ACPR = -49.6 dBc; EVM = 2.2%.
