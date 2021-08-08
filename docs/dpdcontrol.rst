@@ -1,5 +1,3 @@
-.. _dpdcontrol:
-
 DPDControl Application
 ======================
 

@@ -1,5 +1,3 @@
-.. _structure:
-
 LimeADPD Structure
 ==================
 

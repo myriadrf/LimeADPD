@@ -1,5 +1,3 @@
-.. _implementation:
-
 Implementation Platform
 =======================
 

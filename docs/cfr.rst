@@ -1,5 +1,3 @@
-.. _cfr:
-
 Crest Factor Reduction (CFR)
 ============================
 

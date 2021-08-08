@@ -1,5 +1,3 @@
-.. _-board-programming:
-
 LimeSDR-QPCIe Board Programming
 ===============================
 

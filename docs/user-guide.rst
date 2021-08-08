@@ -1,5 +1,3 @@
-.. _user-guide:
-
 CFR and DPD User Guide
 ======================
 

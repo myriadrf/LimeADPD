@@ -33,7 +33,9 @@ highlight_language = 'console'
 # ones.
 
 extensions = [
-    "sphinx_rtd_theme"
+    'sphinx.ext.autosectionlabel',
+    'sphinx.ext.imgmath',
+    'sphinx_rtd_theme'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -57,9 +59,13 @@ html_context = {
     'github_version': 'master/docs/' 
 }
 
+# This is where we place substitutions, such as for Unicode characters.
 rst_epilog = """
 .. include:: /substitutions.txt
 """
+
+# Allow same section headings tnd thus labels o be used across documents.
+autosectionlabel_prefix_document = True
 
 # -- Options for HTML output -------------------------------------------------
 
