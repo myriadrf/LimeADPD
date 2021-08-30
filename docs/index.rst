@@ -28,3 +28,5 @@ multicarrier signals and high modulation bandwidths.
 
 Here, we present Lime Microsystems solution for PA linearization based on
 adaptive digital predistortion (ADPD) and crest factor reduction (CFR).
+
+Here is an equation: :math:`a^2 + b^2 = c^2`.
