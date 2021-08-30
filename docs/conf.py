@@ -35,7 +35,8 @@ highlight_language = 'console'
 extensions = [
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.imgmath',
+    'sphinx.ext.mathjax',
+    'sphinx-mathjax-offline',
     'sphinx_rtd_theme'
 ]
 
@@ -67,12 +68,6 @@ rst_epilog = """
 
 # Allow same section headings and thus labels o be used across documents.
 autosectionlabel_prefix_document = True
-
-# Generate SVG format images from LaTeX math embedded in RST documents.
-imgmath_image_format = 'svg'
-
-# Default size of 12pt for equations is a bit small.
-imgmath_font_size = 16
 
 # -- Options for HTML output -------------------------------------------------
 

@@ -18,4 +18,8 @@ the documentation for details.
 Please see the COPYING file(s). However, please note that the license terms stated do not extend to any files provided with FPGA
 vendor design tools and see the relevant files for the associated terms and conditions.
 
-[1]: https://downloads.myriadrf.org/project/limeadpd/21.07/Lime_ADPD_CFR_v21.07.0.pdf
+## Status
+
+* Docs: [![Netlify Status](https://api.netlify.com/api/v1/badges/f03f80d0-aa7d-4a45-b337-2e2a72663355/deploy-status)](https://app.netlify.com/sites/limeadpd/deploys)
+
+[1]: https://limeadpd.myriadrf.org/
