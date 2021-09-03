@@ -22,11 +22,12 @@ NOTE: Peak to Average Power Ratio Reduction (PAPR) is also known as Crest Factor
 Reduction (CFR). The Crest Factor Ratio (CFR) is defined as a ratio between the
 signal magnitude maximum value and the signal average value:
 
-**<<ADD EQN>>**
+.. math:: CFR= \frac{ |s(n)|_{max}}{s_{rms}} 
 
 Peak to Average Power Ratio (PAPR) is defined as:
 
-**<<ADD EQN>>**
+.. math:: PAPR= \frac{ |s(n)| ^2_{max}}{s_{rms}^2} 
+.. math:: PAPR_{dB}= 10 \log_{10} \frac{ |s(n)| ^2_{max}}{s_{rms}^2}
 
 Peak Windowing Method 
 ---------------------
@@ -34,7 +35,8 @@ Peak Windowing Method
 Hard Clipping (HC) technique cuts the peaks when the envelope *\|x(n)\|* of the
 complex signal *x(n)* exceeds user selectable threshold level *Th*:
 
-**<<ADD EQN>>**
+.. math:: y(n)=c(n)x(n)
+.. math:: c(n)= \{ \begin{matrix} \frac {Th} { |x(n)| }, |x(n)| >Th \\ 1, |x(n)| \leq Th  \end{matrix}
 
 HC is quite simple. However it produces high signal distortion due to hard
 clipping. Undesirable side effects of HC include in-band signal distortion which
@@ -45,11 +47,11 @@ signal peaks are multiplied with a windowing function to smooth the sharp edges
 at clipping points. In fact, the above clipping coefficients *c(n)* are
 replaced by *b(n)*:
 
-**<<ADD EQN>>**
+.. math:: b(n)=1- \sum_{k=- \infty }^{k= \infty} (1-c(k)) w(n-k) 
 
 where w\ *(n)* is some symmetrical windowing function (Hann’s for example). 
 
-**<<ADD EQN>>**
+.. math:: b(n) \leq c(n)
 
 The difference between *c(n)* and *b(n)* is minimized by choosing narrow window
 lengths which results in lower EVM degradation. However, if clipping operation
@@ -114,7 +116,7 @@ produces output signal 1-\ *b(n)* while PWFIR2 generates the feedback signal
 *f(n)* (Figure 2.a). For the implementation, we have chosen Hann windowing
 function:
 
-**<<ADD EQN>>**
+.. math:: w(k)= \frac{1}{2} (1- \cos (2 \pi \frac {k} {L-1} )), 0 \leq k \leq L-1
 
 PWFIR is designed to implement 1 <= L <= 40 tap filters where the filter length
 L and the filter coefficients *w(k)* are easily software programmable.
@@ -142,10 +144,14 @@ indexed from 0 to 19. Whenever the condition is true, the coefficient at index
 *j* is determined by following equation. Otherwise, the coefficient is set to
 zero.
 
-**<<ADD EQN>>**
+.. math:: h_{PWFIR1}(j)= w(j-(20- [ \frac{L+1}{2}]))
+.. math:: 20- [ \frac{L+1}{2}] \leq j \leq 19
 
 PWFIR2 architecture is given in Figure 4.b. It provides up to 20 programmable
 filter coefficients which are stored in the register array and indexed from 0 to
 19. The coefficients of PWFIR2 are determined by following equation whenever
 condition is met. Otherwise, the coefficient value at index *j* is set to zero.
+
+.. math:: h_{PWFIR2}(j)= w([ \frac{L+1}{2}]+j)
+.. math:: 0 \leq j \leq [ \frac{L}{2}] - 1
 

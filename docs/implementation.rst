@@ -67,8 +67,8 @@ In case of MIMO, single ADPD monitoring path is used as time shared resource to
 linearize multiple PAs which saves power consumption as well as on board RF
 resources.
 
-CFR block has provision of changing the number of FIR filter taps L in the range
-1 <= L <=  40. 
+CFR block has provision of changing the number of FIR filter taps L in the range 
+1 <= L <= 40
 
 Using the same interface, clipping threshold can be set to 0 <= Th <= 1. It is
 floating point number. The value of 0 is equivalent to “CFR power down” while 1

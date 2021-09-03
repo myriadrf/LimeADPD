@@ -39,7 +39,7 @@ steps 1 to 8:
 #. Start the LimeSuiteGUI application with sudo:
    ::
 
-     sudo ./LimeSuiteGU
+     sudo ./LimeSuiteGUI
 #. Make the connection with the LimeSDR QPCIe board Options |rarr| Connection
    settings. Select the LimeSDR QPCIe board.
 #. Read the LMS7002M INI configuration file
@@ -197,7 +197,7 @@ DPDViewer Window
 PC/GUI implements graphical display for demo and debugging purposes. GUI is
 capable to show important ADPD signals in FFT (frequency), time and
 constellation (I vs Q) domains. The DPD viewer window is displayed through
-*Modules |rarr| DPDViewer*.
+*Modules* |rarr| *DPDViewer*.
 
 Figures 7 and 8 show important ADPD signals before and after the algorithm
 convergence. Signals are captured by GUI executed by CPU Core.
