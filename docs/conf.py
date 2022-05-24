@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'LimeADPD'
-copyright = '2017-2021, Lime Microsystems'
+copyright = '2017-2022, Lime Microsystems'
 author = 'Lime Microsystems'
 
 # The full version, including alpha/beta/rc tags
@@ -37,6 +37,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.mathjax',
     'sphinx-mathjax-offline',
+    'sphinx_tabs.tabs',
     'sphinx_rtd_theme'
 ]
 

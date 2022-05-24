@@ -12,19 +12,20 @@ Hardware Configuration
 
 Follow the steps explained below:
 
-* The LimeSDR QPCIe channel A output, the LimeSDR QPCIe LMS#1 TX1_1 port, is
-  connected to channel A PA#1 input. 
-* For channel B, port LMS#1 TX2_1 port is used and it is connected to
-  corresponding PA#2 input.
-* The output of one of the PAs is via RF attenuator connected to spectrum
-  analyzer RF input. The other PA output can be terminated with 50 Ohms.
-* PA coupling outputs are over 10dB-20dB RF attenuators fed to two LimeSDR QPCIe
-  receive inputs. 
-* The on-board analogue multiplexer is used for selection of PA coupling output
-  signals. The multiplexer input, the U.FL RF1, is dedicated for channel A receive
-  input, while the U.FL RF3 is used as channel B input. 
-* The analogue multiplexer output U.FL port RFC is connected to the U.FL LMS#1
-  RX1_W, which is used as DPD monitoring input. 
+.. tabs::
+
+   .. tab:: LimeSDR-PCIe-5G
+
+      *5G board steps go here*
+
+   .. tab:: LimeSDR-QPCIe
+
+      * The LimeSDR QPCIe channel A output, the LimeSDR QPCIe LMS#1 TX1_1 port is connected to channel A PA#1 input. 
+      * For channel B, port LMS#1 TX2_1 port is used and it is connected to corresponding PA#2 input.
+      * The output of one of the PAs is via RF attenuator connected to spectrum analyzer RF input. The other PA output can be terminated with 50 Ohms.
+      * PA coupling outputs are over 10dB-20dB RF attenuators fed to two LimeSDR QPCIe receive inputs. 
+      * The on-board analogue multiplexer is used for selection of PA coupling output signals. The multiplexer input, the U.FL RF1, is dedicated for channel A receive input, while the U.FL RF3 is used as channel B input. 
+      * The analogue multiplexer output U.FL port RFC is connected to the U.FL LMS#1 RX1_W, which is used as DPD monitoring input. 
 
 LimeSuiteGUI settings
 ---------------------

@@ -5,8 +5,9 @@
    Introduction <self>
    structure
    cfr
-   implementation
-   board-programming
+   implementation/index
+   programming/index
+   limesuite
    user-guide
    dpdcontrol
    dpd-results

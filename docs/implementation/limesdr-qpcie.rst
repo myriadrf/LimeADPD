@@ -1,5 +1,5 @@
-Implementation Platform
-=======================
+LimeSDR-QPCIe Implementation
+============================
 
 ADPD and CFR algorithms are implemented using LimeSDR-QPCIe board, a high level
 block diagram of which is shown in Figure 5. LimeSDR-QPCIe board has a lot more
@@ -13,7 +13,7 @@ MS/s. Interpolation block is used to double usual LTE sample rate of 30.72 MS/s
 before driving DPD block. DPD sample rate of 61.44 MS/s (or higher) is required
 if we want to cancel at least IMD3 products in case of 20 MHz modulation.
 
-.. figure:: images/adpd-limesdr-qpcie.png
+.. figure:: /images/adpd-limesdr-qpcie.png
 
    Figure 5: ADPD implementation based on LimeSDR-QPCIe board.
 
