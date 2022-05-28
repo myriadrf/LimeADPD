@@ -3,14 +3,15 @@
    :hidden:
 
    Introduction <self>
-   structure
+   limeadpd
+   limeadpd-iq
    cfr
    implementation/index
    programming/index
    limesuite
-   user-guide
-   dpdcontrol
-   dpd-results
+   configuration/index
+   userguide/index
+   dpdresults/index
    cfr-results
    conclusion
 

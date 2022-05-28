@@ -1,10 +1,20 @@
 LimeSDR-QPCIe Implementation
 ============================
 
+.. note::
+
+   * The LimeADPD algorithm is implemented in LimeSDR-QPCIe board
+   * The board LimeSDR-QPCIe incorporates two transceiver LMS7002M chips, named with LMS1 and LMS2. 
+     The board is basically dedicated to 4G LTE signal transmission. 
+   * The LimeADPD is designed in LMS1 transmit path. Two TX channels, named with channels A and B, 
+     are implemented by LMS1. Only one LMS1 receive path is used for realization of both DPD monitoring paths. 
+
 ADPD and CFR algorithms are implemented using LimeSDR-QPCIe board, a high level
-block diagram of which is shown in Figure 5. LimeSDR-QPCIe board has a lot more
-options than shown (two LMS7002M chips, USB interface, GPS receiver, …).
-LMS7002M itself is 2T-2R RF IC. For clarity, Figure  shows the minimum hardware
+block diagram of which is shown in Figure 8. 
+
+LimeSDR-QPCIe board has a lot more options than 
+shown (two LMS7002M chips, USB interface, GPS receiver, …).
+LMS7002M itself is 2T-2R RF IC. For clarity, Figure shows the minimum hardware
 options required to illustrate the LimeADPD implementation. Regarding the
 implementation, the same signal names as in Figure 1 are used here.
 
@@ -15,62 +25,34 @@ if we want to cancel at least IMD3 products in case of 20 MHz modulation.
 
 .. figure:: /images/adpd-limesdr-qpcie.png
 
-   Figure 5: ADPD implementation based on LimeSDR-QPCIe board.
+   Figure 8: ADPD implementation based on LimeSDR-QPCIe board.
 
-For the development or demo, test waveform is uploaded first and played from the
-WFM RAM Block implemented using Altera Cyclone V FPGA resources. More
-importantly, the same FPGA also implements both DPD and CFR modules. 
-
-Initially, predistorter is bypassed i.e. *yp*\ :sub:`I`\ =\ *xp*\ :sub:`I`,
-*yp*\ :sub:`Q`\ =\ *xp*\ :sub:`Q`. Provision for SPI in order to update the
-coefficients during the training.  Signals **xp**, **yp** and **x** are captured
-using Data Capture RAM Blocks implemented also using FPGA resources. 
-
-Captured data is made available to CPU (Intel Motherboard) Core via PCIe
-interface. FPGA implements PCIe and other glue logic required to interconnect
-LimeSDR-QPCIe on board components including two LMS7002M ICs to the CPU Core.
-
-CPU implements postdistorter block, delay line and the rest of training
-algorithm. After each adaptation step, CPU updates predistorter coefficients via
-SPI/PCIe interface.
-
-Besides, CFR filter order, filter coefficients and CFR threshold are configured
-through the same SPI/PCIe interface. 
-
-PC/GUI implements graphical display for demo and debugging purposes. GUI is
-capable to show important ADPD signals in FFT (frequency), time and
-constellation (I vs Q) domains. 
-
-In the real applications, WFM and **xp** Capture RAM blocks are not required.
-The algorithm needs only **yp** and **x** as shown in Chapter 2. CPU Core
-performs both ADPD adaptation, as explained above, and base band (BB) digital
-modem functions which are application specific, LTE for example.
-
-As shown in Figure 5, frequency conversion from BB to RF is performed by
+As shown in Figure 8, frequency conversion from BB to RF is performed by
 LMS7002M transmitter chains. Frequency down conversion from RF to BB is
 implemented by only one LMS7002M receive chain dedicated to ADPD, i.e. one
 receiver of the available RF RX chains is allocated as ADPD monitoring path. In
-case of MIMO applications, the same ADPD monitoring path is used as time sharing
-recourse to linearize multiple PAs which saves power consumption as well as on
+case of MIMO applications, the same ADPD monitoring path is used as time-sharing
+resource to linearize multiple PAs which saves power consumption as well as on
 board RF resources.
 
-Regarding data converters, LMS7002M on chip 12-bit DACs and ADCs are used. The
-data rate at *LimeLight* interface is 61.44MSps.
+The pre-distorter, external ADCs and DACs operate at rate of
+61.44 MHz. Regarding data converters, LMS7002M on chip 12-bit DACs and ADCs are used. The
+data rate at *LimeLight* interface is 61.44 MS/s.
 
 In order to increase the capacity of the radio link, 2x2 MIMO transceiver is
-implemented. One transceiver IC is used to implement two MIMO transmitters. In
-each of the transmit channels, separate DPD, CFR and low-pass FIR filter blocks
-are implemented. Another transceiver IC is used to implement two regular MIMO
+implemented. One transceiver IC - the LMS1 is used to implement two MIMO transmitters. In
+each of the transmitting channels, separate DPD, CFR and low-pass FIR filter blocks
+are designed. Another transceiver IC is used to implement regular MIMO
 receivers.
 
-In case of MIMO, single ADPD monitoring path is used as time shared resource to
+In case of MIMO, single ADPD monitoring path is used as time-shared resource to
 linearize multiple PAs which saves power consumption as well as on board RF
 resources.
 
-CFR block has provision of changing the number of FIR filter taps L in the range 
-1 <= L <= 40
+CFR block has provision of changing the number of FIR filter taps *L* in the range 
+1 ≤ *L* ≤ 40.
 
-Using the same interface, clipping threshold can be set to 0 <= Th <= 1. It is
+Using the same interface, clipping threshold can be set to 0 ≤ *Th* ≤ 1. It is
 floating point number. The value of 0 is equivalent to “CFR power down” while 1
 corresponds to “CFR bypass”.
 
@@ -78,28 +60,27 @@ The interpolation/decimation option can be enabled or disabled. The choice is
 related to the modulation bandwidth as shown later.
 
 CFR output is filtered by on-FPGA digital low-pass post-CFR FIR filters (Figure
-5). These filters are very frequency selective and efficiently remove
+8). These filters are very frequency selective and efficiently remove
 out-of-band unwanted products generated by BB digital modem as well as CFR PW
 method itself.
 
 We have implemented two CFR blocks for both transmitted channels. The 40-tap
 PWCFR module operates at 122.88 MHz clock frequency.  
 
-If interpolation control signal is zero (see Figure 5) the data rate of CFR
-input signal samples, which come (from WFM RAM) to CFR input is 30.72 MSps.
-Therefore, the PWCRF operates at the clock frequency level which is 4 times
-greater then processing data rate. In this case, the data interpolation (using
+If interpolation control signal is zero (see Figure 8) the data rate of CFR
+input signal samples, which come (from WFM RAM) to CFR input is 30.72 MS/s.
+Therefore, the PWCFR operates at the clock frequency level which is 4 times
+greater than processing data rate. In this case, the data interpolation (using
 up-conversion of factor of 2) is used after CFR and post-CFR FIR blocks (see
-Figure 5). The number of taps in these filters is 40. The order L is in the
-range 1 <= L <= 40. The predistorter, external ADCs and DACs operate at rate of
-61.44 MHz.
+Figure 8). The number of taps in these filters is 40. The order *L* is in the
+range 1 ≤ *L* ≤ 40. 
 
-If interpolation control signal is equal to equal to one (Figure 5),
+If interpolation control signal is equal to one (Figure 8),
 interpolation (using up-conversion of factor of 2) is used in front of CFR and
-post CFR FIR blocks. (see Figure 5). In this case, the data rate of signals
-processed by CFR and post-CFR FIR blocks is equal to 61.44 MSps. Therefore, the
-PWCFR operates at the clock frequency level which is only 2 times greater then
+post CFR FIR blocks. (see Figure8). In this case, the data rate of signals
+processed by CFR and post-CFR FIR blocks is equal to 61.44 MS/s. Therefore, the
+PWCFR operates at the clock frequency level which is only 2 times greater than
 processing data rate. The data interpolation, located after the CFR and post-CFR
 FIR blocks, is now bypassed. The number of taps in the CFR and post-CFR low-pass
-filters is limited to 20. Therefore, the L is in the range 1 <= L <=  20.
+filters is limited to 20. Therefore, the L is in the range 1 ≤ *L* ≤ 20.
 

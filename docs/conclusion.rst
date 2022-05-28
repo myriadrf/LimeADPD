@@ -69,3 +69,16 @@ by 2.78 dB while EVM is degraded by only 1.7%.
 
 ACPR is not affected at all neither by BB modem nor CFR algorithm thanks to
 digital filtering implemented by FIR blocks.
+
+The LimeADPD I/Q yields linearization results comparable to conventional DPD 
+solutions. The algorithm provides low complexity in terms of
+reduced number of complex-valued coefficients. The nonlinearities of the PA 
+and I/Q modulator are compensated by non-conjugate DPD block. Linear I/Q corrector,
+implemented as a FIR filter is applied specifically for I/Q imbalance mitigation. 
+Utilization of FIR block for I/Q corrector additionally reduces the number of complex valued
+coefficients. 
+
+The I/Q related imbalance images are suppressed almost down to the noise floor without
+sacrificing the PA output power. Low complexity feature enables method 
+implementation in SDR boards which are suitable for realization in FPGA.
+The LimeADPD I/Q performance was analyzed using LTE type of waveforms, and also, multi-tone signals.

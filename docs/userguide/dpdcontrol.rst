@@ -1,52 +1,8 @@
-DPDControl Application
+DPDcontrol Application
 ======================
 
-The application is dedicated to LimeSDR QPCIe board. Before starting the
-command-line application, named DPDcontrol, the LMS7002 transceiver chip should
-be initialized and modulation waveforms started.
-
-One option to do this is to start Amarisoft LTE stack. The other option is,
-using LimeSuiteGUI application, to load LMS7002M configuration files and run
-test waveforms.
-
-In the first option, during LTE start-up procedure, two LMS7002M .ini files are
-automatically loaded into two transceiver ICs. Also, the .ini2 FPGA
-configuration file is loaded, containing on-board FPGA gateware configuration,
-including information regarding CFRs and post-CFR FIR filter coefficients. 
-
-In the second option, used for development or demo, test waveform is uploaded
-and played from the on-board WFM RAM Blocks. The LimeSuiteGUI application is
-used in this case.
-
-#. Open the terminal in the folder which belongs to LimeSuiteGUI installation: 
-   ::
-
-     <LimeSuiteGUI installation folder>/LimeSuite/build/bin
-#. Start the LimeSuiteGUI application with sudo:
-   ::
-
-     sudo ./LimeSuiteGUI
-#. Make the connection with the board Options->Connection settings. Find and
-   select LimeSDR QPCIe board.
-#. Read the LMS7002M .ini configuration file
-   ``LMS1settings/LMS1settings_20_751.ini``.
-#. Open the window Board related controls through *Modules* |rarr| *Board Controls*.
-   When window is opened, read the FPGA configuration file (with extension .ini2)
-   which contains the CFRs settings and post-CFR FIR filter configuration. To do
-   this press *Read settings* button and choose the file dedicated to 10MHz LTE
-   waveform ``FPGAsettings/FPGAsettings_10MHz.ini2``. When FPGA is initialized, 
-   close the *Board related controls window*. 
-#. In LimeSuiteGUI open the *Calibrations tab*, press *Calibrate Tx*, then 
-   *Calibrate Rx*.
-#. Now, select the test waveform by *Modules* |rarr| *FPGA controls*, then select
-   the 10MHz LTE waveform ``lms7suite_wfm/LTE_DL_TM31_10MHZ.wfm``. Check *MIMO*
-   option and press button *Custom* to start the waveform.
-
-.. note::
-   If it is required to modify CFR or post-FIR CFR settings, LimeSuiteGUI must be
-   used. Again, go to *Modules* |rarr| *Board Controls*, open *Board related 
-   controls*. After the CFR settings are modified, save new configuration into FPGA
-   configuration .ini2 file or replace the existing FPGA configuration .ini2 file. 
+The application DPDcontrol is a command-line application dedicated to LimeSDR QPCIe 
+and LimeSDR-PCIe-5G boards. 
 
 Once the test waveforms are played, the ``DPDcontrol`` application can be started.
 
@@ -54,10 +10,11 @@ Once the test waveforms are played, the ``DPDcontrol`` application can be starte
    It is not allowed to use the DPDcontrol application and LimeSuiteGUI at the 
    same time. Therefore, before starting the DPDcontrol, close the LimeSuiteGUI.
 
-It is still possible to linearize PAs using DPDcontrol, and then, after closing
-the DPDcontrol, open LimeSuiteGUI, its DPDViewer window, and check the spectrum
-of the PA output signals. The relevant signal is signal x which is a measure of
-PA output.
+.. note::
+   It is possible to linearize PAs using DPDcontrol, and then, after closing
+   the DPDcontrol, open LimeSuiteGUI, its DPDViewer window, and check the spectrum
+   of the PA output signals. The relevant signal is signal *x* which is a measure of
+   PA output.
 
 The very basic DPDcontrol operations are explained through steps 1-7.
 
@@ -104,7 +61,7 @@ If in consecutive DPD calibration procedures, different, random values for ND
 are obtained, which are out of specified range, there is a RF reflection or
 interference. To solve this, check the RF cables. The cable dedicated for DPD
 monitoring path (from PA’s coupling output to board) must have strong shield.
-Else, place 10dBm-20dBm RF attenuator at LimeSDR QPCIe board receive port,
+Else, place 10dBm-20dBm RF attenuator at board receive port,
 dedicated to DPD monitoring input, rather than at PA’s coupling output.
 
 .. note::

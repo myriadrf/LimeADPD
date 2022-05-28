@@ -1,16 +1,16 @@
-LimeADPD Structure
-==================
+LimeADPD
+========
 
 Indirect Learning Architecture
 ------------------------------
 
 The simplified block diagram of an indirect learning architecture is given in
 Figure 1. Please note that RF part in both TX (up to PA input) neither in RX
-(back to base band frequency) paths is shown for simplicity.
+(back to base-band frequency) paths is shown for simplicity.
 
-Delay line compensates ADPD loop *(yp(n)* to *x(n))* delay. Postdistorter is
+Delay line compensates ADPD loop *(yp(n)* to *x(n))* delay. Post-distorter is
 trained to be inverse of power amplifier. Predistorter is simple copy of
-postdistorter. When converged:
+post-distorter. When converged:
 
 .. math:: \epsilon (n)=0, yp(n)=y(n) => x(n)=xp(n),
 
@@ -26,7 +26,7 @@ Complex Valued Memory Polynomial
 LimeADPD algorithm is based on modelling nonlinear system (PA and its inverse in
 this case) by complex valued memory polynomials which are in fact cut version of
 Volterra series which is well known as general nonlinear system modelling and
-identification approach. In this particular case “cut version ” means the system
+identification approach. In this particular case “cut version” means the system
 can efficiently be implemented in real life applications.
 
 For a given complex input:
@@ -42,8 +42,8 @@ where:
 
 .. math:: w_{ij}=a_{ij}+jb_{ij}
 
-are the polynomial coefficients while *e(n)* is the envelop of the input. For the
-envelop calculation, two options are considered, the usual one:
+are the polynomial coefficients while *e(n)* is the envelope of the input. For the
+envelope calculation, two options are considered, the usual one:
 
 .. math:: e(n)=\sqrt{x_I(n)^2+x_Q(n)^2}
 
@@ -56,26 +56,26 @@ calculate and in most cases provides even better results.
 
 In the above equations, *N* is memory length while *M* represents nonlinearity
 order. Hence, complex valued memory polynomial can be taken into account both
-system memory effects as well as the system nonlinearity.
+system memory effects and the system nonlinearity.
 
 LimeADPD Equations
 ------------------
 
 Based on discussions given in previous sections and using signal notations of
-Figure 1, ADPD predistorter implements the following equations:
+Figure 1, ADPD pre-distorter implements the following equations:
 
 .. math:: yp(n)=\sum_{i=0}^{N} \sum_{j=0}^{M} w_{ij} xp(n-i)ep(n-i)^j
 .. math:: xp(n)=xp_I(n)+jxp_Q(n)
 .. math:: ep(n)=xp_I(n)^2+xp_Q(n)^2
 
-while postdistorter does similar:
+while post-distorter does similar:
 
 .. math:: y(n)=\sum_{i=0}^{N} \sum_{j=0}^{M} w_{ij} x(n-i)e(n-i)^j
 .. math:: x(n)=x_I(n)+jx_Q(n)
 .. math:: e(n)=x_I(n)^2+x_Q(n)^2
 
-Note that predistorter and postdistorter share the same set of complex
-coefficients **w**\ :sub:`ij`. Delay line is simple and its output is given by:
+Note that pre-distorter and post-distorter share the same set of complex
+coefficients **w**\ :sub:`ij`. Delay line is simple, and its output is given by:
 
 .. math:: u(n)=yp(n-nd)
 
@@ -83,7 +83,7 @@ Training Algorithm
 ------------------
 
 ADPD training algorithm alters complex valued memory polynomial coefficients
-**w**\ :sub:`ij` in order to minimise the difference between PA input **yp**\
+**w**\ :sub:`ij` in order to minimize the difference between PA input **yp**\
 *(n)* and **y**\ *(n)*, ignoring the delay and gain difference between the 
 two signals. Instantaneous error shown in Figure 1 is calculated as:
 

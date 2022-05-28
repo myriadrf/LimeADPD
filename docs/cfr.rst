@@ -38,7 +38,7 @@ complex signal *x(n)* exceeds user selectable threshold level *Th*:
 .. math:: y(n)=c(n)x(n)
 .. math:: c(n)= \{ \begin{matrix} \frac {Th} { |x(n)| }, |x(n)| >Th \\ 1, |x(n)| \leq Th  \end{matrix}
 
-HC is quite simple. However it produces high signal distortion due to hard
+HC is quite simple. However, it produces high signal distortion due to hard
 clipping. Undesirable side effects of HC include in-band signal distortion which
 is measured by Error Vector Magnitude (EVM) and out-band signal distortion,
 measured by Adjacent Channel Power Ratio (ACPR). For that reason, we have
@@ -64,7 +64,7 @@ hardware DSP blocks processing power. Of course, these frequencies can easily be
 changed to conform to any other similar telecommunication standard.
 
 The implementation of PW consists of several stages. The PW processing
-operations are depicted in Figure 2.a. 
+operations are depicted in Figure 3.a. 
 
 To determine the envelope *e(n)=|x(n)|*, complex I/Q input components are squared,
 summed and square-rooted. The envelope *e(n)* is then compared to the threshold
@@ -76,14 +76,14 @@ value is set to one.
 
 Peak search block is introduced in PW processing stage to find local minimum
 values of the signal *c(n)*. If the input sample is not local minimum, then the
-output of Peak search block (signal *cp(n)*\ ) is set to one. 
+output of Peak search block (signal *cp(n)*\) is set to one. 
 
 .. figure:: images/peak-windowing-search-correction.png
 
-   Figure 2: (a) Peak windowing architecture (b) Peak search block and (c)
+   Figure 3: (a) Peak windowing architecture (b) Peak search block and (c)
    Correction block.
 
-Figure 2.a shows the architecture of PWFIR filter. PWFIR consists of
+Figure 3.a shows the architecture of PWFIR filter. PWFIR consists of
 feed-forward (PWFIR1) and feedback (PWFIR2) sub-filters.
 
 PWFIR takes input signal *v(n)* and generates 1-\ *b(n)*. Negative values of
@@ -92,13 +92,13 @@ PWFIR takes input signal *v(n)* and generates 1-\ *b(n)*. Negative values of
 *x*\ :sub:`Q`\ *(n)*. 
 
 Prior to applying the correction, *x*\ :sub:`I`\ *(n)* and *x*\ :sub:`Q`\ *(n)*
-are properly delayed to compensate for the delay (latency) introduced by the
+are properly delayed compensating for the delay (latency) introduced by the
 implementation of PWFIR and other CFR preprocessing stages. Hence, CFR output
-*y(n)* is constructed as shown in Figure 2.c.
+*y(n)* is constructed as shown in Figure 3.c.
 
 In order to reduce overlapping, the feedback structure (PWFIR2) is introduced.
 The feedback path adjusts the next filter input value. Looking forward to when
-clipped input value reaches the center tap (Figure 2.a), the contribution of all
+clipped input value reaches the center tap (Figure 3.a), the contribution of all
 previous input values (between first and center tap) are calculated and used for
 correction of the next input value. At the time when incoming clipped signal
 reaches the unity weighted center tap, the contributions from all previous
@@ -108,18 +108,18 @@ window length.
 
 .. figure:: images/cfr-algorithm-in-action.png
 
-   Figure 3: CFR algorithm in action. Bottom graph gives c(n), cp(n) and b(n),
-   top graph shows Th, e(n)=|x(n)| and envelope of the CFR output \|y(n)\|.
+   Figure 4: CFR algorithm in action. Bottom graph gives *c(n)*, *cp(n)* and *b(n)*,
+   top graph shows *Th*, *e(n)* =|x(n)| and envelope of the CFR output \|y(n)\|.
 
 As mentioned before, PWFIR filter structure is divided into two parts. PWFIR1
 produces output signal 1-\ *b(n)* while PWFIR2 generates the feedback signal
-*f(n)* (Figure 2.a). For the implementation, we have chosen Hann windowing
+*f(n)* (Figure 3.a). For the implementation, we have chosen Hann windowing
 function:
 
 .. math:: w(k)= \frac{1}{2} (1- \cos (2 \pi \frac {k} {L-1} )), 0 \leq k \leq L-1
 
-PWFIR is designed to implement 1 <= L <= 40 tap filters where the filter length
-L and the filter coefficients *w(k)* are easily software programmable.
+PWFIR is designed to implement 1 ≤ *L* ≤ 40 tap filters where the filter length
+*L* and the filter coefficients *w(k)* are easily software programmable.
 
 The architecture of PWFIR filter is based on multiply-and-accumulate (MAC)
 circuitry.
@@ -137,9 +137,9 @@ DSP blocks used for the filter implementation is also reduced.
 
 .. figure:: images/pwfir1-pwfir2-module-architecture.png
 
-   Figure 4: The architecture of PWFIR1 (a) and PWFIR2 (b) modules.
+   Figure 5: The architecture of PWFIR1 (a) and PWFIR2 (b) modules.
 
-The detailed architecture of PWFIR1 is given in Figure 4.a. The coefficients are
+The detailed architecture of PWFIR1 is given in Figure 5.a. The coefficients are
 indexed from 0 to 19. Whenever the condition is true, the coefficient at index
 *j* is determined by following equation. Otherwise, the coefficient is set to
 zero.
@@ -147,7 +147,7 @@ zero.
 .. math:: h_{PWFIR1}(j)= w(j-(20- [ \frac{L+1}{2}]))
 .. math:: 20- [ \frac{L+1}{2}] \leq j \leq 19
 
-PWFIR2 architecture is given in Figure 4.b. It provides up to 20 programmable
+PWFIR2 architecture is given in Figure 5.b. It provides up to 20 programmable
 filter coefficients which are stored in the register array and indexed from 0 to
 19. The coefficients of PWFIR2 are determined by following equation whenever
 condition is met. Otherwise, the coefficient value at index *j* is set to zero.
