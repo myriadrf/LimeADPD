@@ -6,7 +6,7 @@ LimeSDR-PCIe-5G Board Configuration
    The board LimeSDR-PCIe-5G incorporates three LMS7002M ICs, named with LMS1, LMS2, LMS3.
    
    For DPD demonstration the LMS1 and LMS3 are used. Two transmitter channels (named with channels A and B) are implemented by LMS1. 
-   The DPD monitoring paths are realized by two LMS3 receiver paths. The TQM8M9079 PAs, which are employed for DPD demonstration, 
+   The DPD monitoring paths are realized by two LMS3 receiver paths. The pre-driver TQM8M9079 PAs 
    are embedded on the board, located in LMS1 transmit paths.
 
    The LMS2 is used for 5G signal transmission and implements two transceiver chains. 
@@ -19,8 +19,8 @@ Please, follow the steps explained below:
 
 * For LMS1 TX channel A output, use the U.FL connector J8 - the LMS1 TX1. 
 * For LMS1 channel B TX output, the U.FL connector J9, LMS1 TX2 port, is used.
-* For DPD demonstration, one of the TX outputs is connected to RF coupler and after that, 
-  to Spectrum Analyzer RF input. The other TX output can be terminated with 50 Ohms.
+* For DPD demonstration, one of the TX outputs is connected to PA input and after the PA to RF coupler. 
+  The other TX output can be terminated with 50 Ohms.
   RF coupling outputs are over 10-20 dB RF attenuators fed to two LMS3 receive inputs,
   which are used as DPD monitoring path inputs.  
 * For LMS3 channel A RX input, the U.FL connector J6 is used. It is connected to LMS3 RX1_H input.
