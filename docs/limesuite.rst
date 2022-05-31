@@ -16,8 +16,6 @@ The LimeSuiteGUI source code dedicated to DPD demonstration is available at:
         * branch: DPD_LimeSDR-QPCIe_Stable 
 
 
-
-Please download LimeSuiteGUI source code from specified Gitlab branch and in
-order to install software follow instructions described at:
+Please clone the LimeSuiteGUI source code from the specified GitLab branch and in order to install follow the instructions described at:
 
 https://wiki.myriadrf.org/Lime_Suite

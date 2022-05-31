@@ -8,8 +8,8 @@ The simplified block diagram of an indirect learning architecture is given in
 Figure 1. Please note that RF part in both TX (up to PA input) neither in RX
 (back to base-band frequency) paths is shown for simplicity.
 
-Delay line compensates ADPD loop *(yp(n)* to *x(n))* delay. Post-distorter is
-trained to be inverse of power amplifier. Predistorter is simple copy of
+A delay line compensates ADPD loop *(yp(n)* to *x(n))* delay. Post-distorter is
+trained to be inverse of power amplifier. Predistorter is a simple copy of
 post-distorter. When converged:
 
 .. math:: \epsilon (n)=0, yp(n)=y(n) => x(n)=xp(n),
@@ -42,8 +42,7 @@ where:
 
 .. math:: w_{ij}=a_{ij}+jb_{ij}
 
-are the polynomial coefficients while *e(n)* is the envelope of the input. For the
-envelope calculation, two options are considered, the usual one:
+are the polynomial coefficients while *e(n)* is the envelope of the input. For the envelope calculation, two options are considered, the usual one:
 
 .. math:: e(n)=\sqrt{x_I(n)^2+x_Q(n)^2}
 
