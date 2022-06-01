@@ -33,8 +33,6 @@ data rate at the *LimeLight* interface is 61.44 MS/s.
 In order to increase the capacity of the radio link, a 2x2 MIMO transceiver is
 implemented. One transceiver IC, LMS1, is used to implement two MIMO transmitters. In each of the transmitting channels, separate DPD, CFR and low-pass FIR filter blocks are implemented. Another transceiver IC is used to implement regular MIMO receivers.
 
-In the case of MIMO, single ADPD monitoring path is used as time-shared resource to linearize multiple PAs which saves power consumption as well as on board RF resources.
-
 CFR block has provision of changing the number of FIR filter taps *L* in the range 1 ≤ *L* ≤ 40.
 
 Using the same interface, clipping threshold can be set to 0 ≤ *Th* ≤ 1. It is

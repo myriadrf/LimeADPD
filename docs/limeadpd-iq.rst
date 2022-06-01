@@ -59,7 +59,7 @@ are the polynomial coefficients while *e(n)* is the squared envelope of the inpu
 
 .. math:: e(n)=x_I(n)^2+x_Q(n)^2
 
-In the above equations, parameter *N1* in the represents the DPD memory length and *M1* is the nonlinearity order. The I/Q corrector block is modeled by linear FIR filter block with length *N2*.
+In the above equations, parameter *N*\ :sub:`1`\ in the represents the DPD memory length and *M*\ :sub:`1`\ is the nonlinearity order. The I/Q corrector block is modeled by linear FIR filter block with length *N*\ :sub:`2`\.
 
 The advantage of LimeADPD I/Q is low complexity in terms of reduced number of complex valued coefficients.
 

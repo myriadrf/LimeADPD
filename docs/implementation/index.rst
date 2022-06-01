@@ -19,7 +19,7 @@ The FPGA ICs may be used for the implementation of many other digital blocks. Fo
 
 Regarding ADPD algorithm, the pre-distorter part is embedded in the FPGA. 
 Initially, pre-distorter is bypassed i.e. *yp*\ :sub:`I`\ =\ *xp*\ :sub:`I`,
-*yp*\ :sub:`Q`\ =\ *xp*\ :sub:`Q`. The boards have provision for SPI in order to update the DPD coefficients during the training process.  
+*yp*\ :sub:`Q`\ =\ *xp*\ :sub:`Q`\  (signals shown in the Figure 1 in case of LimeADPD and in the Figure 2 in case of LimeADPD I/Q). The boards have provision for SPI in order to update the DPD coefficients during the training process.  
 
 The FPGA RAM blocks are used for implementation of Data Capture RAM Blocks, 
 storing the data streams of signals *xp*, *yp* and *x*. Also, the FPGA implements PCIe and other glue logic required to interconnect on-board components including the LMS7002M ICs to the host CPU. Captured *xp*, *yp* and *x* data is also made available to the host CPU via PCIe interface. The host implements post-distorter block, delay line and the rest of training
@@ -31,5 +31,5 @@ through the same SPI/PCIe interface.
 The GUI running on host system implements a graphical display for debugging purposes. This GUI is capable of showing important ADPD signals in FFT (frequency), time and constellation (I vs Q) domains. 
 
 In production applications, WFM and *xp* Capture RAM blocks are not required.
-The algorithm needs only *yp* and *x* as shown in the Figure x. CPU Core
+The algorithm needs only *yp* and *x* as shown in the Figure 1 (in case of LimeADPD) and in the Figure 2 (in case of LimeADPD I/Q). CPU Core
 performs both ADPD adaptation and base-band (BB) digital modem functions.
