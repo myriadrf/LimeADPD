@@ -6,12 +6,12 @@ LMS1 transmit path
 
 .. note::
 
-   * LimeADPD I/Q algorithm is implemented via he LimeSDR-PCIe-5G board
+   * LimeADPD I/Q algorithm is implemented via the LimeSDR-PCIe-5G board
    * LimeSDR-PCIe-5G incorporates three transceiver LMS7002M chips, named with LMS1, LMS2, LMS3. 
-   * LMS1 isdedicated to 4G LTE signal transmission and LimeADPD I/Q is implemented in its transmit path.
+   * LMS1 is dedicated to 4G LTE signal transmission and LimeADPD I/Q is implemented in its transmit path.
    * Two transmitter channels, named with channels A and B, are implemented by LMS1. 
    * The board integrates TQM8M9079 power amplifiers — which are employed for DPD demonstration — in LMS1 transmit paths.
-   * LMS3 is used to implment DPD monitoring paths. 
+   * LMS3 is used to implement DPD monitoring paths. 
 
 LimeADPD I/Q and CFR algorithms were implemented using LimeSDR-PCIe-5G board,
 a high level block diagram of which is shown in Figure 6. For clarity, Figure 

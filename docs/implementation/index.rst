@@ -8,7 +8,13 @@ Implementation Platform
    LimeSDR-QPCIe <limesdr-qpcie>
 
 The ADPD-I/Q and ADPD algorithms are implemented via the LimeSDR-PCIe-5G and 
-LimeSDR-QPCIe boards, respectively. The CFR algorithm, which supports ADPD operation, is implemented via these boards also.
+LimeSDR-QPCIe boards, respectively. The CFR algorithm, which supports ADPD operation, 
+is implemented via LimeSDR-PCIe-5G and LimeSDR-QPCIe also.
+
+.. note::
+   The online technical documentation for the board **LimeSDR-PCIe-5G** is available at: https://pcie5g.myriadrf.org/
+   
+   For the **LimeSDR-QPCIe**, documentation is available at: https://wiki.myriadrf.org/LimeSDR-QPCIe
 
 The boards incorporate LMS7002M transceiver ICs and high-performance FPGA
 chips with large resource abilities, which are used for realization of Lime algorithms. In the case of the LimeSDR-PCIe-5G board, the Xilinx XC7A200T-2FBG676C is used. The other board, the LimeSDR-QPCIe utilizes an Altera Cyclone V 5CGXFC7D7F31C8 FPGA chip.
