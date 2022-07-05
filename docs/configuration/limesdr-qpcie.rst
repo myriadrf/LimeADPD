@@ -52,7 +52,7 @@ Board Related Controls window
 -----------------------------
 
 The Crest factor reduction (CFR) controls have been implemented in the *Board
-related controls window*, which is the part of LimeSuiteGUI (Figure 13). The
+related controls window*, which is the part of LimeSuiteGUI (Figure 15). The
 window provides:
 
 * Selection of the transmitter channels A or B.
@@ -64,10 +64,10 @@ window provides:
 
 .. figure:: ../images/board-related-controls.png
 
-   Figure 13: The Board related controls' dialog.
+   Figure 15: The Board related controls' dialog.
 
 The radio buttons A_CHANNEL and B_CHANNEL select one of the TX paths: A or
-B (Figure 13). 
+B (Figure 15). 
 
 Two different CFR blocks and accompanying post-CFR FIR filters in the FPGA
 gateware are dedicated to different transmit paths A and B. Therefore, before
@@ -77,8 +77,8 @@ using the previously specified radio buttons.
 CFR parameters for each of the TX paths include:
 
 * *Bypass* – when is checked, the CFR is bypassed.
-* *Interpolation* has possible values 0 and 1 (Figure 13). The value 1 selects the
-  interpolation in front of CFR block. (see Figure 8). In this case the data rate
+* *Interpolation* has possible values 0 and 1 (Figure 15). The value 1 selects the
+  interpolation in front of CFR block. (see Figure 10). In this case the data rate
   of signals entering the CFR is 61.44 MS/s. Otherwise, when 0 value is chosen,
   the interpolation is used after CFR and post-CFR FIR blocks. In this case the
   data rate of signals is 30.72 MS/s. 
@@ -97,7 +97,7 @@ windowing coefficients are automatically calculated and are programmed to the
 dedicated CFR registers located in FPGA gateware. 
 
 The low-pass post-CFR FIR filter follows the CFR block
-(Figure 8). The options for filter coefficients reading end programming are
+(Figure 10). The options for filter coefficients reading end programming are
 provided. When *Coeff.* button in the *Board related controls* window is
 pressed, the post-CFR FIR filter coefficients are read from FPGA
 registers and displayed in the new window. New post-CFR FIR coefficients can be
@@ -118,13 +118,13 @@ into the FPGA registers.
   *A_CHANNEL/B_CHANNEL* are used. 
 
 The post-CFR filter length depends on Interpolation. When interpolation is 0,
-the data rate of post-CFR FIR signals is 30.72 MS/s (see Figure 5). In this case
+the data rate of post-CFR FIR signals is 30.72 MS/s (see Figure 10). In this case
 the post-CFR FIR order is 40. Otherwise, when value 1 is chosen, the
 interpolation is done before the CFR and post-CFR FIR blocks. In this case, the
 data rate of signals is 61.44 MS/s and filter order maximum is equal to 20. 
 
 To save or read gateware configuration the *Board related controls* window
-(Figure 13) provides three buttons: 
+(Figure 15) provides three buttons: 
 
 * *Read settings* which reads the ``.ini2`` file, updates the configuration shown in
   the window and also, automatically programs the FPGA gateware (the CFR blocks
@@ -138,7 +138,7 @@ Beside the CFR and post-CFR FIR configuration, the *Board related controls* wind
 controls the internal LimeNET Base station PAs and DC/DC convertors. Namely, the
 LimeNET Base station PAs and DC/DCs can be turned on/off programmatically. 
 
-The check buttons *DC/DC ChA and ChB* (Figure 13) are used to switch on/off the
+The check buttons *DC/DC ChA and ChB* (Figure 15) are used to switch on/off the
 LimeNET BS DC/DC convertors, which provide power supply to PAs (only if LimeNET
 internal PAs are used). Additionally, the LimeNET BS PAs can be turn on/off
 using *PA ChA and ChB* check buttons. Note that when the control is checked, the

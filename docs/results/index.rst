@@ -1,15 +1,18 @@
-DPD Measured Results
-====================
+Measured Results
+================
 
 .. toctree::
    :hidden:
-
-   LimeSDR-PCIe-5G <limesdr-pcie-5g>
-   LimeSDR-QPCIe <limesdr-qpcie>
+   
+   dpdresults/index
+   cfr-results
+   equaliser-results
 
 The Lime's ADPD-I/Q and ADPD algorithms were implemented in LimeSDR-PCIe-5G and 
 LimeSDR-QPCIe boards, respectively. 
 
 The CFR algorithm, which supports the DPD operation, is also implemented on the boards.
+
+The Lime Equaliser algorithm is implemented in LimeSDR-PCIe-5G.
 
 The results of LimeADPD algorithms are presented here. 

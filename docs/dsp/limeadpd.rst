@@ -16,7 +16,7 @@ post-distorter. When converged:
 
 hence, PA is linearized.
 
-.. figure:: images/indirect-learning-architecture.png
+.. figure:: ../images/indirect-learning-architecture.png
 
 Figure 1: Indirect learning architecture
 

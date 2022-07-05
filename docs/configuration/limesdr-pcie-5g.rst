@@ -108,17 +108,17 @@ steps 1 to 12:
 
    .. figure:: ../images/board-related-controls-5G.png
 
-   Figure 9: The Board related controls' dialog.
+   Figure 11: The Board related controls' dialog.
 
    .. figure:: ../images/CDCM6208.png
 
-   Figure 10: CDCM6208 dialog.
+   Figure 12: CDCM6208 dialog.
   
 LMS#1 CFR controls window
 -------------------------
 
  The Crest factor reduction (CFR) controls have been implemented in the LMS#1 CFR controls
- window, which is the part of LimeSuite GUI (Figure 11). 
+ window, which is the part of LimeSuite GUI (Figure 13). 
  
  The window *LMS1 CFR controls* is opened by *Modules* |rarr| *LMS#1 CFR controls*.
 
@@ -131,10 +131,10 @@ LMS#1 CFR controls window
 
  .. figure:: ../images/lms1-cfr-controls-5G.png
 
-   Figure 11: LMS1 CFR controls dialog
+   Figure 13: LMS1 CFR controls dialog
 
 The radio buttons A_CHANNEL and B_CHANNEL select one of the TX paths: A or
-B (Figure 11). 
+B (Figure 13). 
 
 Two CFR blocks and accompanying post-CFR FIR filters are implemented in transmit 
 paths A and B. Therefore, before any modification of CFR parameters is made, the 
@@ -143,7 +143,7 @@ TX path must be selected using the previously specified radio buttons.
 CFR parameters for each of the TX paths include:
 
 * *Bypass CFR* – when is checked, the CFR is bypassed.
-* *Interpolation* has possible values 0 and 1 (Figure 11). The value 1 selects the
+* *Interpolation* has possible values 0 and 1 (Figure 13). The value 1 selects the
   interpolation in front of CFR block. (see Figure 6). In this case the data rate
   of signals entering the CFR is 61.44 MS/s. Otherwise, when 0 value is chosen,
   the interpolation is used after CFR and post-CFR FIR blocks. In this case the
@@ -180,7 +180,7 @@ into the FPGA registers.
    The coefficient values, stored in the ``.fir`` file, are derived as normalized FIR filter 
    coefficient values multiplied with constant integer number of 2\ :sup:`15`\ -1.
 
-To save or read FPGA configuration the window (Figure 11) provides three buttons: 
+To save or read FPGA configuration the window (Figure 13) provides three buttons: 
 
 * *Refresh all* button reads the configuration which has been already programmed 
   in the FPGA and updates the configuration in the window.
@@ -206,10 +206,10 @@ The window *LMS#2 CFR controls* is opened by *Modules* |rarr| *LMS#2 CFR control
 
  .. figure:: ../images/lms2-cfr-controls-5G.png
 
-   Figure 12: LMS2 CFR controls dialog
+   Figure 14: LMS2 CFR controls dialog
 
 The radio buttons A_CHANNEL and B_CHANNEL select one of the LMS2 TX paths: A or
-B (Figure 12). 
+B (Figure 14). 
 
 CFR parameters for each of the TX paths include:
 

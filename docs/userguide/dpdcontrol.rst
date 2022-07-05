@@ -16,13 +16,28 @@ Once the test waveforms are played, the ``DPDcontrol`` application can be starte
    of the PA output signals. The relevant signal is signal *x* which is a measure of
    PA output.
 
+.. note::
+   The LMS#3 is used as DPD monitoring path. 
+   Clock for the LMS3 analog interfaces should be set to 61.44 MHz. 
+   The clock configuration is provided via LimeSuiteGUI CDCM6208 window.
+
+   * Open Modules → CDCM6208
+   * Check the Y6 and Y7 CDCM outputs (for LMS#3 ADCs) in the Frequency planning box.
+   * Enter frequency of 61.44 in the Frequency requested boxes. Click Calculate.
+   * Click Write All to write the new configuration into the CDCM6208 chip.
+
+.. note:: 
+   * open Modules → LMS#1 CFR controls window
+   * check boxes: ResetN, LMS1 txen, DPD cap.en., LMS3 mon.path, DPD/CFR enable
+   
+
 The very basic DPDcontrol operations are explained through steps 1-7.
 
 1. Open the terminal in following folder, which belongs the *LimeSuiteGUI*
    installation:
    ::
 
-     <LimeSuite install folder>/LimeSuite/src/commandmode/
+     <LimeSuite install folder>/LimeSuite/src/DPD_CommandMode/
 2. Compile the DPDcontrol application:
    ::
 

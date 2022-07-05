@@ -42,11 +42,11 @@ Test Case 1: LTE 5MHz Low IF, Maxim Integrated MAX2612 PA
 
 .. figure:: /images/test-case-1-before-linearization-5G.png
 
-   Figure 16: Signal spectrum before linearization.
+   Figure 18: Signal spectrum before linearization.
 
 .. figure:: /images/test-case-1-after-linearization-5G.png
 
-   Figure 17: Signal spectrum after linearization.
+   Figure 19: Signal spectrum after linearization.
 
 * Before linearization: ACPR (left side) = -33 dBc;
 * After linearization: ACPR (left side)= -52.4 dBc; 
@@ -76,17 +76,17 @@ Test Case 2: Ten-tone Low IF, Maxim Integrated MAX2612 PA
   asymmetrical positive-band ten-tone input waveform is used. The output power 
   of ten tone test signal is equal to 3.5dBm. The input waveform is modified by
   CFR block. The PAPR is reduced from 10.6 to 8.3 dB.
-  Figures 18 and 19 illustrate the results of DPD/IQ operation by showing power spectral 
+  Figures 20 and 21 illustrate the results of DPD/IQ operation by showing power spectral 
   densities of PA output with and without using DPD/IQ.
  
 
 .. figure:: /images/test-case-2-before-linearization-5G.png
 
-   Figure 18: Signal spectrum before linearization.
+   Figure 20: Signal spectrum before linearization.
 
 .. figure:: /images/test-case-2-after-linearization-5G.png
 
-   Figure 19: Signal spectrum after linearization.
+   Figure 21: Signal spectrum after linearization.
 
 * Before linearization: ACPR (left side) = -29.8 dBc;
 * After linearization: ACPR (left side)= -46.3 dBc; 
@@ -99,11 +99,11 @@ Test Case 3: 10MHz LTE, 1W modulated output power amplifier
 
 .. figure:: /images/test-case-3-before-linearization-5G.png
 
-   Figure 20: Signal spectrum before linearization.
+   Figure 22: Signal spectrum before linearization.
 
 .. figure:: /images/test-case-3-after-linearization-5G.png
 
-   Figure 21: Signal spectrum after linearization.
+   Figure 23: Signal spectrum after linearization.
 
 The average output power at 1 dB compression point is 28 dBm at the frequency of 2.14 GHz. 
 

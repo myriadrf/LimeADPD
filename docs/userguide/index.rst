@@ -1,5 +1,5 @@
-CFR and DPD User Guide
-======================
+LimeDSP User Guides
+===================
 
 .. toctree::
    :hidden:
@@ -7,6 +7,7 @@ CFR and DPD User Guide
    CFR Configuration <cfr-config>
    DPDViewer Window <dpd-viewer>
    DPDControl Application <dpdcontrol>
+   Equaliser Application <equapi>
 
 Before CFR and DPD are started, the LMS7002 transceiver chip should be initialized and modulation waveforms started.
 

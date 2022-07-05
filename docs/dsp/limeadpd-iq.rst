@@ -30,7 +30,7 @@ and it is dedicated to minimization of PA and transmitter nonlinearity effects. 
 
 and is introduced to suppress the effects of transmitter’s I/Q imbalance.
 
-.. figure:: images/indirect-learning-architecture2.png
+.. figure:: ../images/indirect-learning-architecture2.png
 
 Figure 2: Indirect learning architecture for I/Q image rejection and PA linearization
 
@@ -59,7 +59,7 @@ are the polynomial coefficients while *e(n)* is the squared envelope of the inpu
 
 .. math:: e(n)=x_I(n)^2+x_Q(n)^2
 
-In the above equations, parameter *N*\ :sub:`1`\ in the represents the DPD memory length and *M*\ :sub:`1`\ is the nonlinearity order. The I/Q corrector block is modeled by linear FIR filter block with length *N*\ :sub:`2`\.
+In the above equations, parameter *N*\ :sub:`1`\ represents the DPD memory length and *M*\ :sub:`1`\ is the nonlinearity order. The I/Q corrector block is modeled by linear FIR filter block with length *N*\ :sub:`2`\.
 
 The advantage of LimeADPD I/Q is low complexity in terms of reduced number of complex valued coefficients.
 
@@ -81,7 +81,7 @@ while the post-distorter does similar:
 .. math:: e(n)=x_I(n)^2+x_Q(n)^2
 
 Note that the pre-distorter and post-distorter share the same set of complex
-coefficients **g** and **h**. Delay line is simple and its output is given by:
+coefficients **g** and **h**. Delay line is given by:
 
 .. math:: u(n)=yp(n-nd)
 

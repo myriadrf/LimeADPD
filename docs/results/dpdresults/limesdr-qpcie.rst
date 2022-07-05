@@ -50,11 +50,11 @@ Test Case 1: 10MHz LTE, Maxim Integrated MAX2612 PA
 
 .. figure:: /images/test-case-1-before-linearization.png
 
-   Figure 22: Signal spectrum before linearization.
+   Figure 24: Signal spectrum before linearization.
 
 .. figure:: /images/test-case-1-after-linearization.png
 
-   Figure 23: Signal spectrum after linearization.
+   Figure 25: Signal spectrum after linearization.
 
 * Before linearization: ACPR = -40.2 dBc;  EVM = 3.2%
 * After linearization: ACPR = -51.8 dBc;  EVM = 2.2%
@@ -84,11 +84,11 @@ Test Case 2: 20MHz LTE, Maxim Integrated MAX2612 PA
 
 .. figure:: /images/test-case-2-before-linearization.png
 
-   Figure 24: Signal spectrum before linearization.
+   Figure 26: Signal spectrum before linearization.
 
 .. figure:: /images/test-case-2-after-linearization.png
 
-   Figure 25: Signal spectrum after linearization.
+   Figure 27: Signal spectrum after linearization.
 
 * Before linearization: ACPR = -40.3 dBc; EVM = 3.6%.
 * After linearization: ACPR = -49.6 dBc; EVM = 2.2%.
@@ -101,7 +101,7 @@ Test Case 3: 10MHz LTE, 10W modulated output power amplifier
 
 .. figure:: /images/test-case-3-before-after-linearization.png
 
-   Figure 26: Signal spectrum before and after linearization.
+   Figure 28: Signal spectrum before and after linearization.
 
 The bandwidth of PA is 700-850 MHz. The average output power at 1 dB compression
 point is 40 dBm at the frequency of 750 MHz. In the measurement setup, the 30 dB

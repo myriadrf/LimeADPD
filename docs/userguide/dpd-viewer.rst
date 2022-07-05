@@ -1,9 +1,24 @@
 DPDViewer Window
 ================
 
+.. note::
+   The LMS#3 is used as DPD monitoring path. 
+   Clock for the LMS3 analog interfaces should be set to 61.44 MHz. 
+   The clock configuration is provided via LimeSuiteGUI CDCM6208 window.
+
+   * Open Modules → CDCM6208
+   * Check the Y6 and Y7 CDCM outputs (for LMS#3 ADCs) in the Frequency planning box.
+   * Enter frequency of 61.44 in the Frequency requested boxes. Click Calculate.
+   * Click Write All to write the new configuration into the CDCM6208 chip.
+
+.. note:: 
+   * open Modules → LMS#1 CFR controls window
+   * check boxes: ResetN, LMS1 txen, DPD cap.en., LMS3 mon.path, DPD/CFR enable
+  
+
 .. figure:: ../images/dpdviewer-before-training.png
 
-   Figure 14: DPDViewer: ADPD signals before training
+   Figure 16: DPDViewer: ADPD signals before training
 
 PC/GUI implements graphical display for demo and debugging purposes. GUI is
 capable to show important ADPD signals in FFT (frequency), time and
@@ -20,7 +35,7 @@ background tasks, repeated after time interval of several seconds.
 The DPD viewer window is displayed through
 *Modules* |rarr| *DPDViewer*.
 
-Figures 14 and 15 show important ADPD signals before and after the algorithm
+Figures 16 and 17 show important ADPD signals before and after the algorithm
 convergence. Signals are captured by GUI executed by CPU Core.
 
 ADPD parameters given in the QADPD setup part of the window are: 
@@ -40,14 +55,14 @@ ADPD parameters given in the QADPD setup part of the window are:
 
 .. figure:: ../images/dpdviewer-after-training.png
 
-   Figure 15: DPDViewer: ADPD signals before training
+   Figure 17: DPDViewer: ADPD signals before training
 
-Before training (Figure 14), predistorter signals *yp* and *xp* are equal (plot
+Before training (Figure 16), predistorter signals *yp* and *xp* are equal (plot
 1).  Signal *x* as a measure of PA output is distorted (plot 3). Waveforms *y*
 and *u* are very different (plot 2) which results in huge error (plot 4) which
 ADPD has to minimize.
 
-After ADPD training (Figure 15), signal *yp* (plot 1) is predistorted in order to
+After ADPD training (Figure 17), signal *yp* (plot 1) is predistorted in order to
 cancel PA distortion components. *x* as a measure of PA output is now linearized
 (plot 3). Excellent match between *y* and *u* waveforms in both time and
 amplitude scale (plot 2). ADPD error (plot 4) is minimized. Improvement in PA

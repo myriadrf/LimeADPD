@@ -78,7 +78,7 @@ Peak search block is introduced in PW processing stage to find local minimum
 values of the signal *c(n)*. If the input sample is not local minimum, then the
 output of Peak search block (signal *cp(n)*\) is set to one. 
 
-.. figure:: images/peak-windowing-search-correction.png
+.. figure:: ../images/peak-windowing-search-correction.png
 
    Figure 3: (a) Peak windowing architecture (b) Peak search block and (c)
    Correction block.
@@ -106,7 +106,7 @@ values have already been compensated. This reduces the EVM degradation when
 successive peaks in *cp(n)* occur within the period shorter than half of the
 window length.
 
-.. figure:: images/cfr-algorithm-in-action.png
+.. figure:: ../images/cfr-algorithm-in-action.png
 
    Figure 4: CFR algorithm in action. Bottom graph gives *c(n)*, *cp(n)* and *b(n)*,
    top graph shows *Th*, *e(n)* =|x(n)| and envelope of the CFR output \|y(n)\|.
@@ -135,7 +135,7 @@ that the filter has symmetrical window coefficients. The required number of
 multiplications is reduces by factor of 1/2. Consequentially, the number of FPGA
 DSP blocks used for the filter implementation is also reduced.
 
-.. figure:: images/pwfir1-pwfir2-module-architecture.png
+.. figure:: ../images/pwfir1-pwfir2-module-architecture.png
 
    Figure 5: The architecture of PWFIR1 (a) and PWFIR2 (b) modules.
 

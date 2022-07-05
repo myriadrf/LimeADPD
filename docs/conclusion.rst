@@ -82,3 +82,20 @@ Measurement results demonstrate LimeADPD I/Q capabilities:
 * Although the provided results consider the test cases where the I/Q imbalance effects are present at negative image frequencies, LimeADPD I/Q also provides satisfactory results if I/Q imbalance images are present at positive frequencies. 
   
 The performance was analyzed using multi-tone signals and LTE type of waveforms.
+
+Equaliser
+---------
+The I/Q imbalance and gain error issues arise as target Local Oscillator (LO) frequency increases; 
+they very are evident at 3.5GHz. However, the method is required also for lower target LO frequencies. 
+
+The Equaliser is implemented on LimeSDR-PCIe-5G board in LMS#2 transmit and receive paths.
+The transceiver LMS#2 is dedicated for 5G New Radio (NR) applications. 
+By utilization of Equaliser, the I/Q imbalance is reduced and gain is equalized in the wide base-band bandwidth of 100MHz.
+
+The RX and TX equaliser circuits are implemented as FIR filters. 
+Distinct filters are applied to I and Q signal paths. 
+The total number of FIR filters, realized for one transceiver path, is four, 
+and, the number of real-valued coefficients of each FIR is 16.
+
+Equaliser utilization increases the IRR by more than 15-20 dB in baseband bandwidth of 100 MHz 
+compared to cases when only static IQ calibration is performed.
