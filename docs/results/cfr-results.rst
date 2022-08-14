@@ -37,7 +37,7 @@ In test cases presented below, the signals are generated in different ways:
 Test Case 1: LTE 5MHz
 ---------------------
 
-.. table:: Table 3: CFR Test Case 1 results for E-TM 3.1 LTE 5MHz.
+.. table:: Table 4: CFR Test Case 1 results for E-TM 3.1 LTE 5MHz.
 
    +------+------+-----+--------+--------+--------+----------+-----------+----------+
    |      |CFR   | CFR | CFR    | PAPR   | EVM    | ACPR     ||deg| PAPR ||deg| EVM |
@@ -55,7 +55,7 @@ Test Case 1: LTE 5MHz
    +------+------+-----+--------+--------+--------+----------+-----------+----------+
 
 
-.. table:: Table 4: CFR Test Case 1 results for Amarisoft LTE stack 5MHz. 
+.. table:: Table 5: CFR Test Case 1 results for Amarisoft LTE stack 5MHz. 
 
    +------+------+-----+--------+--------+--------+----------+-----------+----------+
    |      |CFR   | CFR | CFR    | PAPR   | EVM    | ACPR     ||deg| PAPR ||deg| EVM |
@@ -70,7 +70,7 @@ Test Case 1: LTE 5MHz
 Test Case 2: LTE 10 MHz
 -----------------------
 
-.. table:: Table 5: CFR Test case 2 results for E-TM 3.1 LTE 10MHz.
+.. table:: Table 6: CFR Test case 2 results for E-TM 3.1 LTE 10MHz.
 
    +------+------+-----+--------+--------+--------+----------+-----------+----------+
    |      |CFR   | CFR | CFR    | PAPR   | EVM    | ACPR     ||deg| PAPR ||deg| EVM |
@@ -88,7 +88,7 @@ Test Case 2: LTE 10 MHz
    +------+------+-----+--------+--------+--------+----------+-----------+----------+
 
 
-.. table:: Table 6: CFR Test Case 2 results for Amarisoft LTE stack 10MHz.
+.. table:: Table 7: CFR Test Case 2 results for Amarisoft LTE stack 10MHz.
 
    +------+------+-----+--------+--------+--------+----------+-----------+----------+
    |      |CFR   | CFR | CFR    | PAPR   | EVM    | ACPR     ||deg| PAPR ||deg| EVM |
@@ -103,7 +103,7 @@ Test Case 2: LTE 10 MHz
 Test Case 3: LTE 15 MHz
 -----------------------
 
-.. table:: Table 7: CFR Test case 3 results for E-TM 3.1 LTE 15MHz.
+.. table:: Table 8: CFR Test case 3 results for E-TM 3.1 LTE 15MHz.
 
    +------+------+-----+--------+--------+--------+----------+-----------+----------+
    |      |CFR   | CFR | CFR    | PAPR   | EVM    | ACPR     ||deg| PAPR ||deg| EVM |
@@ -121,7 +121,7 @@ Test Case 3: LTE 15 MHz
    +------+------+-----+--------+--------+--------+----------+-----------+----------+
 
 
-.. table:: Table 8: CFR Test Case 2 results for Amarisoft LTE stack 15MHz.
+.. table:: Table 9: CFR Test Case 2 results for Amarisoft LTE stack 15MHz.
 
    +------+------+-----+--------+--------+--------+----------+-----------+----------+
    |      |CFR   | CFR | CFR    | PAPR   | EVM    | ACPR     ||deg| PAPR ||deg| EVM |
@@ -136,7 +136,7 @@ Test Case 3: LTE 15 MHz
 Test Case 4: LTE 20 MHz
 -----------------------
 
-.. table:: Table 9: CFR Test case 4 results for E-TM 3.1 LTE 20MHz.
+.. table:: Table 10: CFR Test case 4 results for E-TM 3.1 LTE 20MHz.
 
    +------+------+-----+--------+--------+--------+----------+-----------+----------+
    |      |CFR   | CFR | CFR    | PAPR   | EVM    | ACPR     ||deg| PAPR ||deg| EVM |
@@ -154,7 +154,7 @@ Test Case 4: LTE 20 MHz
    +------+------+-----+--------+--------+--------+----------+-----------+----------+
 
 
-.. table:: Table 10: CFR Test Case 4 results for Amarisoft LTE stack 20MHz.
+.. table:: Table 11: CFR Test Case 4 results for Amarisoft LTE stack 20MHz.
 
    +------+------+-----+--------+--------+--------+----------+-----------+----------+
    |      |CFR   | CFR | CFR    | PAPR   | EVM    | ACPR     ||deg| PAPR ||deg| EVM |

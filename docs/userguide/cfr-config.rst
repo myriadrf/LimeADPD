@@ -35,7 +35,7 @@ For example, for *Threshold* = 0.707, the PAPR of the output signal is reduced b
   
 The LMS1 CFR filter order depends upon the waveform bandwidth. The recommended CFR configuration for different LTE bandwidths is given in Table 2.
 
-.. list-table:: Table 2: The recommended CFR configuration for different LTE
+.. list-table:: Table 3: The recommended CFR configuration for different LTE
                 bandwidths. 
    :header-rows: 1
 

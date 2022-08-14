@@ -10,7 +10,7 @@ DACs |rarr| TX |rarr| PA |rarr| Coupler |rarr| RX |rarr| ADCs.
 Improvements in ACPR and EVM have been achieved in all cases as shown in Table
 11.
 
-.. table:: Table 11: DPD results summary.
+.. table:: Table 12: DPD results summary.
 
    +-------------+----------+------+-----+------------------+------------------+
    |Configuration|Modulation|Psat  |Fc   |ACPR (dBc)        | EVM (%)          |
