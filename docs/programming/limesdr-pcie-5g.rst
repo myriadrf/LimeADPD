@@ -23,7 +23,7 @@ The repository described below contains the FPGA gateware project for the LimeSD
 
 https://gitlab.com/myriadrf/pcie_5gradio_gw.git 
 
-branch: DPD_3.0_Board_temp
+branch: DPD_3.1_Board
 
 The gateware can be built with the free version of Xilinx Vivado v2020.1 (64-bit).
 

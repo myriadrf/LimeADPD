@@ -6,7 +6,7 @@
    dsp/index
    implementation/index
    programming/index
-   limesuite
+   limesuite/index
    configuration/index
    userguide/index
    results/index

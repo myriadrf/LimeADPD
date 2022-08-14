@@ -1,14 +1,14 @@
-LimeSuiteGUI Installation
-=========================
+LimeSuiteGUI
+============
 
-The LimeSuiteGUI source code dedicated to DPD demonstration is available at:
+The LimeSuiteGUI source code dedicated for demonstration is available at:
 
 .. tabs::
 
    .. tab:: LimeSDR-PCIe-5G
 
        * https://gitlab.com/myriadrf/LimeSuite_5G.git
-       * branch: 5G_LitePCIe-DPD_V3.0_temp 
+       * branch: master_branch_update
 
    .. tab:: LimeSDR-QPCIe
 
@@ -19,3 +19,11 @@ The LimeSuiteGUI source code dedicated to DPD demonstration is available at:
 Please clone the LimeSuiteGUI source code from the specified GitLab branch and in order to install follow the instructions described at:
 
 https://wiki.myriadrf.org/Lime_Suite
+
+
+.. toctree::
+   :hidden:
+
+   LimeSDR-PCIe-5G <limesdr-pcie-5g>
+   LimeSDR-QPCIe <limesdr-qpcie>
+

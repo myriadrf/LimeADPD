@@ -1,35 +1,39 @@
 CFR Configuration
 =================
-   
+
 .. tabs::
 
    .. tab:: LimeSDR-PCIe-5G
 
-        * In order to configure CFR in LMS1 transmit path open the window *LMS1 CFR controls* via *Modules* |rarr| *LMS1 CFR controls*. 
-        * Read the FPGA configuration file (with extension .ini2) which contains the CFR settings and post-CFR FIR filter configuration. 
+        * The LMS1 CFR processes the LTE waveforms. The data processing rate is 30.72 MS/s or 61.44MS/s depending on LTE signal bandwidth. 
+        * For 5 MHz and 10 MHz bandwidth waveforms the rate is 30.72 MS/s. For 15 MHz and 20 MHz bandwidth waveforms the rate is 61.44 MS/s. 
+        * In order to configure CFR in LMS1 transmit path open the window *LMS1 CFR controls* via *Modules* |rarr| *LMS1 CFR, LMS3 RxTSP controls*. 
+        * Read the FPGA configuration file ``FPGAsettings/FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2`` which contains the LMS1 CFR settings and post-CFR FIR filter configuration. 
         * To do this press *Read* button and choose the file.
-        * The configuration file which corresponds to 10MHz LTE waveform is ``FPGAsettings/FPGAsettings.ini2``. 
+
+         
+        * The LMS2 CFR runs the 5G 100MHz bandwidth waveforms. The CFR data processing rate is 245.76 MS/s. 
+        * In order to configure LMS2 CFR, open the window *LMS2 CFR controls* via *Modules* |rarr| *LMS2 CFR controls*. 
+        * Read the FPGA configuration file ``FPGAsettings/FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2`` which contains the LMS2 CFR and post-CFR FIR filter configuration. 
+        * To do this press *Read* button and choose the file.
 
    .. tab:: LimeSDR-QPCIe
 
+        * The CFR processes the LTE waveforms. The data processing rate is 30.72 MS/s or 61.44MS/s depending on LTE signal bandwidth. 
         * Open the window *Board related controls* through *Modules* |rarr| *Board Controls*.
         * Read the FPGA configuration file (with extension .ini2) which contains the CFR settings and post-CFR FIR filter configuration. 
         * To do this press *Read settings* button and choose the file dedicated to 10MHz LTE waveform, ``FPGAsettings/FPGAsettings_10MHz.ini2``. 
 
-The CFR data rate as well the post-CFR filter length depends on the *Interpolation* option:
+In case of LMS1 transmit paths of LimeSDR-PCIe-5G board different LTE signal bandwidths are considered.
+The CFR data rate, as well the post-CFR filter length, depends on the *Interpolation* option:
 
-* When *Interpolation* = 0, the CFR processing data rate is 30.72MSps. In this case the post-CFR FIR order maximum value is 40. This option is dedicated for 5 MHz and 10 MHz bandwidth waveforms. 
-
-* When *Interpolation* = 1, the signal interpolation is utilized in front of the CFR and post-CFR FIR blocks. In this case, the data rate of signals processed by CFR is 61.44 MSps. This option is used when 15 MHz and 20 MHz bandwidth waveforms are transmitted. In this case the Post-CFR FIR filter order maximum is equal to 20. 
-
-.. note::
+* When *Interpolation* = 0, the CFR processing data rate is 30.72MS/s. In this case the post-CFR FIR order maximum is 40. This Interpolation option is dedicated for 5 MHz and 10 MHz bandwidth waveforms. 
+* When *Interpolation* = 1, the signal interpolation is utilized in front of the CFR and post-CFR FIR blocks. In this case, the data rate of signals processed by CFR is 61.44 MS/s. This option is used for 15 MHz and 20 MHz bandwidth waveforms. In this case the Post-CFR FIR filter order maximum is equal to 20. 
+ 
+The CFR threshold determines the target PAPR and is expressed by real number in the range from 0.0 to 1.0. The threshold is normalized to full scale signals.
+For example, for *Threshold* = 0.707, the PAPR of the output signal is reduced by 3dB.
   
-  * Whenever the waveform bandwith is changed it is neccessary to change both post-CFR filter coefficients and CFR parameters, including the CFR filter length and interpolation that correspond to selected bandwidth.
-  * When interpolation or CFR order values are changed in the control window, new Hann windowing coefficients are automatically calculated and are programmed to the dedicated CFR registers located in FPGA gateware of the board.       
-   
-The CFR treshold determines the target PAPR and is expressed by real number in the range from 0.0 to 1.0. The threshold is normalized to full scale signals.For example, for *Threshold* = 0.707, the PAPR of the output signal is reduced by 3dB.
-  
-The CFR filter order depends upon the waveform bandwidth. The recommended CFR configuration for different LTE bandwidths is given in Table 2.
+The LMS1 CFR filter order depends upon the waveform bandwidth. The recommended CFR configuration for different LTE bandwidths is given in Table 2.
 
 .. list-table:: Table 2: The recommended CFR configuration for different LTE
                 bandwidths. 
@@ -61,7 +65,23 @@ The CFR filter order depends upon the waveform bandwidth. The recommended CFR co
      - 0.75*
 
 .. note::
+  
+  * Whenever the waveform bandwidth is changed it is required to change the post-CFR filter coefficients and CFR parameters, including the CFR filter length and interpolation that correspond to selected bandwidth.
+  * When interpolation or CFR order values are changed, new Hann windowing coefficients are automatically calculated and are programmed into the dedicated CFR registers.
+     
+.. note::
 
    If the power of the input signal is additionally backed-off by LTE stack
    settings, the threshold given in the Table 2 should be re-calculated and
    modified. 
+
+.. note::
+
+   For the CFR block, located in LimeSDR-PCIe-5G LMS2 path, which processes the 5G 100MHz bandwidth at the rate 245.76 MS/s, the configuration includes:
+
+   * CFR is enabled (the option *Bypass CFR* is left unchecked), 
+   * the interpolation is enabled (the option *Bypass HB1* is unchecked), 
+   * the recommended CFR order is equal to 13,
+   * the post-CFR FIR operation is enabled (the option *Bypass FIR* is unchecked).
+   
+   
