@@ -202,8 +202,8 @@ The *Bypass HB1* should be unchecked and 245.76 MS/s used.
 LMS2 CFR parameters for each of the TX paths include:
 
 * *Bypass HB1*, when checked, the interpolation is skipped (Figure 7). In this 
-  case, the data rate of signals is 122.88 MS/s. When left unchecked, the data rate of 
-  the signals, which are processed by CFR, is 245.76 MS/s.
+  case, the data rate of signals is 122.88 MS/s. When *Bypass HB1* is left unchecked (in this case *HB1 delay* must be **checked**), 
+  the data rate of the signals, which are processed by CFR, is 245.76 MS/s.
 * *Bypass CFR* – when is checked, the CFR is bypassed.
 * *CFR order* is the integer value representing the CFR PWFIR order. 
   The CFR order maximum is 32;
@@ -212,6 +212,10 @@ LMS2 CFR parameters for each of the TX paths include:
   full-scale. For example, the value of 0.707 reduces the input signal PAPR by 3dB.
   When value of 1.0 is chosen, the clipping operation is bypassed. 
 * *Gain* is the digital gain following CFR block. The default value is set to 1.0.
+
+.. note::
+
+   Interpolation require that *HB1 Bypass* is **unchecked** and *HB1 delay* is **checked**.
 
 The LMS2 low-pass post-CFR FIR filter follows the CFR block. By pressing the button *Coefficients*, 
 the FIR coefficients are read from FPGA registers and displayed. 

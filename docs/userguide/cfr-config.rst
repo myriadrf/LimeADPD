@@ -80,7 +80,7 @@ The LMS1 CFR filter order depends upon the waveform bandwidth. The recommended C
    For the CFR block, located in LimeSDR-PCIe-5G LMS2 path, which processes the 5G 100MHz bandwidth at the rate 245.76 MS/s, the configuration includes:
 
    * CFR is enabled (the option *Bypass CFR* is left unchecked), 
-   * the interpolation is enabled (the option *Bypass HB1* is unchecked), 
+   * the interpolation is enabled (the option *Bypass HB1* is **unchecked**, the *HB1 Delay* is **checked**), 
    * the recommended CFR order is equal to 13,
    * the post-CFR FIR operation is enabled (the option *Bypass FIR* is unchecked).
    
