@@ -26,6 +26,8 @@ For DPD demonstration the LMS1 and LMS3 are used. Two transmitter channels (name
 The DPD monitoring paths are realized by two LMS3 receiver paths. The pre-driver TQM8M9079 PAs 
 are embedded on the board, located in LMS1 transmit paths.
 
+In DPD demonstration the TQM8M9079 PAs is being linearized.
+
 Please, follow the steps explained below:
 
 * The LMS1 A channel connections:
@@ -38,12 +40,12 @@ Please, follow the steps explained below:
    * The U.FL connector J5 is used as channel B DPD monitoring input. It is connected to LMS3 RX2_W input.
    * The channel B RX input is U.FL connector RX2(J2), connected to LMS1 RX2_H input port.
 
-For DPD demonstration, one of the TX outputs is connected to PA input and after the PA to RF coupler. 
-The other TX output can be terminated with 50 Ohms.
-
-RF coupling outputs are over 10-20 dB RF attenuators fed to two LMS3 receive inputs,
-which are used as DPD monitoring path inputs.  
-
+* For DPD demonstration, for selected channel, 
+   * TX output (LMS1 TX 1) is connected to RF coupler input.
+   * RF coupler output is connected to Spectrum Analyser RF input.
+   * RF coupler coupling output is fed to DPD monitoring input (connected to LMS3 RX W input).
+   * At DPD monitoring input, at board LimeSDR-PCIe-5G side, the 10 dB RF attenuator is placed for attenuation of RF coupler coupling output. 
+   * The other channel TX output can be terminated with 50 Ohms.
 
 LMS1 DPD Software Configuration
 -------------------------------
@@ -61,15 +63,18 @@ steps 1 to 12:
      sudo ./LimeSuiteGUI
 #. Make the connection with the LimeSDR-PCIe-5G board *Options* |rarr| *Connection
    settings*. Select the LimeSDR-PCIe-5G board.
-#. Select the right LMS7002M chip (LMS1, LMS2 or LMS3) in the LimeSuite GUI and 
-   read corresponding INI configuration files:
-   ``LMSsettings/LMS1settings.ini``
-   ``LMSsettings/LMS2settings.ini``
-   ``LMSsettings/LMS3settings.ini``
-   Three INI files are provided with this document, one for each LMS7002M IC.
-#. In LimeSuiteGUI select the LMS1 chip, open the *Calibrations* tab, press buttons *Calibrate Tx*, then
-   *Calibrate Rx* for static LMS1 TX I/Q calibration. 
-#. In LimeSuiteGUI open the *CLKGEN* tab, press buttons *Calibrate*, *Tune*.
+
+#. Clocks for the LMS3 analog interfaces are provided by the onboard 
+   CDCM6208 clock generator. 
+   
+   * Open *Modules* |rarr| *CDCM6208*. 
+   * Check the LMS2 Y0 CDCM output in the *Frequency planning* box. 
+     Enter frequency of 122.88 in the *Frequency requested* boxes. Click *Calculate*.
+     Click *Write All* to write the new configuration into the CDCM6208 chip. Uncheck the Y0.
+   * Check the LMS3 Y6 and Y7 CDCM outputs in the *Frequency planning* box. 
+     Enter frequency of 61.44 in the *Frequency requested* boxes. Click *Calculate*.
+     Click *Write All* to write the new configuration into the CDCM6208 chip. Uncheck the Y6 and Y7.
+
 #. To configure RF switches and amplifiers open the window *Board related controls* 
    using *Modules* |rarr| *Board Controls*. When opened, please configure the following:
 
@@ -81,27 +86,30 @@ steps 1 to 12:
       * the *LMS1 TX2_EN* is checked, the *LMS1 RWSW_TX2* selection box is *TX2_1* |rarr| *TX2(J9)*, *TX2DAC* should is set to value od 52000,  
       * the *LMS1 RWSW_RX2* selection box should be set to *RX2_H* |larr| *RX2(J2)*,
 
-#. Clocks for the LMS3 analog interfaces are provided by the onboard 
-   CDCM6208 clock generator. 
+
+#. Select the LMS1 chip in the LimeSuite GUI and 
+   read corresponding INI configuration file:
    
-   * Open *Modules* |rarr| *CDCM6208*. 
-   * Check the LMS3 Y6 and Y7 CDCM outputs in the *Frequency planning* box. 
-     Enter frequency of 61.44 in the *Frequency requested* boxes. Click *Calculate*.
-     Click *Write All* to write the new configuration into the CDCM6208 chip. Uncheck the Y6 and Y7.
+   * ``LMSsettings/LMS1settings_dpd.ini``
+#. In LimeSuiteGUI select the LMS1 chip, open the *Calibrations* tab, press buttons *Calibrate All*.
+
+#. Select the LMS2 and LMS3 LMS7002M chips in the LimeSuiteGUI and 
+   read corresponding INI configuration files:
+   
+   * ``LMSsettings/LMS2settings.ini``
+   * ``LMSsettings/LMS3settings_dpd.ini``
   
 #. Open the window *LMS1 CFR controls* through *Modules* |rarr| *LMS1 CFR, LMS3 RxTSP*.
    
    * Read the FPGA configuration file (the file with extension ``.ini2``) which contains the CFR and post-CFR FIR configuration. 
    * To do this press *Read* button and choose the file dedicated to 10MHz LTE waveform: ``FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2``. 
-
-#. Open the window *LMS2 CFR controls* through *Modules* |rarr| *LMS2 CFR controls*.
-   
-   * Read the FPGA configuration file. Press *Read* button and choose the same file: ``FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2``. 
-  
+   * **check** *DPD cap.en.* 
+ 
 #. Now, select the test waveform by *Modules* |rarr| *FPGA controls*, 
    
    * Select the LMS1 option, and, read the 10MHz LTE waveform ``lms7suite_wfm/LTE_DL_TM31_10MHZ.wfm``.
    * Press button *Custom* to start the waveform.
+   * When MIMO operation is required, before pressing *Custom* button check MIMO option.
 
 .. note:: 
    * open *Modules* |rarr| *LMS1 CFR, LMS3 RxTSP* control window
@@ -111,9 +119,16 @@ steps 1 to 12:
       * **check** *DPD cap.en.* 
 
 .. note::
-   If it is required to modify CFR or post-FIR CFR settings, LimeSuiteGUI must be used. 
+   In LimeSuiteGUI, for selected LMS3 chip, it is required:
+   
+   * SXR tab |rarr| *Enable SXR/SXT module* is checked
+   * SXT tab |rarr| *Enable SXR/SXT module* is **unchecked**
+   * the previous two requirements are written in ``LMS3settings_dpd.ini``
+
+.. note::
+   When it is required to modify CFR or post-FIR CFR settings, LimeSuiteGUI must be used. 
    Again, go to *Modules* |rarr| *LMS1 CFR, LMS3 RxTSP*, open *LMS1 CFR, LMS3 RxTSP*. 
-   After the CFR settings are modified, save new configuration into FPGA configuration file or replace the existing FPGA configuration file.
+   After the CFR settings are modified, save new configuration into FPGA configuration file or replace the existing file.
 
 LMS2 Equaliser Hardware Configuration
 -------------------------------------
@@ -146,9 +161,11 @@ Follow the steps:
    settings*. Select the LimeSDR-PCIe-5G board.
 #. Select the right LMS7002M chip (LMS1, LMS2 or LMS3) in the LimeSuiteGUI and 
    read corresponding INI configuration files:
-   ``LMSsettings/LMS1settings.ini``
-   ``LMSsettings/LMS2settings.ini``
-   ``LMSsettings/LMS3settings.ini``
+   
+   * ``LMSsettings/LMS1settings.ini``
+   * ``LMSsettings/LMS2settings_equ.ini``
+   * ``LMSsettings/LMS3settings_equ.ini``
+   
    Three INI files are provided with this document, one for each LMS7002M IC.
 #. To configure RF switches and amplifiers open the window *Board related controls* 
    using *Modules* |rarr| *Board Controls*. When opened, configure the following items:
@@ -184,6 +201,7 @@ Follow the steps:
    Press button *Start* to start receiving data on LMS2 channel A.
 #. Go to *Modules* |rarr| *FPGA controls*, then select the LMS2 option. 
    Select the waveform. Press button *Custom* to start the LMS2 channel A waveform.
+   When MIMO operation is required, before pressing *Custom* button check MIMO option.
 
 .. note:: 
    * in LimeSuiteGUI 

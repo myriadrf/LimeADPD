@@ -33,7 +33,7 @@ The CFR data rate, as well the post-CFR filter length, depends on the *Interpola
 The CFR threshold determines the target PAPR and is expressed by real number in the range from 0.0 to 1.0. The threshold is normalized to full scale signals.
 For example, for *Threshold* = 0.707, the PAPR of the output signal is reduced by 3dB.
   
-The LMS1 CFR filter order depends upon the waveform bandwidth. The recommended CFR configuration for different LTE bandwidths is given in Table 2.
+The LMS1 CFR filter order depends upon the waveform bandwidth. The recommended CFR configuration for different LTE bandwidths is given in Table 3.
 
 .. list-table:: Table 3: The recommended CFR configuration for different LTE
                 bandwidths. 
@@ -72,7 +72,7 @@ The LMS1 CFR filter order depends upon the waveform bandwidth. The recommended C
 .. note::
 
    If the power of the input signal is additionally backed-off by LTE stack
-   settings, the threshold given in the Table 2 should be re-calculated and
+   settings, the threshold given in the Table 3 should be re-calculated and
    modified. 
 
 .. note::

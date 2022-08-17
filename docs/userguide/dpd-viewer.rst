@@ -6,15 +6,20 @@ DPDViewer Window
    Clock for the LMS3 analog interfaces should be set to 61.44 MHz. 
    The clock configuration is provided via LimeSuiteGUI CDCM6208 window.
 
-   * Open Modules → CDCM6208
+   * Open Modules |rarr| CDCM6208
    * Check the Y6 and Y7 CDCM outputs (for LMS#3 ADCs) in the Frequency planning box.
    * Enter frequency of 61.44 in the Frequency requested boxes. Click Calculate.
    * Click Write All to write the new configuration into the CDCM6208 chip.
 
 .. note:: 
-   * open Modules → LMS#1 CFR controls window
+   * open Modules |rarr| LMS#1 CFR controls window
    * check boxes: ResetN, LMS1 txen, DPD cap.en., LMS3 mon.path, DPD/CFR enable
-  
+
+.. note::
+   In LimeSuiteGUI, for selected LMS3 chip, please verify:
+   
+   * SXR tab |rarr| *Enable SXR/SXT module* is checked
+   * SXT tab |rarr| *Enable SXR/SXT module* is **unchecked**
 
 .. figure:: ../images/dpdviewer-before-training.png
 
@@ -77,16 +82,18 @@ follows:
 
 .. note::
 
-   Expected values for delay ND are in the range [74-80]. 
+   Expected values for delay ND are in the range [74-85]. 
 
 .. note::
 
    If in consecutive DPD calibration procedures, different, random values for ND
-   are obtained, which are out of specified range, there is a RF reflection or
+   are obtained, which are out of specified range, there is an RF reflection or
    interference. To solve this, check the RF cables. The cable dedicated for DPD
    monitoring path (from PA’s coupling output to board) should have
-   strong shield. Else, 10dBm-20dBm RF attenuator should be placed at
+   strong shield. Else, 10-20dBm RF attenuator should be placed at
    board receive input, rather than at PA’s coupling output.
+   
+   The other option is to press in LimeSuiteGUI, for LMS3 chip, in SXR tab, *Calculate*, *Tune*.
 
 4. Press *Calibrate gain* to determine DPD digital gain.
 
@@ -98,8 +105,8 @@ follows:
 
 .. note::
 
-   The DPD digital gain should be in range [1.0-3.0], otherwise, LMS7002M
-   channel A receiver gain settings must be modified. 
+   The DPD digital gain should be in range [1.0-3.0], otherwise, LMS3 LMS7002M
+   receiver gain settings must be modified. 
 
 5. In the part of the window *Train DPD*, press the *Start* button, check *Cont.
    train* option and then select *Continuous* option.
@@ -125,5 +132,5 @@ as follows:
 2. In the part of the window *Train DPD*, press the *Start* button, uncheck *Cont.
    train* option and select *Continuous* option.
 3. To stop monitoring operation, first press *One step*, then *End* button.
-4. Repeat steps 1-3 for the other channel .
+4. Repeat steps 1-3 for the other channel.
 

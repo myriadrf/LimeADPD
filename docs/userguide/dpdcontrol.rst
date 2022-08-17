@@ -7,8 +7,8 @@ and LimeSDR-PCIe-5G boards.
 Once the test waveforms are played, the ``DPDcontrol`` application can be started.
 
 .. warning::
-   It is not allowed to use the DPDcontrol application and LimeSuiteGUI at the 
-   same time. Therefore, before starting the DPDcontrol, close the LimeSuiteGUI.
+   It is not allowed to use the DPDcontrol application and DPDViewer at the 
+   same time. Therefore, before starting the DPDcontrol, close the DPDViewer.
 
 .. note::
    It is possible to linearize PAs using DPDcontrol, and then, after closing
@@ -17,18 +17,24 @@ Once the test waveforms are played, the ``DPDcontrol`` application can be starte
    PA output.
 
 .. note::
-   The LMS#3 is used as DPD monitoring path. 
+   The LMS3 is used as DPD monitoring path. 
    Clock for the LMS3 analog interfaces should be set to 61.44 MHz. 
    The clock configuration is provided via LimeSuiteGUI CDCM6208 window.
 
-   * Open Modules → CDCM6208
+   * Open Modules |rarr| CDCM6208
    * Check the Y6 and Y7 CDCM outputs (for LMS#3 ADCs) in the Frequency planning box.
    * Enter frequency of 61.44 in the Frequency requested boxes. Click Calculate.
    * Click Write All to write the new configuration into the CDCM6208 chip.
 
 .. note:: 
-   * open Modules → LMS#1 CFR controls window
-   * check boxes: ResetN, LMS1 txen, DPD cap.en., LMS3 mon.path, DPD/CFR enable
+   * open Modules |rarr| LMS#1 CFR controls window
+   * please verify that following boxes are checked: *ResetN*, *LMS1 txen*, *DPD cap.en.*, *LMS3 mon.path*, *DPD/CFR enable*
+
+.. note::
+   In LimeSuiteGUI, for selected LMS3 chip, please verify:
+   
+   * SXR tab |rarr| *Enable SXR/SXT module* is checked
+   * SXT tab |rarr| *Enable SXR/SXT module* is **unchecked**
    
 
 The very basic DPDcontrol operations are explained through steps 1-7.
@@ -70,18 +76,22 @@ The very basic DPDcontrol operations are explained through steps 1-7.
    both channels.
 
 .. note::
-   Expected values for delay ND are in the range [74 – 80]. 
+   Expected values for delay ND are in the range [74 – 85]. 
 
-If in consecutive DPD calibration procedures, different, random values for ND
-are obtained, which are out of specified range, there is a RF reflection or
-interference. To solve this, check the RF cables. The cable dedicated for DPD
-monitoring path (from PA’s coupling output to board) must have strong shield.
-Else, place 10dBm-20dBm RF attenuator at board receive port,
-dedicated to DPD monitoring input, rather than at PA’s coupling output.
+   If in consecutive DPD calibration procedures, different, random values for ND
+   are obtained, which are out of specified range, there is an RF reflection or
+   interference. 
+   
+   To solve this, check the RF cables. The cable dedicated for DPD
+   monitoring path (from PA’s coupling output to board) must have strong shield.   
+   Else, place 10dBm-20dBm RF attenuator at board receive port,
+   dedicated to DPD monitoring input, rather than at PA’s coupling output.
+
+   The other option is to press in LimeSuiteGUI, for LMS3 chip, in SXR tab, *Calculate*, *Tune*.
 
 .. note::
    The DPD digital gain should be in range [1.0-3.0], otherwise change the
-   LMS7002M receiver gain settings. Open *LimeSuiteGUI*, in tab RFE modify LNA;
+   LMS3 LMS7002M receiver gain settings. Open *LimeSuiteGUI*, select the LMS3 chp, in tab RFE modify LNA;
    in tab RBB modify PGA gain settings.
 
 .. note:: 
@@ -105,8 +115,11 @@ dedicated to DPD monitoring input, rather than at PA’s coupling output.
    iterations PAs get linearized.
 
 .. note::
-   The information about DPD calculation errors obtained by DPD training process
-   can be useful. The information is displayed or disabled by successive entering
+   The information about calculation errors obtained by training process
+   can be useful. Moreover, the DPDcontrol automatically measures and displays the ACPR results.
+   The ACPR parameters are configured via commands ``ChannelSpacing`` and ``ChannelBandwidth`` explained below.
+
+   The information is displayed or disabled by successive entering
    the character “**l**” in command line.
 
 6. To stop DPD training operation use:
@@ -127,26 +140,14 @@ explained below:
 
      help
 
-2. To turn on the DCDCs and PAs (only if  LimeNET internal PAs are used):
-   ::
-
-     startDCDC {1, 2, all}
-     startPA {1, 2, all}
-
-3. To turn off the DCDCs and PAs (if LimeNET internal PAs are used):
-   ::
-
-     stopPA {1, 2, all}
-     stopDCDC {1, 2, all}
-
-4. To store the DPD parameters into DPDcontrol configuration file (DPD digital
-   gain and ND delay, which are determined by calibrateDPD; and DPD nonlinearity
+2. To store the DPD parameters into DPDcontrol configuration file (DPD digital
+   gain and ND delay, which are previously determined by calibrateDPD; and DPD nonlinearity
    order – QADPD_M, defined by *DPDcontrol* application argument), use:
    ::
 
-     storeConfigDPD {1, 2, all}
+     saveConfigDPD {1, 2, all}
 
-5. The DPD parameters (*DPD digital gain*, *ND delay* and *QADPD_M*) are loaded
+3. The DPD parameters (*DPD digital gain*, *ND delay* and *QADPD_M*) are loaded
    from configuration file using: 
    ::
 
@@ -155,33 +156,41 @@ explained below:
 .. note::
    When the application *DPDcontrol* is started, the parameters DPD digital gain
    and ND delay are automatically loaded from *DPDcontrol* configuration file.
-   Also, when application is started without arguments, the DPD nonlinearity
-   order *QADPD_M* is read from configuration file. When it is started with
-   argument, it represents value of *QADPD_M*.
+   
+   When application is started without arguments, the DPD nonlinearity
+   order *QADPD_M* is read from configuration file. When DPDcontrol is started with
+   an argument, the argument value is the new value for *QADPD_M*.
 
-6. There is an option to store all calculated DPD coefficients (after training
+4. There is an option to store all calculated DPD coefficients (after training
    process is stopped with *stopDPD* command) into application’s configuration
    file. 
    ::
 
-     storeCoeffDPD {1, 2, all}
+     saveCoeffDPD {1, 2, all}
 
-7. To read the DPD coefficients from configuration file: 
+5. To read the DPD coefficients from configuration file: 
    ::
 
      loadCoeffDPD {1, 2, all}
 
-8. To read current status of DPD parameters (*DPD digital gain*, *ND delay* and
+6. To read current status of DPD parameters (*DPD digital gain*, *ND delay* and
    *QADPD_M*), or status of the PAs and DCDCs for both transmitting channels, use
    the following command: 
    ::
 
      readConfigDPD {1, 2, all}
 
-9. To reset all DPD coefficients:
+7. To reset all DPD coefficients:
    ::
 
      resetDPD {1, 2, all}
 
 .. note::
    The result of this command is the same as DPD is bypassed. 
+
+8. DPDcontrol automatically measures the ACPR which parameters ChannelSpacing and ChannelBandwidth are configured via: 
+   ::
+
+     setChannelSpacing {1, 2, all} <[1.0 .. 20.0]>
+
+     setChannelBandwidth {1, 2, all} <[1.0 .. 20.0]>
