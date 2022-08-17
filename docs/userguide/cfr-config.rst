@@ -8,13 +8,13 @@ CFR Configuration
         * The LMS1 CFR processes the LTE waveforms. The data processing rate is 30.72 MS/s or 61.44MS/s depending on LTE signal bandwidth. 
         * For 5 MHz and 10 MHz bandwidth waveforms the rate is 30.72 MS/s. For 15 MHz and 20 MHz bandwidth waveforms the rate is 61.44 MS/s. 
         * In order to configure CFR in LMS1 transmit path open the window *LMS1 CFR controls* via *Modules* |rarr| *LMS1 CFR, LMS3 RxTSP controls*. 
-        * Read the FPGA configuration file ``FPGAsettings/FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2`` which contains the LMS1 CFR settings and post-CFR FIR filter configuration. 
+        * Read the FPGA configuration file ``FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2`` which contains the LMS1 CFR settings and post-CFR FIR filter configuration. 
         * To do this press *Read* button and choose the file.
 
          
         * The LMS2 CFR runs the 5G 100MHz bandwidth waveforms. The CFR data processing rate is 245.76 MS/s. 
         * In order to configure LMS2 CFR, open the window *LMS2 CFR controls* via *Modules* |rarr| *LMS2 CFR controls*. 
-        * Read the FPGA configuration file ``FPGAsettings/FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2`` which contains the LMS2 CFR and post-CFR FIR filter configuration. 
+        * Read the FPGA configuration file ``FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2`` which contains the LMS2 CFR and post-CFR FIR filter configuration. 
         * To do this press *Read* button and choose the file.
 
    .. tab:: LimeSDR-QPCIe

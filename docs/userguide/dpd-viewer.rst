@@ -2,6 +2,9 @@ DPDViewer Window
 ================
 
 .. note::
+   Check if the file :download:`QADPDconfig.ini </doc/QADPDconfig.ini>` is copied into the folder ``<LimeSuite install folder>/LimeSuite/build/bin``.
+
+.. note::
    The LMS#3 is used as DPD monitoring path. 
    Clock for the LMS3 analog interfaces should be set to 61.44 MHz. 
    The clock configuration is provided via LimeSuiteGUI CDCM6208 window.

@@ -53,9 +53,8 @@ LMS1 DPD Software Configuration
 The CFR and DPD control is implemented in LimeSuiteGUI application. Follow the
 steps 1 to 12: 
 
-#. Copy the content of folder *DPD/sw* (the subfolders and *QADPDconfig.ini*) into
-   folder that belongs to LimeSuiteGUI installation: ``<LimeSuite install
-   folder>/LimeSuite/build/bin``.
+#. Copy the :download:`QADPDconfig.ini </doc/QADPDconfig.ini>` into the folder 
+   that belongs to LimeSuiteGUI installation: ``<LimeSuite install folder>/LimeSuite/build/bin``.
 #. Open a terminal in this folder.
 #. Start the LimeSuiteGUI application with sudo:
    ::
@@ -90,24 +89,26 @@ steps 1 to 12:
 #. Select the LMS1 chip in the LimeSuite GUI and 
    read corresponding INI configuration file:
    
-   * ``LMSsettings/LMS1settings_dpd.ini``
+   * :download:`LMS1settings_dpd.ini </doc/LMS1settings_dpd.ini>`
 #. In LimeSuiteGUI select the LMS1 chip, open the *Calibrations* tab, press buttons *Calibrate All*.
 
 #. Select the LMS2 and LMS3 LMS7002M chips in the LimeSuiteGUI and 
    read corresponding INI configuration files:
    
-   * ``LMSsettings/LMS2settings.ini``
-   * ``LMSsettings/LMS3settings_dpd.ini``
+   * :download:`LMS2settings_equ.ini </doc/LMS2settings_equ.ini>`
+   * :download:`LMS3settings_dpd.ini </doc/LMS3settings_dpd.ini>`
   
 #. Open the window *LMS1 CFR controls* through *Modules* |rarr| *LMS1 CFR, LMS3 RxTSP*.
    
    * Read the FPGA configuration file (the file with extension ``.ini2``) which contains the CFR and post-CFR FIR configuration. 
-   * To do this press *Read* button and choose the file dedicated to 10MHz LTE waveform: ``FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2``. 
+   * To do this press *Read* button and choose the file dedicated to 10MHz LTE waveform: 
+   * :download:`FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2 </doc/FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2>` 
    * **check** *DPD cap.en.* 
  
 #. Now, select the test waveform by *Modules* |rarr| *FPGA controls*, 
    
-   * Select the LMS1 option, and, read the 10MHz LTE waveform ``lms7suite_wfm/LTE_DL_TM31_10MHZ.wfm``.
+   * Select the LMS1 option, and, read the 10MHz LTE waveform 
+   * :download:`LTE_DL_TM31_10MHZ.wfm </doc/LTE_DL_TM31_10MHZ.wfm>`
    * Press button *Custom* to start the waveform.
    * When MIMO operation is required, before pressing *Custom* button check MIMO option.
 
@@ -162,9 +163,9 @@ Follow the steps:
 #. Select the right LMS7002M chip (LMS1, LMS2 or LMS3) in the LimeSuiteGUI and 
    read corresponding INI configuration files:
    
-   * ``LMSsettings/LMS1settings.ini``
-   * ``LMSsettings/LMS2settings_equ.ini``
-   * ``LMSsettings/LMS3settings_equ.ini``
+   * :download:`LMS1settings_dpd.ini </doc/LMS1settings_dpd.ini>`
+   * :download:`LMS2settings_equ.ini </doc/LMS2settings_equ.ini>` 
+   * :download:`LMS3settings_equ.ini </doc/LMS3settings_equ.ini>` 
    
    Three INI files are provided with this document, one for each LMS7002M IC.
 #. To configure RF switches and amplifiers open the window *Board related controls* 
@@ -192,9 +193,12 @@ Follow the steps:
   
 #. Open the window *LMS1 CFR controls* through *Modules* |rarr| *LMS1 CFR, LMS3 RxTSP*.
    Read the FPGA configuration file which contains the CFRs settings and post-CFR FIR filter configuration. To do this press 
-   *Read* button and choose the file: ``FPGAsettings/FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2``. 
+   *Read* button and choose the file: 
+   
+   * :download:`FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2 </doc/FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2>` 
+    
 #. Open the window *LMS2 CFR controls* through *Modules* |rarr| *LMS2 CFR controls*.
-   Read the same FPGA configuration file. Press *Read* button and choose the file: ``FPGAsettings/FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2``.
+   Read the same FPGA configuration file. Press *Read* button and choose the file: ``FPGAsettings_LMS1_10MHz_LMS2_100MHz.ini2``.
 #. Execute the *equAPI* application to calibrate the Equaliser. Please follow the steps which can be found in the description of *equAPI* in 
    *UserGuide/Equaliser* section. 
 #. When Equaliser is calibrated, go to *Modules* |rarr| *FFTviewer*, then, select the *Data reading* |rarr| *LMS2SISO, 16-bit format*. 

@@ -138,19 +138,18 @@ The FIR is bypassed when *Bypass FIR* is checked.
 
    For different LTE waveforms (5MHz, 10MHz, 15MHz and 20MHz) the corresponding
 
-   * ``FIR_05MHz_30p72MHz.fir``,
-   * ``FIR_10MHz_30p72MHz.fir``, 
-   * ``FIR_15MHz_61p44MHz.fir``,
-   * ``FIR_20MHz_61p44MHz.fir``
+   * :download:`FIR_05MHz_30p72MHz.fir </doc/FIR_05MHz_30p72MHz.fir>`,
+   * :download:`FIR_10MHz_30p72MHz.fir </doc/FIR_10MHz_30p72MHz.fir>`,
+   * :download:`FIR_15MHz_61p44MHz.fir </doc/FIR_15MHz_61p44MHz.fir>`,
+   * :download:`FIR_20MHz_61p44MHz.fir </doc/FIR_20MHz_61p44MHz.fir>`,
   
-   are provided in folder ``<LimeSuiteGUI install folder>/LimeSuite/build/bin/FIRcoefficients``. 
    The coefficient values, stored in the ``.fir`` file, are derived after normalized FIR filter 
    coefficient values are multiplied with constant integer number of 2\ :sup:`15`\ -1.
 
 To save or read FPGA configuration the window (Figure 13) provides three buttons: 
 
 * *Refresh all* button reads the configuration which has been already programmed 
-  in the FPGA and updates the configuration in the window.     
+  in the FPGA and updates the configuration in the window.
 * *Read* button which reads the ``.ini2`` file, updates the configuration shown in
   the window and also, automatically programs the FPGA registers. 
   The configuration includes all settings which are shown in the window, 
@@ -239,8 +238,10 @@ various LMS2 RX and TX static corrector modules:
 
 .. note::
  
-   The coefficients for 100MHz Low-Pass FIR are provided by ``FIR_100MHz_245p76MHz.fir``
-   located in folder ``<LimeSuiteGUI install folder>/LimeSuite/build/bin/FIRcoefficients``. 
+   The coefficients for 100MHz Low-Pass FIR are provided by 
+   
+   * :download:`FIR_100MHz_245p76MHz.fir </doc/FIR_100MHz_245p76MHz.fir>`,
+  
    The coefficient values are derived after normalized coefficient values are multiplied
    with 2\ :sup:`15`\ -1.
 
