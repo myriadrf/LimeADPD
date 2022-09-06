@@ -61,6 +61,9 @@ ADPD parameters given in the QADPD setup part of the window are:
   Gain calibration, the power at PA output is increased, as well the amount of
   distortion. 
 
+.. note:: 
+   For demonstration set Lambda equal to 0.99998
+
 .. figure:: ../images/dpdviewer-after-training.png
 
    Figure 17: DPDViewer: ADPD signals before training
