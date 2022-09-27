@@ -212,6 +212,7 @@ Follow the steps:
 
       * it is very important to open completely LMS2 analogue Receive and Transmit filters, 100MHz,-3dB bandwidth  
       * in RxTSP and TxTSP tabs, for both LMS2 and LMS3, in both channels A and B, bypass (check the fields) all RxTSP and TxTSP blocks
+      * in LMS3 TxTSP tab, select Input source -> Test signals option
       * check Enable MIMO for MIMO operation      
    * open Modules |rarr| *LMS1 CFR, LMS3 RxTSP* control window
 

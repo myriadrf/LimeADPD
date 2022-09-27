@@ -30,6 +30,7 @@ Main parts of software application are:
    * in LimeSuiteGUI       
       * in RxTSP tab, for both LMS2 and LMS3, in both channels A and B, bypass (check fields) all RxTSP blocks
       * in TxTSP tab, for both LMS2 and LMS3, in both channels A and B, bypass (check fields) all TxTSP blocks
+      * in LMS3 TxTSP tab, select Input source -> Test signals option
       * check Enable MIMO for MIMO operation
    * open Modules → LMS1 CFR,LMS3 RxTSP control window
 
