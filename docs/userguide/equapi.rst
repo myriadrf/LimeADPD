@@ -12,6 +12,8 @@ Main parts of software application are:
    3. Rx and Tx, EQUI and EQUQ, coefficients programming operations.
 
 .. note::
+   Please follow first the instructions in Board Configuration Guide > LimeSDR-PCIe-5G board.
+
    The LMS2 DAC clock frequency is set to 245.76 MHz. The LMS2 ADC clock frequency is set to 122.88 MHz.  
    The LMS3 is used during LMS2 calibration routines (in Phases 1, 2 and 3). 
    Clock for the LMS3 analog interfaces should be set to 122.88 MHz. 
@@ -21,10 +23,12 @@ Main parts of software application are:
    * Check the Y0 (for LMS2 DAC) in the Frequency planning box. Enter frequency of 245.76 in the Frequency requested boxes. Click Calculate. Click Write All to write the new configuration into the CDCM6208 chip. Uncheck the Y0.
    * Check the Y4 and Y5 CDCM outputs (for LMS2 ADCs); Y6 and Y7 (for LMS3 ADCs) in the Frequency planning boxes. Enter frequency of 122.88 in corresponding Frequency requested boxes. Click Calculate. Click Write All to write the new configuration. Uncheck the Y4, Y5, Y6 and Y7.
 
-.. note:: 
-   * in LimeSuiteGUI 
+.. warning::
+  * it is very important to open completely LMS2 analogue Receive and Transmit filters, 100MHz,-3dB bandwidth  
 
-      * in RxTSP tab, for both LMS2 and LMS3, in both channels A and B, bypass (check fields) all RxTSP blocks except DC corrector and DC tracking loop
+.. note:: 
+   * in LimeSuiteGUI       
+      * in RxTSP tab, for both LMS2 and LMS3, in both channels A and B, bypass (check fields) all RxTSP blocks
       * in TxTSP tab, for both LMS2 and LMS3, in both channels A and B, bypass (check fields) all TxTSP blocks
       * check Enable MIMO for MIMO operation
    * open Modules → LMS1 CFR,LMS3 RxTSP control window

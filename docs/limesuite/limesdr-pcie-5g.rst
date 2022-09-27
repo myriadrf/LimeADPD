@@ -242,8 +242,9 @@ various LMS2 RX and TX static corrector modules:
    
    * :download:`FIR_100MHz_245p76MHz.fir </doc/FIR_100MHz_245p76MHz.fir>`,
   
+   The filter has 32 taps and the same number of coefficients. 
    The coefficient values are derived after normalized coefficient values are multiplied
-   with 2\ :sup:`15`\ -1.
+   with a constant 2\ :sup:`15`\ -1.
 
 Additional buttons are provided: 
 

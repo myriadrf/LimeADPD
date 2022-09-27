@@ -210,9 +210,9 @@ Follow the steps:
 .. note:: 
    * in LimeSuiteGUI 
 
-      * in RxTSP tab, for both LMS2 and LMS3, in both channels A and B, bypass (check the fields) all RxTSP blocks except DC corrector and DC tracking loop
-      * in TxTSP tab, for both LMS2 and LMS3, in both channels A and B, bypass (check the fields) all TxTSP blocks
-      * check Enable MIMO for MIMO operation
+      * it is very important to open completely LMS2 analogue Receive and Transmit filters, 100MHz,-3dB bandwidth  
+      * in RxTSP and TxTSP tabs, for both LMS2 and LMS3, in both channels A and B, bypass (check the fields) all RxTSP and TxTSP blocks
+      * check Enable MIMO for MIMO operation      
    * open Modules |rarr| *LMS1 CFR, LMS3 RxTSP* control window
 
       * check LMS3 *Enable RxTSP* for both channels 
