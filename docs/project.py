@@ -15,6 +15,19 @@ github_repo_path= 'master/docs/'
 # This can be overridden using the ".. code-block::" directive.
 highlight_language = 'console'
 
+# Intersphinx mapping
+# To minimise build time only include projects that are referenced.
+intersphinx_internal = [
+#    'suiteng',
+]
+
+intersphinx_external = [
+#    'sphinx',
+]
+
 # Set to True if the project is archived.
 archived = False
+
+# When True internal intersphinx targets point at stage.myriadrf.org.
+staging = True
 
